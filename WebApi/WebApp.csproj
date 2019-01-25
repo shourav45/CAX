@@ -178,6 +178,7 @@
     <Folder Include="Views\Report\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllers\DestinationsController.cs" />
     <Compile Include="ApiControllers\PartyInfoesController.cs" />
     <Compile Include="ApiControllers\SPOInfoesController.cs" />
     <Compile Include="ApiControllers\UserInfoesController.cs" />
@@ -389,6 +390,9 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\AddUser.cshtml" />
     <Content Include="Views\Home\AddSPO.cshtml" />
+    <Content Include="Views\Home\Rate.cshtml" />
+    <Content Include="Views\Home\Zonal.cshtml" />
+    <Content Include="Views\Home\AddParty.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
