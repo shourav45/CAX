@@ -1,0 +1,243 @@
+﻿
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+
+<div class="row" ng-app="SPOApp" ng-controller="SPOCtrl">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Add SPO
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <form name="userform" ng-submit="submitForm()" method="post" novalidate>
+                        <input type="text" style="display:none" ng-model="IsEdit" readonly />
+                        <div class="col-lg-6">
+                            <div class="" ng-class="{ 'has-error' : submitted && userform.Name.$invalid}">
+                                <label class="col-md-4 control-label">
+                                    Name :
+                                    <span style="color:red">*</span>
+                                </label>
+                                <div class="col-md-8">
+                                    <input type="text" ng-model="SPO.Name" class="form-control" placeholder="Name" id="Name" name="Name" required>
+                                    <div class="form-control-focus"> </div>
+                                    <span ng-show="submitted &&  userform.Name.$error.required" class="text-danger">Name is Required</span>
+                                </div>
+                            </div>
+                            &emsp;
+                            <div class="" ng-class="{ 'has-error' : submitted && userform.Mobile1.$invalid}">
+                                <label class="col-md-4 control-label">
+                                    Mobile Number 1:
+                                    <span style="color:red">*</span>
+                                </label>
+                                <div class="col-md-8">
+                                    <input type="text" ng-model="SPO.Mobile1" class="form-control" placeholder="Mobile Number 1" id="Mobile1" name="Mobile1" required>
+                                    <div class="form-control-focus"> </div>
+                                    <span ng-show="submitted &&  userform.Mobile1.$error.required" class="text-danger">Mobile Number is Required</span>
+                                </div>
+                            </div>
+                            &emsp;
+                            <div class="" ng-class="{ 'has-error' : submitted && userform.Designation.$invalid}">
+                                <label class="col-md-4 control-label">
+                                    Designation:
+                                    <span style="color:red">*</span>
+                                </label>
+                                <div class="col-md-8">
+                                    <input type="text" ng-model="SPO.Designation" class="form-control" placeholder="Designation" id="Designation" name="Designation" required>
+                                    <div class="form-control-focus"> </div>
+                                    <span ng-show="submitted &&  userform.Designation.$error.required" class="text-danger">Designation is Required</span>
+                                </div>
+                            </div>
+                            &emsp;
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="" ng-class="{ 'has-error' : submitted && userform.Mobile2.$invalid}">
+                                <label class="col-md-4 control-label">
+                                    Mobile Number 2:
+                                </label>
+                                <div class="col-md-8">
+                                    <input type="text" ng-model="SPO.Mobile2" class="form-control" placeholder="Mobile Number 2" id="Mobile2" name="Mobile2">
+                                </div>
+                            </div>
+                            &emsp;
+                            <div class="" ng-class="{ 'has-error' : submitted && userform.Address.$invalid}">
+                                <label class="col-md-4 control-label">
+                                    Address:
+                                </label>
+                                <div class="col-md-8">
+                                    <textarea ng-model="SPO.Address" rows="3" id="Address" name="Address"></textarea>
+                                </div>
+                            </div>
+                            <hr />
+                            <hr />
+                        </div>
+
+                        <div class="col-md-12">
+                            <input type="submit" class="btn btn-primary" style="width:16%;margin-left: 9px;" ng-click="submitted=true" value="Add User" />
+                            <input type="reset" id="frmresetbtn" class="btn btn-warning" style="float:left;width: 16%;margin-left: 28%;" ng-click="submitted=false" value="Reset" />
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- Advanced Tables -->
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover" datatable="ng" dt-options="vm.dtOptions">
+                                        <thead>
+                                            <tr>
+                                                <th>SL/No</th>
+                                                <th>Name</th>
+                                                <th>Designation</th>
+                                                <th>Mobile</th>
+                                                <th>Email</th>
+                                                <th>Acctions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="spo in spoList">
+                                                <td>{{$index + 1}}</td>
+                                                <td>{{spo.Name}}</td>
+                                                <td>{{spo.Designation}}</td>
+                                                <td>{{spo.Mobile1}}</td>
+                                                <td>{{spo.Address}}</td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-default btn" ng-click="EditSPO(spo);"><i class="glyphicon glyphicon-pencil"></i></button>
+                                                        <button type="button" class="btn btn-default btn" ng-click="DeleteSPO(spo);"><i class="glyphicon glyphicon-trash"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--End Advanced Tables -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <!-- Page-Level Plugin Scripts-->
+    <script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script>
+        angular.module('SPOApp', ['UserApp.controllers', 'datatables']);
+        angular.module('UserApp.controllers', []).controller('SPOCtrl', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
+            init();
+            function init() {
+                initialize();
+                LoaduserList();
+            }
+            function initialize() {
+                $scope.vm = {};
+                $scope.vm.dtOptions = DTOptionsBuilder.newOptions()
+                  .withOption('order', [0, 'asc']);
+                $scope.IsEdit = 0;
+            }
+
+            $scope.EditSPO = function (spo) {
+                console.log(spo);
+                $scope.IsEdit = 1;
+                $scope.SPO = spo;
+                console.log($scope.SPO);
+                $('html').animate({ scrollTop: 0 }, 'slow');//IE, FF
+                $('body').animate({ scrollTop: 0 }, 'slow');//chrome, don't know if Safari works
+                $('.popupPeriod').fadeIn(1000, function () {
+                    setTimeout(function () { $('.popupPeriod').fadeOut(2000); }, 3000);
+                });
+                alert('Edit Clicked!');
+            }
+
+            $scope.DeleteSPO = function (spo) {
+                console.log(spo);
+                swal({
+                    title: "Are you sure?",
+                    text: "You will not be able to recover this SPO!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: '#DD6B55',
+                    confirmButtonText: 'Ok',
+                    cancelButtonText: "Cancel",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $http.delete("/api/SPOInfoes/" + spo.SPOInfoId)
+                        .then(function successCallback(response) {
+                            $("#frmresetbtn").trigger("click");
+                            LoaduserList();
+                            sweetAlert("Success!!", "SPO deleted", "success");
+                        }, function errorCallback(response) {
+                            //error msg
+                        });
+                        }
+                    });
+            }
+
+            function LoaduserList() {
+                $http.get("/api/SPOInfoes")
+                       .then(function successCallback(response) {
+                           $scope.spoList = response.data;
+                           toastr.options.positionClass = 'toast-bottom-right';
+                           toastr.success($scope.spoList.length + ' SPO found.');
+                           console.log(response.data);
+                       }, function errorCallback(response) {
+                           //error msg
+                       });
+            }
+
+            $scope.submitForm = function () {
+                if ($scope.userform.$invalid)
+                    return;
+
+                if ($scope.IsEdit == 1) //for update user
+                {
+                    if ($scope.SPO != 0) {
+                        $http.put("/api/SPOInfoes/" + $scope.SPO.SPOInfoId, $scope.SPO)
+                            .then(function successCallback(response) {
+                                //$scope.SPO = [];
+                                $("#frmresetbtn").trigger("click");
+                                LoaduserList();
+                                $scope.IsEdit = 0;
+                                sweetAlert("Done!!", "User updated successfully", "success");
+                            }, function errorCallback(response) {
+                                //error msg
+                            });
+                    }
+                }
+                else //for new user
+                {
+                    if ($scope.SPO != 0) {
+                        console.log($scope.SPO);
+                        $http.post("/api/SPOInfoes", $scope.SPO)
+                            .then(function successCallback(response) {
+                                //$scope.SPO = [];
+                                $("#frmresetbtn").trigger("click");
+                                LoaduserList();
+                                sweetAlert("Congratulations!!", "A SPO has been added successfully", "success");
+                            }, function errorCallback(response) {
+                                //error msg
+                            });
+                    }
+                }
+
+
+            }
+        });
+
+    </script>
+}

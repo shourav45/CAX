@@ -21,7 +21,11 @@ namespace WebApi.Controllers
 
         public ActionResult AddUser()
         {
+            return View();
+        }
 
+        public ActionResult AddSPO()
+        {
             return View();
         }
        
