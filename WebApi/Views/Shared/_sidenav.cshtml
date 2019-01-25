@@ -1,0 +1,121 @@
+﻿<nav class="navbar-default navbar-static-side" role="navigation">
+    <!-- sidebar-collapse -->
+    <div class="sidebar-collapse">
+        <!-- side-menu -->
+        <ul class="nav" id="side-menu">
+            <li>
+                <!-- user image section-->
+                <div class="user-section">
+                    <div class="user-section-inner">
+                        <img src="~/assets/img/user.jpg" alt="">
+                    </div>
+                    <div class="user-info">
+                        <div><strong>CAX-Admin</strong></div>
+                        <div class="user-text-online">
+                            <span class="user-circle-online btn btn-success btn-circle "></span>&nbsp;Adminstrator
+                        </div>
+                    </div>
+                </div>
+                <!--end user image section-->
+            </li>
+            @*<li class="sidebar-search">
+                <!-- search section-->
+                <div class="input-group custom-search-form">
+                    <input type="text" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+                <!--end search section-->
+            </li>*@
+            <li>
+                <a href="@Url.Action("Index","Home")"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("AddUser","Home")"><i class="fa fa-bar-chart-o fa-fw"></i> User</a>
+               
+            </li>
+
+            <li>
+                <a href="timeline.html"><i class="fa fa-flask fa-fw"></i> Accounts<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level selected text-center">
+                    <li>
+                        <a href="#">A1</a>
+                    </li>
+                    <li>
+                        <a href="#">A2</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#"><i class="fa fa-files-o fa-fw"></i> Booking<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level selected text-center">
+                    <li>
+                        <a href="#">Documents</a>
+                    </li>
+                    <li>
+                        <a href="#">Parcel</a>
+                    </li>
+                    <li>
+                        <a href="#">Poly</a>
+                    </li>
+                    <li>
+                        <a href="#">Others</a>
+                    </li>
+                </ul>
+                <!-- second-level-items -->
+            </li>
+            <li>
+                <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Delivery Status</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reports<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level selected text-center">
+                    <li>
+                        <a href="#">1</a>
+                    </li>
+                    <li>
+                        <a href="#">2</a>
+                    </li>
+                    <li>
+                        <a href="#">3</a>
+                    </li>
+                    <li>
+                        <a href="#">4</a>
+                    </li>
+                </ul>
+                <!-- second-level-items -->
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-table fa-fw"></i> Zonal</a>
+            </li>
+            <li>
+                <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Rate</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-sitemap fa-fw"></i> Party<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level selected text-center">
+                    <li>
+                        <a href="#">Party Entry</a>
+                    </li>
+                    <li>
+                        <a href="#">Partry List</a>
+                    </li>
+                  
+                </ul>
+
+             </li>
+            <li>
+                <a href="#"><i class="fa fa-wrench fa-fw"></i> CN Print</span></a>
+                <!-- second-level-items -->
+            </li>
+        </ul>
+        <!-- end side-menu -->
+    </div>
+    <!-- end sidebar-collapse -->
+</nav>
+<!-- end navbar side -->
