@@ -27,6 +27,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -177,7 +178,8 @@
     <Folder Include="Views\Report\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiControllers\DestinationsController.cs" />
+    <Compile Include="ApiControllers\PartyInfoesController.cs" />
+    <Compile Include="ApiControllers\SPOInfoesController.cs" />
     <Compile Include="ApiControllers\UserInfoesController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -216,9 +218,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901241823529_id.cs" />
-    <Compile Include="Migrations\201901241823529_id.Designer.cs">
-      <DependentUpon>201901241823529_id.cs</DependentUpon>
+    <Compile Include="Migrations\201901251009532_First.cs" />
+    <Compile Include="Migrations\201901251009532_First.Designer.cs">
+      <DependentUpon>201901251009532_First.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CNInfo.cs" />
@@ -386,8 +388,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\AddUser.cshtml" />
-    <Content Include="Views\Home\Zonal.cshtml" />
-    <Content Include="Views\Home\Rate.cshtml" />
+    <Content Include="Views\Home\AddSPO.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -399,8 +400,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201901241823529_id.resx">
-      <DependentUpon>201901241823529_id.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901251009532_First.resx">
+      <DependentUpon>201901251009532_First.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
