@@ -8,3 +8,5 @@
 /.vs/slnx.sqlite
 /WebApi/obj/Debug
 /WebApi/obj/Release
+/WebApi/bin
+/WebApi/Web.Config
