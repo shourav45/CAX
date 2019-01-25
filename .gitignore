@@ -3,3 +3,10 @@
 /WebApi/obj/Release
 
 /.vs/CAX-Solution/v14/.suo
+/bin
+/obj
+/Web.Config
+/Web.Debug.config
+/Web.Release.config
+/.vs/CAX-Solution/v14/
+/.vs/Config

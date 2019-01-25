@@ -3,11 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="~/assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
-<link href="~/assets/css/bootstrap-select.min.css" rel="stylesheet" />
-<script src="~/assets/scripts/bootstrap-select.min.js"></script>
-
-<div class="row" ng-app="UserApp" ng-controller="UserClt">
+<div class="row" ng-controller="RateClt">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -101,11 +97,9 @@
 
 @section Scripts{
 <!-- Page-Level Plugin Scripts-->
-<script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
-<script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
 <script>
-        angular.module('UserApp', ['UserApp.controllers', 'datatables']);
-        angular.module('UserApp.controllers', []).controller('UserClt', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
+           CNApp.controller('RateClt', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
+
             init();
             function init() {
                 initialize();

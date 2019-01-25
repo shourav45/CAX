@@ -4,9 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="~/assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
-
-<div class="row" ng-app="UserApp" ng-controller="UserClt">
+<div class="row" ng-controller="ZonalClt">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -98,11 +96,9 @@
 
 @section Scripts{
     <!-- Page-Level Plugin Scripts-->
-    <script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
-    <script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+  
     <script>
-        angular.module('UserApp', ['UserApp.controllers', 'datatables']);
-        angular.module('UserApp.controllers', []).controller('UserClt', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
+            CNApp.controller('ZonalClt', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
             init();
             function init() {
                 initialize();

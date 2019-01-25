@@ -31,7 +31,7 @@
 
 </head>
 
-<body class="body-Login-back" style="background-color: darkolivegreen" ng-app="TestApp" ng-controller="Loginclt">
+<body class="body-Login-back" style="background-color: darkolivegreen" ng-controller="Loginclt">
     <div class="container" >
         <div class="row">
             <div class="col-md-4 col-md-offset-4 text-center logo-margin ">
@@ -74,8 +74,7 @@
   </html>
 
 <script>
-angular.module('TestApp', ['TestApp.controllers']);
-angular.module('TestApp.controllers', []).controller('Loginclt', function ($scope,$http) {
+    CNApp.controller('Loginclt', function ($scope, $http) {
     init();
     function init() {
         $scope.userList = [];

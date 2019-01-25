@@ -6,7 +6,7 @@
 
 <link href="~/assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 
-<div class="row" ng-app="SPOApp" ng-controller="SPOCtrl">
+<div class="row" ng-controller="SPOCtrl">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -134,8 +134,8 @@
     <script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
     <script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
     <script>
-        angular.module('SPOApp', ['SPOApp.controllers', 'datatables']);
-        angular.module('SPOApp.controllers', []).controller('SPOCtrl', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
+           CNApp.controller('SPOCtrl', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
+
             init();
             function init() {
                 initialize();
