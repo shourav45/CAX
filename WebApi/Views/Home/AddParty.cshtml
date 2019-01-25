@@ -8,7 +8,7 @@
 <link href="~/assets/css/bootstrap-select.min.css" rel="stylesheet" />
 <link href="~/assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 
-<div class="row" ng-app="PartyApp" ng-controller="PartyCtrl">
+<div class="row" ng-app="MainApp" ng-controller="PartyCtrl">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -46,7 +46,6 @@
                             <div class="" ng-class="{ 'has-error' : submitted && userform.Telephone.$invalid}">
                                 <label class="col-md-4 control-label">
                                     Telephone:
-                                    <span style="color:red">*</span>
                                 </label>
                                 <div class="col-md-8">
                                     <input type="text" ng-model="Party.Telephone" class="form-control" placeholder="Telephone" id="Telephone" name="Telephone">
@@ -60,9 +59,7 @@
                                     Email:
                                 </label>
                                 <div class="col-md-8">
-                                    <input type="text" ng-model="Party.Email" class="form-control" placeholder="Email" id="Email" name="Email" required>
-                                    <div class="form-control-focus"> </div>
-                                    <span ng-show="submitted &&  userform.Eamil.$error.required" class="text-danger">Email is Required</span>
+                                    <input type="text" ng-model="Party.Email" class="form-control" placeholder="Email" id="Email" name="Email">
                                 </div>
                             </div>
                             &emsp;
@@ -71,7 +68,7 @@
                                     SPO Name:
                                 </label>
                                 <div class="col-md-8 row-fluid">
-                                    <select class="selectpicker" data-live-search="true" ng-options="spo.SPOInfoId as spo.Name for spo in spoList" ng-model="Party.SPOId" class="form-control" id="SPOId" name="SPOId" required>
+                                    <select class="selectpicker" data-live-search="true" ng-options="spo.SPOInfoId as spo.Name for spo in listSPO" ng-model="Party.SPOId" class="form-control" id="SPOId" name="SPOId" required>
                                         <option value="" selected>Select</option>
                                     </select>
                                     <div class="form-control-focus"> </div>
@@ -102,18 +99,16 @@
                                                 <th>SL/No</th>
                                                 <th>Name</th>
                                                 <th>Mobile</th>
-                                                <th>Telephone</th>
                                                 <th>Email</th>
-                                                <th>Address</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="prt in spoList">
+                                            <tr ng-repeat="prt in partyList">
                                                 <td>{{$index + 1}}</td>
                                                 <td>{{prt.Name}}</td>
                                                 <td>{{prt.Mobile}}</td>
                                                 <td>{{prt.Email}}</td>
-                                                <td>{{prt.Address}}</td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-default btn" ng-click="EditParty(prt);"><i class="glyphicon glyphicon-pencil"></i></button>
@@ -137,12 +132,12 @@
 
 @section Scripts{
     <!-- Page-Level Plugin Scripts-->
+    <script src="~/assets/scripts/bootstrap-select.min.js"></script>
     <script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
     <script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
-    <script src="~/assets/scripts/bootstrap-select.min.js"></script>
+
     <script>
-        angular.module('PartyApp', ['PartyApp.controllers', 'datatables']);
-        angular.module('PartyApp.controllers', []).controller('PartyCtrl', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
+        CNApp.controller('PartyCtrl', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
             init();
             function init() {
                 initialize();
@@ -157,16 +152,17 @@
             }
 
             $scope.EditParty = function (prt) {
+                console.log('clicked');
+                $scope.Party = [];
+                getAllSPO();
                 console.log(prt);
                 $scope.IsEdit = 1;
                 $scope.Party = prt;
-                console.log($scope.Party);
                 $('html').animate({ scrollTop: 0 }, 'slow');//IE, FF
                 $('body').animate({ scrollTop: 0 }, 'slow');//chrome, don't know if Safari works
                 $('.popupPeriod').fadeIn(1000, function () {
                     setTimeout(function () { $('.popupPeriod').fadeOut(2000); }, 3000);
                 });
-                alert('Edit Clicked!');
             }
 
             $scope.DeleteParty = function (prt) {
@@ -184,7 +180,7 @@
                 },
                     function (isConfirm) {
                         if (isConfirm) {
-                            $http.delete("/api/PartyInfoes/" + part.PartyInfoId)
+                            $http.delete("/api/PartyInfoes/" + prt.PartyInfoId)
                                 .then(function successCallback(response) {
                                     $("#frmresetbtn").trigger("click");
                                     LoadPartyList();
@@ -215,11 +211,12 @@
                 if ($scope.IsEdit == 1) //for update user
                 {
                     if ($scope.Party != 0) {
-                        $http.put("/api/PartyInfoes/" + $scope.SPO.PartyInfoId, $scope.Party)
+                        $http.put("/api/PartyInfoes/" + $scope.Party.PartyInfoId, $scope.Party)
                             .then(function successCallback(response) {
-                                //$scope.SPO = [];
+                                $scope.Party = [];
                                 $("#frmresetbtn").trigger("click");
-                                LoaduserList();
+                                LoadPartyList();
+                                getAllSPO();
                                 $scope.IsEdit = 0;
                                 sweetAlert("Done!!", "User updated successfully", "success");
                             }, function errorCallback(response) {
@@ -233,10 +230,10 @@
                         console.log($scope.Party);
                         $http.post("/api/PartyInfoes", $scope.Party)
                             .then(function successCallback(response) {
-                                //$scope.SPO = [];
+                                $scope.Party = [];
                                 $("#frmresetbtn").trigger("click");
-                                LoaduserList();
-                                sweetAlert("Congratulations!!", "A Party has been added successfully", "success");
+                                LoadPartyList();
+                                sweetAlert("Congratulations!!", "A SPO has been added successfully", "success");
                             }, function errorCallback(response) {
                                 //error msg
                             });
@@ -249,13 +246,13 @@
             function getAllSPO() {
                 $http.get("/api/SPOInfoes")
                     .then(function successCallback(response) {
-                        $scope.spoList = response.data;
-                        console.log(response.data);
+                        $scope.listSPO = response.data;
+                        console.log('spo block');
+                        console.log($scope.listSPO);
                     }, function errorCallback(response) {
                         //error msg
                     });
             }
-
         });
 
     </script>
