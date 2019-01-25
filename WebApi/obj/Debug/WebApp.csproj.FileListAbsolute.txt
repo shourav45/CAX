@@ -145,6 +145,6 @@ E:\CAX\CAX-Solution\WebApi\bin\Microsoft.AI.PerfCounterCollector.xml
 E:\CAX\CAX-Solution\WebApi\bin\Microsoft.AspNet.TelemetryCorrelation.xml
 E:\CAX\CAX-Solution\WebApi\bin\Newtonsoft.Json.pdb
 E:\CAX\CAX-Solution\WebApi\bin\System.Diagnostics.DiagnosticSource.xml
-E:\CAX\CAX-Solution\WebApi\obj\Debug\WebApi.Migrations.id.resources
 E:\CAX\CAX-Solution\WebApi\obj\Debug\WebApp.csproj.GenerateResource.Cache
 E:\CAX\CAX-Solution\WebApi\obj\Debug\WebApp.csprojResolveAssemblyReference.cache
+E:\CAX\CAX-Solution\WebApi\obj\Debug\WebApi.Migrations.First.resources

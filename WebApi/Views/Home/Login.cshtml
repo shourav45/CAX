@@ -47,7 +47,7 @@
                                 <div class="form-group" ng-class="{ 'has-error' : submitted && loginform.UserName.$invalid}">
                                     <div class="row-fluid">
                                         <select class="selectpicker" name="UserName" ng-model="UserName"  data-show-subtext="true" data-live-search="true" style="width: 149%;" required>
-                                            <option value=""  data-subtext="">Please a Select</option>
+                                            <option value=""  data-subtext="">Select User</option>
                                             <option ng-repeat="user in userList"  value="{{user.Name}},{{user.Mobile1}}" data-subtext="{{user.Mobile1}}">{{user.Name}}</option>
                                         </select>
                                         <span ng-show="submitted &&  loginform.UserName.$error.required" class="text-danger">User is Required</span>
