@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/CAX-Solution/v15/Server/sqlite3
+/.vs/CAX-Solution/v15
+/.vs/Work/v15
+/.vs/slnx.sqlite
+/WebApi/obj/Debug
+/WebApi/obj/Release
+/WebApi/bin
+/WebApi/Web.Config

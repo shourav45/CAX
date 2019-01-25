@@ -177,6 +177,7 @@
     <Folder Include="Views\Report\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllers\DestinationsController.cs" />
     <Compile Include="ApiControllers\UserInfoesController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -385,6 +386,8 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\AddUser.cshtml" />
+    <Content Include="Views\Home\Zonal.cshtml" />
+    <Content Include="Views\Home\Rate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
