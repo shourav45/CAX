@@ -37,7 +37,11 @@ namespace WebApi.Controllers
 
         public ActionResult Rate()
         {
+            return View();
+        }
 
+        public ActionResult AddParty()
+        {
             return View();
         }
 
