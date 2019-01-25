@@ -28,6 +28,18 @@ namespace WebApi.Controllers
         {
             return View();
         }
-       
+
+        public ActionResult Zonal()
+        {
+
+            return View();
+        }
+
+        public ActionResult Rate()
+        {
+
+            return View();
+        }
+
     }
 }
