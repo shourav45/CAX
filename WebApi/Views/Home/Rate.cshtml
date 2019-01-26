@@ -14,41 +14,89 @@
                     <form name="caxform" ng-submit="submitForm()" method="post" novalidate>
                         <input type="text" style="display:none" ng-model="IsEdit" readonly />
                         <div class="col-lg-6">
-                            <div class="" ng-class="{ 'has-error' : submitted && caxform.District.$invalid}">
+                            <div class="" ng-class="{ 'has-error' : submitted && caxform.PartyInfoId.$invalid}">
                                 <label class="col-md-4 control-label">
                                     Select Party :
                                     <span style="color:red">*</span>
                                 </label>
                                 <div class="col-md-8">
                                     <div class="row-fluid">
-                                        <select class="selectpicker" name="UserName" ng-model="PartyName" data-show-subtext="false" data-live-search="true" style="z-index: 01;width: 100%;" required>
-                                            <option value="" data-subtext="">Select Party</option>
-                                            <option ng-repeat="pt in PartyList" value="{{pt.PartyInfoId}}">{{pt.Name}}</option>
+                                        <select class="selectpicker" data-live-search="true" ng-options="party.PartyInfoId as party.Name for party in PartyList" ng-model="NewRate.PartyInfoId" id="PartyInfoId" name="PartyInfoId" required>
+                                            <option value="" selected>Select Party</option>
                                         </select>
+                                        <div class="form-control-focus"> </div>
+                                        <span ng-show="submitted &&  caxform.PartyInfoId.$error.required" class="text-danger">Please Select a Party</span>
                                     </div>
+                                    <br />
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="" ng-class="{ 'has-error' : submitted && caxform.Area.$invalid}">
+                            <div class="" ng-class="{ 'has-error' : submitted && caxform.RateType.$invalid}">
                                 <label class="col-md-4 control-label">
-                                    Area:
+                                    Select Rate Type :
                                     <span style="color:red">*</span>
                                 </label>
                                 <div class="col-md-8">
-                                    <input type="text" ng-model="Destination.Area" class="form-control" placeholder="Area" id="Area" name="Area" required>
+                                    <div class="row-fluid">
+                                        <select class="selectpicker" name="RateType" ng-model="NewRate.RateType" id="RateType" data-show-subtext="false" data-live-search="false" style="z-index: 01;width: 100%;" required>
+                                            <option value="" data-subtext="">Select Rate Type</option>
+                                            <option value="Documents" data-subtext="">Documents</option>
+                                            <option value="Parcel" data-subtext="">Parcel</option>
+                                            <option value="Poly" data-subtext="">Poly</option>
+                                        </select>
+                                        <div class="form-control-focus"> </div>
+                                        <span ng-show="submitted &&  caxform.RateType.$error.required" class="text-danger">Please Select a Rate Type</span>
+                                    </div>
+                                    <br />
+                                </div>
+                                </div>
+                                
+
+                            </div>
+                        <div class="col-lg-6" style="padding-bottom: 5%;">
+                               <div style="padding-bottom: 7%;" ng-class="{ 'has-error' : submitted && caxform.FirstKP.$invalid}">
+                                   <label class="col-md-5 control-label">
+                                       First KG / Piece No:
+                                       <span style="color:red">*</span>
+                                   </label>
+                                   <div class="col-md-6">
+                                       <input type="number" ng-model="NewRate.FirstKP" class="col-md-2 form-control" placeholder="Kg / Piece" id="FirstKP" name="FirstKP" required>
+                                       <div class="form-control-focus"> </div>
+                                       <span ng-show="submitted &&  caxform.FirstKP.$error.required" class="text-danger">Please enter number</span>
+
+                                   </div>
+                                   <br />
+                               </div>
+                            <div style="padding-bottom: 10%;"  ng-class="{ 'has-error' : submitted && caxform.FirstKPRate.$invalid}">
+                                <label class="col-md-5 control-label">
+                                    First KG / Piece Rate:
+                                    <span style="color:red">*</span>
+                                </label>
+                                <div class="col-md-6">
+                                    <input type="number" ng-model="NewRate.FirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="FirstKPRate" name="FirstKPRate" required>
                                     <div class="form-control-focus"> </div>
-                                    <span ng-show="submitted &&  caxform.Area.$error.required" class="text-danger">Email is Required</span>
+                                    <span ng-show="submitted &&  caxform.FirstKPRate.$error.required" class="text-danger">Please enter rate</span>
+
+                                </div>
+                              </div>
+                                
+                            <div ng-class="{ 'has-error' : submitted && caxform.AfterFirstKPRate.$invalid}">
+                                <label class="col-md-5 control-label">
+                                    After <label>{{NewRate.FirstKPRate}}</label> KG / Piece Rate:
+                                    <span style="color:red">*</span>
+                                </label>
+                                <div class="col-md-6">
+                                    <input type="number" ng-model="NewRate.AfterFirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="AfterFirstKPRate" name="AfterFirstKPRate" required>
+                                    <div class="form-control-focus"> </div>
+                                    <span ng-show="submitted &&  caxform.AfterFirstKPRate.$error.required" class="text-danger">Please enter rate</span>
+
                                 </div>
                             </div>
-                            &emsp;
-                        </div>
-
-                        <div class="col-md-12">
+                                
+                            </div>
+                        <div class="col-md-12" style="padding-bottom: 5%;">
                             <input type="submit" class="btn btn-primary" style="width:16%;margin-left: 9px;" ng-click="submitted=true" value="Add" />
                             <input type="reset" id="frmresetbtn" class="btn btn-warning" style="float:left;width: 16%;margin-left: 28%;" ng-click="submitted=false" value="Reset" />
                         </div>
-                        <br />
                         <hr />
                     </form>
                 </div>
@@ -65,6 +113,9 @@
                                                 <th>SL/No</th>
                                                 <th>Party</th>
                                                 <th>Rate Type</th>
+                                                <th>First KG/Piece Number</th>
+                                                <th>First KG/Piece Rate</th>
+                                                <th>After First KG/Piece Rate</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -73,6 +124,9 @@
                                                 <td>{{$index + 1}}</td>
                                                 <td>{{rate.PartyInfoId}}</td>
                                                 <td>{{rate.RateType}}</td>
+                                                <td>{{rate.FirstKP}}</td>
+                                                <td>{{rate.FirstKPRate}}</td>
+                                                <td>{{rate.AfterFirstKPRate}}</td>
 
                                                 <td>
                                                     <div class="btn-group">
@@ -98,7 +152,7 @@
 @section Scripts{
 <!-- Page-Level Plugin Scripts-->
 <script>
-           CNApp.controller('RateClt', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
+           CNApp.controller('RateClt', function ($scope, $http) {
 
             init();
             function init() {
@@ -107,9 +161,7 @@
                 LoadRate();
             }
             function initialize() {
-                $scope.vm = {};
-                $scope.vm.dtOptions = DTOptionsBuilder.newOptions()
-                  .withOption('order', [0, 'asc']);
+                $scope.PartyName = '0';
                 $scope.IsEdit = 0;
             }
 
@@ -198,13 +250,14 @@
                 }
                 else //for new user
                 {
-                        console.log($scope.Destination);
-                    $http.post("/api/Destinations", $scope.Destination)
+                    console.log($scope.NewRate);
+
+                    $http.post("/api/RateInfoes", $scope.NewRate)
                             .then(function successCallback(response) {
-                                $scope.Destination = [];
+                                $scope.NewRate = [];
                                 $("#frmresetbtn").trigger("click");
-                                LoadDestinationList();
-                                sweetAlert("Congratulations!!", "Destination added successfully", "success");
+                                LoadRate();
+                                sweetAlert("Congratulations!!", "Rate added successfully", "success");
                             }, function errorCallback(response) {
                                 //error msg
                             });

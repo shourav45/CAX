@@ -147,3 +147,4 @@ E:\CAX\CAX-Solution\WebApi\obj\Debug\WebApi.Migrations.First.resources
 E:\CAX\CAX-Solution\WebApi\obj\Debug\WebApp.csproj.GenerateResource.Cache
 E:\CAX\CAX-Solution\WebApi\obj\Debug\WebApi.dll
 E:\CAX\CAX-Solution\WebApi\obj\Debug\WebApi.pdb
+E:\CAX\CAX-Solution\WebApi\obj\Debug\WebApp.csprojResolveAssemblyReference.cache
