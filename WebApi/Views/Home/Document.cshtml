@@ -1,0 +1,458 @@
+﻿
+@{
+    ViewBag.Title = "User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" ng-controller="ZonalClt">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Document Booking
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <form name="caxform" ng-submit="submitForm()" method="post" novalidate>
+                        <input type="text" style="display:none" ng-model="IsEdit" readonly />
+                       
+                        <div style="width: 45%; float:left">
+                            
+                            <div style="padding-bottom: 12%;">
+                                <label class="col-md-4 control-label">
+                                    Date :
+                                    <span style="color:red">*</span>
+                                </label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="date" ng-model="Book.CNDate" />
+                                </div>
+                            </div>
+                            <div style="padding-bottom: 12%;">
+                                <label class="col-md-4 control-label">
+                                    Destination :
+                                    <span style="color:red">*</span>
+                                </label>
+                                <div class="col-md-8">
+                                    <select class="selectpicker" name="UserName" ng-model="Book.Destination" data-show-subtext="true" data-live-search="true" style="width: 149%;" required>
+                                        <option value="" data-subtext="">Select Destination</option>
+                                        <option ng-repeat="dest in DestinationList" value="{{dest.DestinationId}}" data-subtext="{{dest.Area}}">{{dest.District}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div style="padding-bottom: 12%;">
+                                <label class="col-md-4 control-label">
+                                    Party Name :
+                                    <span style="color:red">*</span>
+                                </label>
+                                <div class="col-md-8">
+                                    <select ng-change="LoadPartyRate(Book.PartyInfoId,'Document')" class="selectpicker" name="UserName" ng-model="Book.PartyInfoId" data-show-subtext="false" data-live-search="true" style="width: 149%;" required>
+                                        <option value="" data-subtext="">Select Party</option>
+                                        <option ng-repeat="party in PartyList" value="{{party.PartyInfoId}}" data-subtext="">{{party.Name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div style="padding-bottom: 12%;">
+                                <label class="col-md-4 control-label">
+                                    Party Code :
+                                    <span style="color:red">*</span>
+                                </label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" disabled ng-model="Book.PartyInfoId" />
+                                </div>
+                            </div>
+                            <div style="padding-bottom: 12%;">
+                                <label class="col-md-4 control-label">
+                                    CN Type :
+                                    <span style="color:red">*</span>
+                                </label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" disabled ng-model="Book.CNType"/>
+                                </div>
+                            </div>
+
+                            <div style="padding-bottom: 12%;">
+                                <label class="col-md-4 control-label">
+                                    Service Type :
+                                    <span style="color:red">*</span>
+                                </label>
+                                <div class="col-md-8">
+                                    <select class="selectpicker" name="UserName" ng-model="Book.ServiceType" data-show-subtext="false" data-live-search="false" style="width: 149%;" required>
+                                        <option value="" data-subtext="">Select Service Type</option>
+                                        <option value="In Dhaka" data-subtext="">In Dhaka</option>
+                                        <option value="Out Dhaka" data-subtext="">Out Dhaka</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div style="padding-bottom: 12%;">
+                                <label class="col-md-4 control-label">
+                                    Fo/L No :
+                                    <span style="color:red">*</span>
+                                </label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" ng-model="Book.Follio" />
+                                </div>
+                            </div>
+                            <div style="padding-bottom: 12%;">
+                                <label class="col-md-4 control-label">
+                                    Consignee Name :
+                                    <span style="color:red">*</span>
+                                </label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" ng-model="Book.ConsingeeName" />
+                                </div>
+                            </div>
+                            <div style="padding-bottom: 12%;">
+                                <label class="col-md-4 control-label">
+                                    Consignee Address :
+                                    <span style="color:red">*</span>
+                                </label>
+                                <div class="col-md-8">
+                                   <textarea class="form-control" ng-model="Book.ConsigneeAddress"></textarea>
+                                </div>
+                            </div>
+
+                        </div>                        
+
+                        <div style="width: 55%; float:right">
+                            
+                            <div style="padding-bottom: 12%;">
+                                <label class="col-md-4 control-label">
+                                    Item Info :
+                                    <span style="color:red">*</span>
+                                </label>
+                                <div class="col-md-8">
+                                    <textarea class="form-control" ng-model="Book.ItemInfo"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div style="padding-bottom: 12%;">
+                                <label class="col-md-4 control-label">
+                                    Document Type:
+                                    <span style="color:red">*</span>
+                                </label>
+                                <div class="col-md-8">
+                                    <select class="form-control" name="Ex1" ng-model="NewRate.Ex1">
+                                        <option value="" data-subtext="">Select Document Type</option>
+                                        <option value="Big" data-subtext="">Big Document</option>
+                                        <option value="General" data-subtext="">General Document</option>
+                                    </select>
+                                    <div class="form-control-focus"> </div>
+                                    <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
+                                </div>
+                                </div>
+                               
+
+                                <div style="padding-bottom: 12%;">
+                                    <label class="col-md-4 control-label">
+                                        Rate Type :
+                                        <span style="color:red">*</span>
+                                    </label>
+                                    <div class="col-md-8">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="Auto" checked>Auto
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="Flat">Flat
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <table class="table-bordered">
+                                    <tr>
+                                        <td>
+                                        <label class="col-md-4 control-label">
+                                            Piece:
+                                            <span style="color:red">*</span>
+                                        </label>
+                                        <div class="col-md-8">
+                                            <input class="form-control" type="text"  />
+                                            <div class="form-control-focus"> </div>
+                                            <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
+                                        </div>
+                                        </td>
+                                        <td>
+                                            First piece Number : 4
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="col-md-4 control-label">
+                                                Rate:
+                                                <span style="color:red">*</span>
+                                            </label>
+                                            <div class="col-md-8">
+                                                <input class="form-control" type="text"  />
+                                                <div class="form-control-focus"> </div>
+                                                <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            First piece Rate : 10
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="col-md-4 control-label">
+                                                Weight:
+                                                <span style="color:red">*</span>
+                                            </label>
+                                            <div class="col-md-8">
+                                                <input class="form-control" type="text"  />
+                                                <div class="form-control-focus"> </div>
+                                                <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            After first 4 piece rate : 5
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="col-md-4 control-label">
+                                                Service charge:
+                                                <span style="color:red">*</span>
+                                            </label>
+                                            <div class="col-md-8">
+                                                <input class="form-control" type="text"  />
+                                                <div class="form-control-focus"> </div>
+                                                <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="col-md-4 control-label">
+                                                Total:
+                                                <span style="color:red">*</span>
+                                            </label>
+                                            <div class="col-md-8">
+                                                <input class="form-control" type="text"  />
+                                                <div class="form-control-focus"> </div>
+                                                <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                       
+                        <div class="col-md-12">
+                            <input type="submit" class="btn btn-primary" style="width:16%;margin-left: 9px;" ng-click="submitted=true" value="Add" />
+                            <input type="reset" id="frmresetbtn" class="btn btn-warning" style="float:left;width: 16%;margin-left: 28%;" ng-click="submitted=false" value="Reset" />
+                        </div>
+                        <br />
+                        <hr />
+                    </form>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- Advanced Tables -->
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover" datatable="ng" dt-options="vm.dtOptions">
+                                        <thead>
+                                            <tr>
+                                                <th>SL/No</th>
+                                                <th>CN Number</th>
+                                                <th>CN Type</th>
+                                                <th>Delivery Status</th>
+                                                <th>CN Date</th>
+                                                <th>Service Type</th>
+                                                <th>Party</th>
+                                                <th>Destination</th>
+                                                <th>Total Amount</th>
+                                                <th>Actions</th>
+                                               
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="cn in CnInfoList">
+                                                <td>{{$index + 1}}</td>
+                                                <td>{{cn.CNInfoId}}</td>
+                                                <td>{{cn.CNType}}</td>
+                                                <td>{{cn.DeliveryStatus}}</td>
+                                                <td>{{cn.CNDate}}</td>
+                                                <td>{{cn.ServiceType}}</td>
+                                                <td>{{cn.Ex1}}</td>
+                                                <td>{{cn.Destination}}</td>
+                                                <td>{{cn.TotalAmount}}</td>
+                                              
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-default btn" ng-click="Edit(cn);"><i class="glyphicon glyphicon-pencil"></i></button>
+                                                        <button type="button" class="btn btn-default btn" ng-click="Delete(cn);"><i class="glyphicon glyphicon-trash"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--End Advanced Tables -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <!-- Page-Level Plugin Scripts-->
+
+    <script>
+            CNApp.controller('ZonalClt', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
+            init();
+            function init() {
+                initialize();
+                LoadPartyList();
+                LoadCnInfo();
+                LoadDestinationList();
+            }
+            function initialize() {
+                $scope.vm = {};
+                $scope.vm.dtOptions = DTOptionsBuilder.newOptions()
+                  .withOption('order', [0, 'asc']);
+                $scope.IsEdit = 0;
+                $scope.Book = [];
+                $scope.Book.CNType = 'Document';
+
+               
+            }
+
+            $scope.LoadPartyRate=function LoadPartyRate(PartyId,RateType) {
+                console.log(PartyId);
+                $http.get("/api/RateInfoes?PartyId="+PartyId+'&RateType='+RateType)
+                       .then(function successCallback(response) {
+                           console.log(response.data);
+                           $scope.Rate = response.data;
+                           toastr.options.positionClass = 'toast-bottom-right';
+                           if ($scope.Rate!=null) {
+                               toastr.success('Rate found.');
+                           }
+                           else
+                           {
+                               toastr.success('Rate not found.');
+                           }
+                       }, function errorCallback(response) {
+                           //error msg
+                       });
+            }
+
+            function LoadCnInfo() {
+                $http.get("/api/CNInfoes")
+                       .then(function successCallback(response) {
+                           $scope.CnInfoList = response.data;
+                           toastr.options.positionClass = 'toast-bottom-right';
+                           toastr.success($scope.CnInfoList.length + ' CN found.');
+                       }, function errorCallback(response) {
+                           //error msg
+                       });
+            }
+            function LoadDestinationList() {
+                $http.get("/api/Destinations")
+                       .then(function successCallback(response) {
+                           $scope.DestinationList = response.data;
+                           toastr.options.positionClass = 'toast-bottom-right';
+                           toastr.success($scope.DestinationList.length + ' destination found.');
+                       }, function errorCallback(response) {
+                           //error msg
+                       });
+            }
+            function LoadPartyList() {
+                $http.get("/api/PartyInfoes")
+                       .then(function successCallback(response) {
+                           $scope.PartyList = response.data;
+                           toastr.options.positionClass = 'toast-bottom-right';
+                           toastr.success($scope.PartyList.length + ' Party found.');
+                       }, function errorCallback(response) {
+                           //error msg
+                       });
+            }
+
+            $scope.Edit = function (dest) {
+                console.log(dest);
+                $scope.IsEdit = 1;
+                console.log($scope.Destination);
+
+                $scope.Destination = dest;
+                $('html').animate({ scrollTop: 0 }, 'slow');//IE, FF
+                $('body').animate({ scrollTop: 0 }, 'slow');//chrome, don't know if Safari works
+                $('.popupPeriod').fadeIn(1000, function () {
+                    setTimeout(function () { $('.popupPeriod').fadeOut(2000); }, 3000);
+                });
+                //$(window).scrollTop(0);
+            }
+
+            $scope.Delete = function (dest) {
+                console.log(dest);
+                swal({
+                    title: "Are you sure?",
+                    text: "You will not be able to recover this user!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: '#DD6B55',
+                    confirmButtonText: 'Ok',
+                    cancelButtonText: "Cancel",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $http.delete("/api/Destinations/" + dest.DestinationId)
+                        .then(function successCallback(response) {
+                            $("#frmresetbtn").trigger("click");
+                            LoadDestinationList();
+                            sweetAlert("Success!!", "Destination deleted", "success");
+                        }, function errorCallback(response) {
+                            //error msg
+                        });
+                        }
+                    });
+            }
+
+          
+            $scope.submitForm = function () {
+                if ($scope.caxform.$invalid)
+                    return;
+
+                if ($scope.IsEdit == 1) //for update user
+                {
+                    console.log($scope.Destination);
+                    $http.put("/api/Destinations/" + $scope.Destination.DestinationId, $scope.Destination)
+                            .then(function successCallback(response) {
+                                $scope.dest = [];
+                                $("#frmresetbtn").trigger("click");
+                                LoadDestinationList();
+                                $scope.IsEdit = 0;
+                                sweetAlert("Done!!", "Updated successfully", "success");
+                            }, function errorCallback(response) {
+                                //error msg
+                       });
+
+                }
+                else //for new user
+                {
+                        console.log($scope.Destination);
+                    $http.post("/api/Destinations", $scope.Destination)
+                            .then(function successCallback(response) {
+                                $scope.Destination = [];
+                                $("#frmresetbtn").trigger("click");
+                                LoadDestinationList();
+                                sweetAlert("Congratulations!!", "Destination added successfully", "success");
+                            }, function errorCallback(response) {
+                                //error msg
+                            });
+                }
+
+
+            }
+        });
+                    
+    </script>
+}

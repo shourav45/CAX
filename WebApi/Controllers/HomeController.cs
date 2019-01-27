@@ -45,5 +45,10 @@ namespace WebApi.Controllers
             return View();
         }
 
+        public ActionResult Document()
+        {
+            return View();
+        }
+
     }
 }

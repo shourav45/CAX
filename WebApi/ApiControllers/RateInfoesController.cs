@@ -20,16 +20,18 @@ namespace WebApi.ApiControllers
         public IQueryable<RateInfo> GetRateInfoset()
         {
             List<RateInfo> RateList = db.RateInfoset.ToList();
-            //List<PartyInfo> PartyList = db.PartyInfoset.ToList();
-            //var rate = from rt in db.RateInfoset.ToList().Where(r => r.PartyInfoId == PartyList.par)
             foreach (var rate in RateList)
             {
                 PartyInfo Party = db.PartyInfoset.Where(p => p.PartyInfoId.ToString() == rate.PartyInfoId).FirstOrDefault();
-                rate.PartyInfoId = Party.Name;
+                rate.Ex1 = Party.Name;
             }
             return RateList.AsQueryable();
         }
-
+        public IHttpActionResult GetRateInfoset(string PartyId, string RateType)
+        {
+            RateInfo rate = db.RateInfoset.Where(r => r.PartyInfoId == PartyId && r.RateType == RateType).FirstOrDefault();
+            return Ok(rate);
+        }
         // GET: api/RateInfoes/5
         [ResponseType(typeof(RateInfo))]
         public IHttpActionResult GetRateInfo(int id)

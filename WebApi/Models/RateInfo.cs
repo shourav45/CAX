@@ -18,7 +18,7 @@ namespace WebApi.Models
         public string AfterFirstKPRate { get; set; }//for poly small
         public string AddBy { get; set; }
         public string AddDate { get; set; }
-        public string Ex1 { get; set; }
+        public string Ex1 { get; set; }//for doc this one doc type like big/general
         public string Ex2 { get; set; }
     }
 }
