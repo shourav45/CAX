@@ -39,7 +39,7 @@
                                     <div class="row-fluid">
                                         <select class="selectpicker" name="RateType" ng-model="NewRate.RateType" id="RateType" data-show-subtext="false" data-live-search="false" style="z-index: 01;width: 100%;" required>
                                             <option value="" data-subtext="">Select Rate Type</option>
-                                            <option value="Documents" data-subtext="">Documents</option>
+                                            <option value="Document" data-subtext="">Document</option>
                                             <option value="Parcel" data-subtext="">Parcel</option>
                                             <option value="Poly" data-subtext="">Poly</option>
                                         </select>
@@ -52,7 +52,7 @@
                                 
 
                             </div>
-                        <div class="col-lg-6" style="padding-bottom: 5%;" ng-show="NewRate.RateType=='Documents'">
+                        <div class="col-lg-6" style="padding-bottom: 5%;" ng-show="NewRate.RateType=='Document'">
                             <div style="padding-bottom: 7%;" ng-class="{ 'has-error' : submitted && caxform.Ex1.$invalid}">
                                 <label class="col-md-5 control-label">
                                     Document Type:
@@ -345,8 +345,9 @@
             
 
             function LoadRate() {
-                $http.get("/api/RateInfoes")
+                $http.get("/RateInfoes/GetRateAllRate")
                        .then(function successCallback(response) {
+                           //console.log(response);
                            $scope.RateList = response.data;
                            toastr.options.positionClass = 'toast-bottom-right';
                            toastr.success($scope.RateList.length + ' rate found.');
@@ -373,7 +374,7 @@
                 if ($scope.IsEdit == 1) //for update user
                 {
                     console.log($scope.Destination);
-                    $http.put("/api/Destinations/" + $scope.Destination.DestinationId, $scope.Destination)
+                    $http.put("/RateInfoes/PutRateInfo/" + $scope.Destination.DestinationId, $scope.Destination)
                             .then(function successCallback(response) {
                                 $scope.dest = [];
                                 $("#frmresetbtn").trigger("click");
@@ -387,9 +388,8 @@
                 }
                 else //for new user
                 {
-                    console.log($scope.NewRate);
-
-                    $http.post("/api/RateInfoes", $scope.NewRate)
+                    //console.log($scope.NewRate);
+                    $http.post("/RateInfoes/PostRateInfo?PartyInfoId=" + $scope.NewRate.PartyInfoId + "&RateType=" + $scope.NewRate.RateType + "&FirstKP=" + $scope.NewRate.FirstKP + "&FirstKPRate=" + $scope.NewRate.FirstKPRate + "&AfterFirstKPRate=" + $scope.NewRate.AfterFirstKPRate + "&Ex1=" + $scope.NewRate.Ex1)
                             .then(function successCallback(response) {
                                 $scope.NewRate = [];
                                 $("#frmresetbtn").trigger("click");

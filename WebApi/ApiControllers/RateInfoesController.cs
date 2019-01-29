@@ -8,16 +8,17 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Mvc;
 using WebApi.Models;
-
+using System.Web.Http;
 namespace WebApi.ApiControllers
 {
-    public class RateInfoesController : ApiController
+    public class RateInfoesController : Controller
     {
         private dbcontext db = new dbcontext();
 
-        // GET: api/RateInfoes
-        public IQueryable<RateInfo> GetRateInfoset()
+        [System.Web.Mvc.HttpGet]
+        public ActionResult GetRateAllRate()
         {
             List<RateInfo> RateList = db.RateInfoset.ToList();
             foreach (var rate in RateList)
@@ -25,38 +26,44 @@ namespace WebApi.ApiControllers
                 PartyInfo Party = db.PartyInfoset.Where(p => p.PartyInfoId.ToString() == rate.PartyInfoId).FirstOrDefault();
                 rate.Ex1 = Party.Name;
             }
-            return RateList.AsQueryable();
+            return Json(RateList,JsonRequestBehavior.AllowGet);
         }
-        public IHttpActionResult GetRateInfoset(string PartyId, string RateType)
-        {
-            RateInfo rate = db.RateInfoset.Where(r => r.PartyInfoId == PartyId && r.RateType == RateType).FirstOrDefault();
-            return Ok(rate);
-        }
-        // GET: api/RateInfoes/5
-        [ResponseType(typeof(RateInfo))]
-        public IHttpActionResult GetRateInfo(int id)
+
+      [System.Web.Http.HttpGet]
+        public ActionResult GetRateById(int id)
         {
             RateInfo rateInfo = db.RateInfoset.Find(id);
             if (rateInfo == null)
             {
-                return NotFound();
+                return Json("Not Found",JsonRequestBehavior.AllowGet);
             }
 
-            return Ok(rateInfo);
+            return Json(rateInfo, JsonRequestBehavior.AllowGet);
         }
 
-        // PUT: api/RateInfoes/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutRateInfo(int id, RateInfo rateInfo)
+        [System.Web.Http.HttpGet]
+        public ActionResult GetRateByPartyId(string PartyId, string RateType)
+        {
+            RateInfo rateInfo = db.RateInfoset.Where(r=>r.PartyInfoId== PartyId).FirstOrDefault();
+            if (rateInfo == null)
+            {
+                return Json("0", JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(rateInfo, JsonRequestBehavior.AllowGet);
+        }
+
+        [System.Web.Http.HttpPost]
+        public ActionResult PutRateInfo(int id, RateInfo rateInfo)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Json("Model is not valid", JsonRequestBehavior.AllowGet);
             }
 
             if (id != rateInfo.RateInfoId)
             {
-                return BadRequest();
+                return Json("Model id is not valid", JsonRequestBehavior.AllowGet);
             }
 
             db.Entry(rateInfo).State = EntityState.Modified;
@@ -69,7 +76,7 @@ namespace WebApi.ApiControllers
             {
                 if (!RateInfoExists(id))
                 {
-                    return NotFound();
+                    return Json("Data is not in table", JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
@@ -77,38 +84,46 @@ namespace WebApi.ApiControllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Json(rateInfo, JsonRequestBehavior.AllowGet);
         }
 
         // POST: api/RateInfoes
-        [ResponseType(typeof(RateInfo))]
-        public IHttpActionResult PostRateInfo(RateInfo rateInfo)
+        [System.Web.Http.HttpPost]
+        public ActionResult PostRateInfo(string PartyInfoId,string RateType,string FirstKP,string  FirstKPRate,string AfterFirstKPRate,string Ex1)
         {
+            RateInfo rateInfo = new Models.RateInfo();
+            rateInfo.PartyInfoId = PartyInfoId;
+            rateInfo.RateType = RateType;
+            rateInfo.FirstKP = FirstKP;
+            rateInfo.FirstKPRate = FirstKPRate;
+            rateInfo.AfterFirstKPRate = AfterFirstKPRate;
+            rateInfo.Ex1 = Ex1;
+
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return Json("Model is not valid", JsonRequestBehavior.AllowGet);
             }
 
             db.RateInfoset.Add(rateInfo);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = rateInfo.RateInfoId }, rateInfo);
+            return Json(rateInfo,JsonRequestBehavior.AllowGet);
         }
 
         // DELETE: api/RateInfoes/5
-        [ResponseType(typeof(RateInfo))]
-        public IHttpActionResult DeleteRateInfo(int id)
+     [System.Web.Http.HttpPost]
+        public ActionResult DeleteRateInfo(int id)
         {
             RateInfo rateInfo = db.RateInfoset.Find(id);
             if (rateInfo == null)
             {
-                return NotFound();
+                return Json("Model not found", JsonRequestBehavior.AllowGet);
             }
 
             db.RateInfoset.Remove(rateInfo);
             db.SaveChanges();
 
-            return Ok(rateInfo);
+            return Json(rateInfo, JsonRequestBehavior.AllowGet); ;
         }
 
         protected override void Dispose(bool disposing)
