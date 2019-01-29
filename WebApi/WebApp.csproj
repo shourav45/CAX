@@ -174,7 +174,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="RDLC\" />
     <Folder Include="Views\Report\" />
   </ItemGroup>
   <ItemGroup>
@@ -411,6 +410,14 @@
     <EmbeddedResource Include="Migrations\201901251009532_First.resx">
       <DependentUpon>201901251009532_First.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="RDLC\rptMonthlySPOSales.rdlc" />
+    <EmbeddedResource Include="RDLC\rptDeliveryStatus.rdlc" />
+    <EmbeddedResource Include="RDLC\rptNonUpdate.rdlc" />
+    <EmbeddedResource Include="RDLC\rptShiperCopy.rdlc" />
+    <EmbeddedResource Include="RDLC\rptDailySales.rdlc" />
+    <EmbeddedResource Include="RDLC\rptPartyWise.rdlc" />
+    <EmbeddedResource Include="RDLC\rptUserEntryCount.rdlc" />
+    <EmbeddedResource Include="RDLC\rptDateWiseBill.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
