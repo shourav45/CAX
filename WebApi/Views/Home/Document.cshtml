@@ -131,7 +131,7 @@
                                     <span style="color:red">*</span>
                                 </label>
                                 <div class="col-md-8">
-                                    <select class="form-control" name="Ex1" ng-model="NewRate.Ex1">
+                                    <select class="form-control" ng-change="DocType()" name="Ex1" ng-model="Book.Ex1">
                                         <option value="" data-subtext="">Select Document Type</option>
                                         <option value="Big" data-subtext="">Big Document</option>
                                         <option value="General" data-subtext="">General Document</option>
@@ -149,10 +149,10 @@
                                     </label>
                                     <div class="col-md-8">
                                         <label class="radio-inline">
-                                            <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="Auto" checked>Auto
+                                            <input type="radio" name="optionsRadiosInline" ng-click="SelectRateType('Auto')"  id="optionsRadiosInline1" value="Auto" checked>Auto
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="Flat">Flat
+                                            <input type="radio" name="optionsRadiosInline" ng-click="SelectRateType('Flat')"  id="optionsRadiosInline2" value="Flat">Flat
                                         </label>
                                     </div>
                                 </div>
@@ -165,7 +165,7 @@
                                             <span style="color:red">*</span>
                                         </label>
                                         <div class="col-md-8">
-                                            <input class="form-control" type="text"  />
+                                            <input ng-model="Book.Kgpiece" class="form-control" type="text"  />
                                             <div class="form-control-focus"> </div>
                                             <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
                                         </div>
@@ -181,7 +181,7 @@
                                                 <span style="color:red">*</span>
                                             </label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text"  />
+                                                <input  class="form-control" type="text"  />
                                                 <div class="form-control-focus"> </div>
                                                 <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
                                             </div>
@@ -190,22 +190,7 @@
                                             First piece Rate : 10
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <label class="col-md-4 control-label">
-                                                Weight:
-                                                <span style="color:red">*</span>
-                                            </label>
-                                            <div class="col-md-8">
-                                                <input class="form-control" type="text"  />
-                                                <div class="form-control-focus"> </div>
-                                                <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            After first 4 piece rate : 5
-                                        </td>
-                                    </tr>
+                                   
                                     <tr>
                                         <td>
                                             <label class="col-md-4 control-label">
@@ -218,7 +203,10 @@
                                                 <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
                                             </div>
                                         </td>
-                                        <td></td>
+                                        <td>
+                                            After first 4 piece rate : 5
+                                        </td>
+                                      
                                     </tr>
                                     <tr>
                                         <td>
@@ -227,7 +215,7 @@
                                                 <span style="color:red">*</span>
                                             </label>
                                             <div class="col-md-8">
-                                                <input class="form-control" type="text"  />
+                                                <input disabled class="form-control" type="text"  />
                                                 <div class="form-control-focus"> </div>
                                                 <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
                                             </div>
@@ -321,23 +309,66 @@
                 $scope.IsEdit = 0;
                 $scope.Book = [];
                 $scope.Book.CNType = 'Document';
+                $scope.Book.RateType = 'Auto';
+            }
 
-               
+            $scope.DocType = function DocType()
+            {
+                if ($scope.Book.PartyInfoId == null)
+                {
+                    toastr.warning('Please select party first.');
+                    return;
+                }
+                if ($scope.Book.Ex1 == 'Big')
+                {
+
+                }
+                else if ($scope.Book.Ex1 == 'General')
+                {
+
+                }
+                else
+                {
+
+                }
+            }
+
+            $scope.SelectRateType=function SelectRateType(RT)
+            {
+                $scope.Book.RateType = RT;
+                if ($scope.Book.PartyInfoId == null) {
+                    toastr.warning('Please select party first.');
+                    return;
+                }
+
+                if($scope.Book.RateType=='Auto')
+                {
+
+                }
+                else if($scope.Book.RateType=='Flat')
+                {
+
+                }
+                else
+                {
+
+                }
+                
             }
 
             $scope.LoadPartyRate=function LoadPartyRate(PartyId,RateType) {
-                console.log(PartyId);
-                $http.get("/api/RateInfoes?PartyId="+PartyId+'&RateType='+RateType)
+              
+                $http.get("/RateInfoes/GetRateByPartyId?PartyId=" + PartyId + '&RateType=' + RateType)
                        .then(function successCallback(response) {
-                           console.log(response.data);
-                           $scope.Rate = response.data;
+                           $scope.PartyRate = response.data;
+                           console.log($scope.PartyRate);
                            toastr.options.positionClass = 'toast-bottom-right';
-                           if ($scope.Rate!=null) {
-                               toastr.success('Rate found.');
+                           if ($scope.PartyRate =='0') {
+                               //show rate on table
                            }
                            else
                            {
-                               toastr.success('Rate not found.');
+                               toastr.warning('Rate not found. Please add rate or go for flat entry.');
                            }
                        }, function errorCallback(response) {
                            //error msg
@@ -359,7 +390,6 @@
                        .then(function successCallback(response) {
                            $scope.DestinationList = response.data;
                            toastr.options.positionClass = 'toast-bottom-right';
-                           toastr.success($scope.DestinationList.length + ' destination found.');
                        }, function errorCallback(response) {
                            //error msg
                        });
@@ -369,7 +399,6 @@
                        .then(function successCallback(response) {
                            $scope.PartyList = response.data;
                            toastr.options.positionClass = 'toast-bottom-right';
-                           toastr.success($scope.PartyList.length + ' Party found.');
                        }, function errorCallback(response) {
                            //error msg
                        });
