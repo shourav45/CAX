@@ -68,7 +68,7 @@
                                     SPO Name:
                                 </label>
                                 <div class="col-md-8 row-fluid">
-                                    <select class="selectpicker" data-live-search="true" ng-options="spo.SPOInfoId as spo.Name for spo in listSPO" ng-model="Party.SPOId" class="form-control" id="SPOId" name="SPOId" required>
+                                    <select class="form-control" ng-options="spo.SPOInfoId as spo.Name for spo in listSPO" ng-model="Party.SPOId" id="SPOId" name="SPOId" required>
                                         <option value="" selected>Select</option>
                                     </select>
                                     <div class="form-control-focus"> </div>
@@ -158,6 +158,8 @@
                 console.log(prt);
                 $scope.IsEdit = 1;
                 $scope.Party = prt;
+                debugger;
+                $scope.Party.SPOId = prt.SPOId.value;
                 $('html').animate({ scrollTop: 0 }, 'slow');//IE, FF
                 $('body').animate({ scrollTop: 0 }, 'slow');//chrome, don't know if Safari works
                 $('.popupPeriod').fadeIn(1000, function () {
