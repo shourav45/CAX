@@ -44,8 +44,8 @@ namespace WebApi.ApiControllers
         [System.Web.Http.HttpGet]
         public ActionResult GetRateByPartyId(string PartyId, string RateType)
         {
-            RateInfo rateInfo = db.RateInfoset.Where(r=>r.PartyInfoId== PartyId).FirstOrDefault();
-            if (rateInfo == null)
+            var rateInfo = db.RateInfoset.Where(r=>r.PartyInfoId== PartyId && r.RateType.Equals(RateType, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            if (rateInfo.Count <= 0)
             {
                 return Json("0", JsonRequestBehavior.AllowGet);
             }

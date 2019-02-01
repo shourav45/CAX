@@ -23,7 +23,10 @@
                                     <span style="color:red">*</span>
                                 </label>
                                 <div class="col-md-8">
-                                    <input class="form-control" type="date" ng-model="Book.CNDate" />
+                                    <input type="date" id="start" name="trip-start"
+                                           value="2018-07-22"
+                                           min="2018-01-01" max="2018-12-31">
+                                    @*<input class="form-control" type="date" ng-model="Book.CNDate" />*@
                                 </div>
                             </div>
                             <div style="padding-bottom: 12%;">
@@ -32,9 +35,9 @@
                                     <span style="color:red">*</span>
                                 </label>
                                 <div class="col-md-8">
-                                    <select class="selectpicker" name="UserName" ng-model="Book.Destination" data-show-subtext="true" data-live-search="true" style="width: 149%;" required>
+                                    <select class="form-control"  name="UserName" ng-model="Book.Destination" data-show-subtext="true" data-live-search="true"  required>
                                         <option value="" data-subtext="">Select Destination</option>
-                                        <option ng-repeat="dest in DestinationList" value="{{dest.DestinationId}}" data-subtext="{{dest.Area}}">{{dest.District}}</option>
+                                        <option ng-repeat="dest in DestinationList" value="{{dest.DestinationId}}" data-subtext="{{dest.Area}}">{{dest.District}}->{{dest.Area}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -44,7 +47,7 @@
                                     <span style="color:red">*</span>
                                 </label>
                                 <div class="col-md-8">
-                                    <select ng-change="LoadPartyRate(Book.PartyInfoId,'Document')" class="selectpicker" name="UserName" ng-model="Book.PartyInfoId" data-show-subtext="false" data-live-search="true" style="width: 149%;" required>
+                                    <select  class="form-control" ng-change="LoadPartyRate(Book.PartyInfoId,'Document')"  name="UserName" ng-model="Book.PartyInfoId" data-show-subtext="false" data-live-search="true" required>
                                         <option value="" data-subtext="">Select Party</option>
                                         <option ng-repeat="party in PartyList" value="{{party.PartyInfoId}}" data-subtext="">{{party.Name}}</option>
                                     </select>
@@ -75,7 +78,7 @@
                                     <span style="color:red">*</span>
                                 </label>
                                 <div class="col-md-8">
-                                    <select class="selectpicker" name="UserName" ng-model="Book.ServiceType" data-show-subtext="false" data-live-search="false" style="width: 149%;" required>
+                                    <select  class="form-control" name="UserName" ng-model="Book.ServiceType" data-show-subtext="false" data-live-search="false"  required>
                                         <option value="" data-subtext="">Select Service Type</option>
                                         <option value="In Dhaka" data-subtext="">In Dhaka</option>
                                         <option value="Out Dhaka" data-subtext="">Out Dhaka</option>
@@ -131,7 +134,7 @@
                                     <span style="color:red">*</span>
                                 </label>
                                 <div class="col-md-8">
-                                    <select class="form-control" ng-change="DocType()" name="Ex1" ng-model="Book.Ex1">
+                                    <select class="form-control" ng-change="FillRateEntry()" name="Ex1" ng-model="Book.Size">
                                         <option value="" data-subtext="">Select Document Type</option>
                                         <option value="Big" data-subtext="">Big Document</option>
                                         <option value="General" data-subtext="">General Document</option>
@@ -149,78 +152,72 @@
                                     </label>
                                     <div class="col-md-8">
                                         <label class="radio-inline">
-                                            <input type="radio" name="optionsRadiosInline" ng-click="SelectRateType('Auto')"  id="optionsRadiosInline1" value="Auto" checked>Auto
+                                            <input type="radio" name="optionsRadiosInline" ng-model="Book.RateType" ng-click="FillRateEntry()"  id="optionsRadiosInline1" value="Auto">Auto
                                         </label>
                                         <label class="radio-inline">
-                                            <input type="radio" name="optionsRadiosInline" ng-click="SelectRateType('Flat')"  id="optionsRadiosInline2" value="Flat">Flat
+                                            <input type="radio" name="optionsRadiosInline" ng-model="Book.RateType" ng-click="FillRateEntry()"  id="optionsRadiosInline2" value="Flat">Flat
                                         </label>
                                     </div>
                                 </div>
 
                                 <table class="table-bordered">
                                     <tr>
-                                        <td>
+                                        <td style="padding-bottom: 8%;">
                                         <label class="col-md-4 control-label">
-                                            Piece:
+                                           Total Piece:
                                             <span style="color:red">*</span>
                                         </label>
                                         <div class="col-md-8">
-                                            <input ng-model="Book.Kgpiece" class="form-control" type="text"  />
+                                            <input class="text-center" ng-model="Book.KPNumber" class="form-control" type="text"  />
                                             <div class="form-control-focus"> </div>
                                             <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
                                         </div>
                                         </td>
-                                        <td>
-                                            First piece Number : 4
-                                        </td>
+                                       
                                     </tr>
                                     <tr>
-                                        <td>
-                                            <label class="col-md-4 control-label">
-                                                Rate:
-                                                <span style="color:red">*</span>
+                                        <td style="padding-bottom: 8%;">
+                                            <label class="control-label">
+                                                First   :
+                                                </label>
+                                                <input class="text-center" disabled id="FirstPieceNumber" ng-model="FirstPieceNumber" type="text" />
+                                            <label class="control-label">
+                                                Piece Rate :
                                             </label>
-                                            <div class="col-md-8">
-                                                <input  class="form-control" type="text"  />
-                                                <div class="form-control-focus"> </div>
-                                                <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
-                                            </div>
+                                             <input class="text-center" disabled id="FirstPieceRate" ng-model="FirstPieceRate" type="text" />
                                         </td>
-                                        <td>
-                                            First piece Rate : 10
-                                        </td>
+                                        
                                     </tr>
-                                   
                                     <tr>
-                                        <td>
-                                            <label class="col-md-4 control-label">
-                                                Service charge:
-                                                <span style="color:red">*</span>
+                                        <td style="padding-bottom: 8%;">
+                                            <label class="control-label">
+                                                After :
                                             </label>
-                                            <div class="col-md-8">
-                                                <input class="form-control" type="text"  />
-                                                <div class="form-control-focus"> </div>
-                                                <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
-                                            </div>
+                                            <input disabled ng-model="FirstPieceNumber" type="text" />
+                                            <label class="control-label">
+                                                Piece Rate :
+                                            </label>
+                                             <input class="text-center" disabled id="AfterFirstPieceRate" ng-model="AfterFirstPieceRate" type="text" />
                                         </td>
-                                        <td>
-                                            After first 4 piece rate : 5
-                                        </td>
-                                      
                                     </tr>
                                     <tr>
-                                        <td>
+                                        <td style="text-align: center;padding-bottom: 4%;">
+                                            <a class="btn btn-info" ng-click="DoCalculate()" href="">Calculate</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-bottom: 8%;">
                                             <label class="col-md-4 control-label">
                                                 Total:
                                                 <span style="color:red">*</span>
                                             </label>
                                             <div class="col-md-8">
-                                                <input disabled class="form-control" type="text"  />
+                                                <input class="text-center" disabled ng-model="Book.TotalAmount" class="form-control" type="text"  />
                                                 <div class="form-control-focus"> </div>
                                                 <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
                                             </div>
                                         </td>
-                                        <td></td>
+                                       
                                     </tr>
                                 </table>
 
@@ -294,6 +291,7 @@
     <!-- Page-Level Plugin Scripts-->
 
     <script>
+        
             CNApp.controller('ZonalClt', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
             init();
             function init() {
@@ -302,6 +300,7 @@
                 LoadCnInfo();
                 LoadDestinationList();
             }
+           
             function initialize() {
                 $scope.vm = {};
                 $scope.vm.dtOptions = DTOptionsBuilder.newOptions()
@@ -311,49 +310,54 @@
                 $scope.Book.CNType = 'Document';
                 $scope.Book.RateType = 'Auto';
             }
-
-            $scope.DocType = function DocType()
+            $scope.DoCalculate= function DoCalculate()
             {
-                if ($scope.Book.PartyInfoId == null)
-                {
-                    toastr.warning('Please select party first.');
+                var FirstAmount = $scope.FirstPieceNumber * $scope.FirstPieceRate;
+                var LeftPiece = $scope.Book.KPNumber - $scope.FirstPieceNumber;
+                var SecoundAmount = LeftPiece * $scope.AfterFirstPieceRate;
+                var TotalAmount = FirstAmount + SecoundAmount;
+                $scope.Book.TotalAmount = TotalAmount;
+                
+            }
+            $scope.FillRateEntry = function FillRateEntry()
+            {
+                var rateType = $("input[name=optionsRadiosInline]:checked").val();
+                if (rateType != null && rateType != undefined && rateType == "Flat") {
+                    // Enabling flat entry
+                    $scope.ToggleRateEntryFields(false);
+
+                    // Clear the Rate entry fields
+                    $scope.Book.KPNumber = "";
+                    $scope.FirstPieceNumber = "";
+                    $scope.FirstPieceRate = "";
+                    $scope.AfterFirstPieceRate = "";
+                    $scope.Book.TotalAmount = "";
                     return;
                 }
-                if ($scope.Book.Ex1 == 'Big')
-                {
 
-                }
-                else if ($scope.Book.Ex1 == 'General')
-                {
+                //Disabling rate entry fields
+                $scope.ToggleRateEntryFields(true);
 
-                }
-                else
-                {
+                // Setting auto rate
+                if ($scope.PartyRate != null && $scope.PartyRate != undefined) {
 
-                }
+                    var availablePartyRate = $.grep($scope.PartyRate, function (obj) {
+                        return obj.Ex1 == $scope.Book.Size;
+                    });
+                    if(availablePartyRate != null && availablePartyRate != undefined){
+                        $scope.Book.KPNumber = "";
+                        $scope.FirstPieceNumber = availablePartyRate[0].FirstKP;
+                        $scope.FirstPieceRate = availablePartyRate[0].FirstKPRate;
+                        $scope.AfterFirstPieceRate = availablePartyRate[0].AfterFirstKPRate;
+                        $scope.Book.TotalAmount = "";
+                    }
+                } 
             }
 
-            $scope.SelectRateType=function SelectRateType(RT)
-            {
-                $scope.Book.RateType = RT;
-                if ($scope.Book.PartyInfoId == null) {
-                    toastr.warning('Please select party first.');
-                    return;
-                }
-
-                if($scope.Book.RateType=='Auto')
-                {
-
-                }
-                else if($scope.Book.RateType=='Flat')
-                {
-
-                }
-                else
-                {
-
-                }
-                
+            $scope.ToggleRateEntryFields = function ToggleRateEntryFields(disabled) {
+                $("#FirstPieceNumber").prop("disabled", disabled);
+                $("#FirstPieceRate").prop("disabled", disabled);
+                $("#AfterFirstPieceRate").prop("disabled", disabled);
             }
 
             $scope.LoadPartyRate=function LoadPartyRate(PartyId,RateType) {
@@ -364,19 +368,18 @@
                            console.log($scope.PartyRate);
                            toastr.options.positionClass = 'toast-bottom-right';
                            if ($scope.PartyRate =='0') {
-                               //show rate on table
-                           }
-                           else
-                           {
                                toastr.warning('Rate not found. Please add rate or go for flat entry.');
+                               return;
                            }
+
+
+
                        }, function errorCallback(response) {
                            //error msg
                        });
             }
-
             function LoadCnInfo() {
-                $http.get("/api/CNInfoes")
+                $http.get("/CNInfoes/GetCNInfoset")
                        .then(function successCallback(response) {
                            $scope.CnInfoList = response.data;
                            toastr.options.positionClass = 'toast-bottom-right';
@@ -403,7 +406,6 @@
                            //error msg
                        });
             }
-
             $scope.Edit = function (dest) {
                 console.log(dest);
                 $scope.IsEdit = 1;
@@ -417,7 +419,6 @@
                 });
                 //$(window).scrollTop(0);
             }
-
             $scope.Delete = function (dest) {
                 console.log(dest);
                 swal({
@@ -444,8 +445,6 @@
                         }
                     });
             }
-
-          
             $scope.submitForm = function () {
                 if ($scope.caxform.$invalid)
                     return;
@@ -467,13 +466,21 @@
                 }
                 else //for new user
                 {
-                        console.log($scope.Destination);
-                    $http.post("/api/Destinations", $scope.Destination)
+                    console.log($scope.Book);
+                    $http.post("/CNInfoes/PostCNInfo?CNType=" + $scope.Book.CNType +
+                        "&PolySize=NULL&CNDate=" + $scope.Book.CNDate +
+                        "&ServiceType="+$scope.Book.ServiceType+"&PartyId="+$scope.Book.PartyId+
+                    "&Destination=" + $scope.Book.Destination + "&Follio=" + $scope.Book.Follio +
+                    "&ConsingeeName=" + $scope.Book.ConsingeeName + "&ConsigneeAddress=" + $scope.Book.ConsigneeAddress +
+                    "&ItemInfo=" + $scope.Book.ItemInfo + "&Kgpiece=" + $scope.Book.Kgpiece +
+                    "&RateType=" + $scope.Book.RateType + "&Weight=" + "0" + "&ServiceCharge=" + $scope.Book.ServiceCharge +
+                    "&VatStatus=0&VatPercent=0&VatAmount=0&AitStatus=0&AitPercent=0&AitAmount=0&TotalAmount=" + $scope.Book.TotalAmount +
+                    "&Size="+$scope.Book.Size+"&KPNumber="+$scope.Book.KPNumber+"&Ex1=")
                             .then(function successCallback(response) {
-                                $scope.Destination = [];
+                                $scope.Book = [];
                                 $("#frmresetbtn").trigger("click");
-                                LoadDestinationList();
-                                sweetAlert("Congratulations!!", "Destination added successfully", "success");
+                                LoadCnInfo();
+                                sweetAlert("Congratulations!!", "CN added successfully", "success");
                             }, function errorCallback(response) {
                                 //error msg
                             });

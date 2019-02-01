@@ -444,11 +444,10 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>DataSet1</DataSetName>
         <Top>0.14931in</Top>
         <Left>0.2175in</Left>
         <Height>0.65625in</Height>
-        <Width>7.90576in</Width>
+        <Width>7.90575in</Width>
         <Style>
           <Border>
             <Style>None</Style>

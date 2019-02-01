@@ -33,8 +33,9 @@ namespace WebApi.Models
         public string AitPercent { get; set; }
         public string AitAmount { get; set; }
         public string TotalAmount { get; set; }
+        public string Size { get; set; }
+        public string KPNumber { get; set; }
         public string Ex1 { get; set; }
-        public string Ex2 { get; set; }
         public string AddDate { get; set; }
         public string AddBy { get; set; }
         public string AddIp { get; set; }
