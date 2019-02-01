@@ -233,3 +233,12 @@ H:\Shourav\Work\WebApi\obj\Debug\WebApp.csproj.CoreCompileInputs.cache
 H:\Shourav\Work\WebApi\obj\Debug\WebApp.csproj.CopyComplete
 H:\Shourav\Work\WebApi\obj\Debug\WebApi.dll
 H:\Shourav\Work\WebApi\obj\Debug\WebApi.pdb
+H:\Shourav\Work\WebApi\obj\Debug\WebApp.csprojAssemblyReference.cache
+H:\Shourav\Work\WebApi\bin\Microsoft.ReportViewer.Common.dll
+H:\Shourav\Work\WebApi\bin\Microsoft.ReportViewer.ProcessingObjectModel.DLL
+H:\Shourav\Work\WebApi\bin\Microsoft.ReportViewer.WebForms.DLL
+H:\Shourav\Work\WebApi\bin\SqlServerTypes\x64\msvcr120.dll
+H:\Shourav\Work\WebApi\bin\SqlServerTypes\x64\SqlServerSpatial140.dll
+H:\Shourav\Work\WebApi\bin\SqlServerTypes\x86\msvcr120.dll
+H:\Shourav\Work\WebApi\bin\SqlServerTypes\x86\SqlServerSpatial140.dll
+H:\Shourav\Work\WebApi\bin\Microsoft.SqlServer.Types.dll
