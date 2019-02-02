@@ -19,7 +19,12 @@ namespace WebApi.ApiControllers
         // GET: api/UserInfoes
         public IQueryable<UserInfo> GetUserInfoset()
         {
-            return db.UserInfoset;
+            IQueryable <UserInfo> List= db.UserInfoset;
+            foreach(var item in List)
+            {
+                item.UserPassword = "*";
+            }
+            return List;
         }
 
         // GET: api/UserInfoes/5

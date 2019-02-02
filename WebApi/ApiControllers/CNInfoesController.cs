@@ -26,7 +26,10 @@ namespace WebApi.ApiControllers
             foreach (var cn in CNList)
             {
                 PartyInfo Party = db.PartyInfoset.Where(p => p.PartyInfoId.ToString() == cn.PartyId).FirstOrDefault();
-                cn.Ex1 = Party.Name;
+                if(Party!=null)
+                {
+                    cn.Ex1 = Party.Name;
+                }
             }
             return Json(CNList,JsonRequestBehavior.AllowGet);
         }
@@ -92,7 +95,8 @@ namespace WebApi.ApiControllers
             CNInfo cn = new CNInfo();
             cn.CNType = CNType;
             cn.PolySize = PolySize;
-            cn.CNDate = Convert.ToDateTime(CNDate);
+            cn.CNDate = DateTime.Now; 
+                //Convert.ToDateTime(CNDate);
             cn.ServiceType = ServiceType;
             cn.PartyId = PartyId;
             cn.Destination = Destination;

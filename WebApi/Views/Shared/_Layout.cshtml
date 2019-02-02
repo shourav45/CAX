@@ -7,7 +7,6 @@
     
     <link href="~/assets/plugins/bootstrap/bootstrap.css" rel="stylesheet" />
     <link href="~/assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
-    <link href="~/assets/css/bootstrap-select.min.css" rel="stylesheet" />
     <link href="~/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <link href="~/assets/css/style.css" rel="stylesheet" />
     <link href="~/assets/css/main-style.css" rel="stylesheet" />
@@ -16,6 +15,25 @@
     <link href="~/Scripts/sweetalert/sweetalert.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
     @*@Scripts.Render("~/bundles/angular");*@
+
+    <script src="~/assets/plugins/jquery-1.10.2.js"></script>
+    <script src="~/assets/plugins/bootstrap/bootstrap.min.js"></script>
+    <script src="~/assets/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="~/assets/scripts/siminta.js"></script>
+    <script src="~/Scripts/sweetalert/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/sweetalert/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <!-- Page-Level Plugin Scripts-->
+    <script src="~/assets/plugins/morris/raphael-2.1.0.min.js"></script>
+    <script src="~/assets/plugins/morris/morris.js"></script>
+    <script src="~/assets/scripts/dashboard-demo.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-datatables.min.js"></script>
+    <script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+    <script src="~/Scripts/app/CNApp.js"></script>
+
 </head>
 <body ng-app="MainApp">
 
@@ -34,25 +52,7 @@
         </footer>
     </div>
 
-    <script src="~/assets/plugins/jquery-1.10.2.js"></script>
-    <script src="~/assets/plugins/bootstrap/bootstrap.min.js"></script>
-    <script src="~/assets/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="~/assets/scripts/siminta.js"></script>
-    <script src="~/Scripts/sweetalert/modernizr-2.6.2.js"></script>
-    <script src="~/Scripts/sweetalert/sweetalert.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-    <!-- Page-Level Plugin Scripts-->
-    <script src="~/assets/plugins/morris/raphael-2.1.0.min.js"></script>
-    <script src="~/assets/plugins/morris/morris.js"></script>
-    <script src="~/assets/scripts/dashboard-demo.js"></script>
 
-    <script src="~/Scripts/angular.min.js"></script>
-    <script src="~/Scripts/angular-datatables.min.js"></script>
-    <script src="~/assets/plugins/dataTables/jquery.dataTables.js"></script>
-    <script src="~/assets/plugins/dataTables/dataTables.bootstrap.js"></script>
-    <script src="~/assets/scripts/bootstrap-select.min.js"></script>
-
-    <script src="~/Scripts/app/CNApp.js"></script>
 
     @RenderSection("scripts", required: false)
 </body>
