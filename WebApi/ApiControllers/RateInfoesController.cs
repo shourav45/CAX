@@ -10,7 +10,6 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Mvc;
 using WebApi.Models;
-using System.Web.Http;
 namespace WebApi.ApiControllers
 {
     public class RateInfoesController : Controller
