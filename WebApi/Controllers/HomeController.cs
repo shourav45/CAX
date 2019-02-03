@@ -86,6 +86,7 @@ namespace WebApi.Controllers
             myCookie.Values.Add("Mobile1", user.Mobile1.ToString());
             myCookie.Values.Add("UserPassword", user.UserPassword.ToString());
             myCookie.Values.Add("Designation", user.Designation.ToString());
+            myCookie.Values.Add("UserAccess", user.UserRole.ToString());
             //set cookie expiry date-time. Made it to last for next 12 hours.
             myCookie.Expires = DateTime.Now.AddHours(12);
             //Most important, write the cookie to client.
@@ -149,6 +150,48 @@ namespace WebApi.Controllers
             return RedirectToAction("Login", "Home");
         }
 
+        public ActionResult Parcel()
+        {
+            return View();
+        }
+        public ActionResult Poly()
+        {
+            return View();
+        }
+        public ActionResult OtherBooking()
+        {
+            return View();
+        }
+        public ActionResult DeliveryStatus()
+        {
+            return View();
+        }
+        public ActionResult CNPrint()
+        {
+            return View();
+        }
+        public ActionResult Accounts()
+        {
+            return View();
+        }
+
+        public ActionResult BillInfoReport()
+        {
+            return View();
+        }
+        public ActionResult CNInfoReport()
+        {
+            return View();
+        }
+        public ActionResult SalesReport()
+        {
+            return View();
+        }
+        public ActionResult PartyReport()
+        {
+            return View();
+        }
+       
         public ActionResult LogOut()
         {
             HttpCookie myCookie = new HttpCookie("UserCookie");

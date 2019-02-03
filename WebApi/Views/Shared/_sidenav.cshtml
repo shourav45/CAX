@@ -1,4 +1,7 @@
-﻿@{ HttpCookie myCookie = Request.Cookies["UserCookie"];}
+﻿@{ 
+    HttpCookie myCookie = Request.Cookies["UserCookie"];
+    string UserAccess = myCookie.Values["UserAccess"].ToString();
+ }
 <nav class="navbar-default navbar-static-side" role="navigation">
     <!-- sidebar-collapse -->
     <div class="sidebar-collapse">
@@ -17,107 +20,119 @@
                         </div>
                     </div>
                 </div>
-                <!--end user image section-->
             </li>
-            @*<li class="sidebar-search">
-            <!-- search section-->
-            <div class="input-group custom-search-form">
-                <input type="text" class="form-control" placeholder="Search...">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </span>
-            </div>
-            <!--end search section-->
-        </li>*@
             <li>
                 <a href="@Url.Action("Index","Home")"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
-
-            <li>
-                <a href="@Url.Action("AddUser","Home")"><i class="fa fa-bar-chart-o fa-fw"></i> User</a>
-
-            </li>
+            @if (UserAccess.Contains("UserMenu"))
+            {
+                <li>
+                    <a href="@Url.Action("AddUser","Home")"><i class="fa fa-bar-chart-o fa-fw"></i> User</a>
+                </li>
+            }
+           
             <li>
                 <a href="@Url.Action("AddSPO","Home")"><i class="fa fa-bar-chart-o fa-fw"></i> SPO Menu</a>
-
             </li>
-
+    
+            @if (UserAccess.Contains("AccountsMenu"))
+            {
+                <li>
+                    <a href="@Url.Action("Accounts","Home")"><i class="fa fa-flask fa-fw"></i> Accounts<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level selected text-center">
+                        <li>
+                            <a href="#">A1</a>
+                        </li>
+                        <li>
+                            <a href="#">A2</a>
+                        </li>
+                    </ul>
+                </li>
+            }
+            @if (UserAccess.Contains("BookingMenu"))
+            {
+                <li>
+                    <a href="#"><i class="fa fa-files-o fa-fw"></i> Booking<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level selected text-center">
+                        <li>
+                            <a href="@Url.Action("Document","Home")">Documents</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Parcel","Home")">Parcel</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Poly","Home")">Poly</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("OtherBooking","Home")">Others</a>
+                        </li>
+                    </ul>
+                    <!-- second-level-items -->
+                </li>
+            }
+           @if (UserAccess.Contains("DeliveryMenu"))
+            {
             <li>
-                <a href="timeline.html"><i class="fa fa-flask fa-fw"></i> Accounts<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level selected text-center">
-                    <li>
-                        <a href="#">A1</a>
-                    </li>
-                    <li>
-                        <a href="#">A2</a>
-                    </li>
-                </ul>
+                <a href="@Url.Action("DeliveryStatus","Home")"><i class="fa fa-edit fa-fw"></i> Delivery Status</a>
             </li>
-
-            <li>
-                <a href="#"><i class="fa fa-files-o fa-fw"></i> Booking<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level selected text-center">
-                    <li>
-                        <a href="@Url.Action("Document","Home")">Documents</a>
-                    </li>
-                    <li>
-                        <a href="#">Parcel</a>
-                    </li>
-                    <li>
-                        <a href="#">Poly</a>
-                    </li>
-                    <li>
-                        <a href="#">Others</a>
-                    </li>
-                </ul>
-                <!-- second-level-items -->
-            </li>
-            <li>
-                <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Delivery Status</a>
-            </li>
-            <li>
-                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reports<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level selected text-center">
-                    <li>
-                        <a href="#">1</a>
-                    </li>
-                    <li>
-                        <a href="#">2</a>
-                    </li>
-                    <li>
-                        <a href="#">3</a>
-                    </li>
-                    <li>
-                        <a href="#">4</a>
-                    </li>
-                </ul>
-                <!-- second-level-items -->
-            </li>
+           }
+            @if (UserAccess.Contains("Report"))
+            {
+                <li>
+                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reports<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level selected text-center">
+                        <li>
+                            <a href="@Url.Action("BillInfoReport","Home")">Bill Info</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("CNInfoReport","Home")">CN Info</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("SalesReport","Home")">Sales Report</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("PartyReport","Home")">Party Report</a>
+                        </li>
+                    </ul>
+                </li>
+            }
+          @if (UserAccess.Contains("Zonal"))
+            {
             <li>
                 <a href="@Url.Action("Zonal","Home")"><i class="fa fa-table fa-fw"></i> Zonal</a>
             </li>
+          }
+           @if (UserAccess.Contains("Rate"))
+            {
             <li>
                 <a href="@Url.Action("Rate","Home")"><i class="fa fa-edit fa-fw"></i> Rate</a>
             </li>
+           }
+           @if (UserAccess.Contains("Rate"))
+            {
             <li>
-                <a href="#"><i class="fa fa-sitemap fa-fw"></i> Party<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level selected text-center">
-                    <li>
-                        <a href="@Url.Action("AddParty","Home")">Party Entry</a>
-                    </li>
-                    <li>
-                        <a href="#">Partry List</a>
-                    </li>
-
-                </ul>
-
+                <a href="@Url.Action("Rate","Home")"><i class="fa fa-edit fa-fw"></i> Rate</a>
             </li>
+           }
+
+                <li>
+                    <a href="@Url.Action("Rate","Home")"><i class="fa fa-edit fa-fw"></i> Rate</a>
+                </li>
+          @if (UserAccess.Contains("PartyMenu"))
+            {
             <li>
-                <a href="#"><i class="fa fa-wrench fa-fw"></i> CN Print</span></a>
-                <!-- second-level-items -->
+                <a href="@Url.Action("AddParty","Home")"><i class="fa fa-sitemap fa-fw"></i> Party</a>
+                
             </li>
+          }
+            
+            @if (UserAccess.Contains("CNPrintMenu"))
+            {
+                <li>
+                    <a href="@Url.Action("CNPrint","Home")"><i class="fa fa-wrench fa-fw"></i> CN Print</a>
+                </li>
+            }
+            
         </ul>
         <!-- end side-menu -->
     </div>

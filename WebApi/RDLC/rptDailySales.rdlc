@@ -188,6 +188,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -289,7 +290,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -452,7 +452,7 @@
       <rd:DataSourceID>4c8a13f5-b10c-450f-b862-2a83fe866d3b</rd:DataSourceID>
     </DataSource>
   </DataSources>
-  <DataSets>
+<DataSets>
     <DataSet Name="DataSet1">
       <Query>
         <DataSourceName>caxbdnco_CAXDBDataSet</DataSourceName>
