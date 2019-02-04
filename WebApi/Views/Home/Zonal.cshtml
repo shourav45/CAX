@@ -109,13 +109,13 @@
                 $scope.vm.dtOptions = DTOptionsBuilder.newOptions()
                   .withOption('order', [0, 'asc']);
                 $scope.IsEdit = 0;
+                $scope.Destination = [];
+                $scope.dest = [];
             }
 
             $scope.Edit = function (dest) {
                 console.log(dest);
-                $scope.IsEdit = 1;
-                console.log($scope.Destination);
-                
+                $scope.IsEdit = 1;                
                 $scope.Destination = dest;
                 $('html').animate({ scrollTop: 0 }, 'slow');//IE, FF
                 $('body').animate({ scrollTop: 0 }, 'slow');//chrome, don't know if Safari works
@@ -172,7 +172,7 @@
                     console.log($scope.Destination);
                     $http.put("/api/Destinations/" + $scope.Destination.DestinationId, $scope.Destination)
                             .then(function successCallback(response) {
-                                $scope.dest = [];
+                                $scope.Destination = [];
                                 $("#frmresetbtn").trigger("click");
                                 LoadDestinationList();
                                 $scope.IsEdit = 0;
@@ -185,7 +185,7 @@
                 else //for new user
                 {
                         console.log($scope.Destination);
-                    $http.post("/api/Destinations", $scope.Destination)
+                    $http.post("/api/Destinations?DistrictName=" + $scope.Destination.District + "&Area=" + $scope.Destination.Area)
                             .then(function successCallback(response) {
                                 $scope.Destination = [];
                                 $("#frmresetbtn").trigger("click");

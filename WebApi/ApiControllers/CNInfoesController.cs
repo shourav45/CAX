@@ -87,46 +87,52 @@ namespace WebApi.ApiControllers
         }
 
         [System.Web.Http.HttpPost]
-        public ActionResult PostCNInfo(string CNType, string PolySize, string CNDate, string ServiceType, string PartyId, string Destination,
-            string Follio, string ConsingeeName, string ConsigneeAddress, string ItemInfo, string Kgpiece, string RateType, string Weight,
-            string ServiceCharge, string VatStatus, string VatPercent, string VatAmount, string AitStatus, string AitPercent,
-            string AitAmount, string TotalAmount, string Size, string KPNumber, string Ex1)
+        public ActionResult PostCNInfo(CNInfo cn)
         {
-            CNInfo cn = new CNInfo();
-            cn.CNType = CNType;
-            cn.PolySize = PolySize;
-            cn.CNDate = DateTime.Now; 
-                //Convert.ToDateTime(CNDate);
-            cn.ServiceType = ServiceType;
-            cn.PartyId = PartyId;
-            cn.Destination = Destination;
-            cn.Follio = Follio;
-            cn.ConsingeeName = ConsingeeName;
-            cn.ConsigneeAddress = ConsigneeAddress;
-            cn.ItemInfo = ItemInfo;
-            cn.Kgpiece = Kgpiece;
-            cn.RateType = RateType;
-            cn.Weight = Weight;
-            cn.ServiceCharge = ServiceCharge;
-            cn.VatStatus = VatStatus;
-            cn.VatPercent = VatPercent;
-            cn.VatAmount = VatAmount;
-            cn.AitStatus = AitStatus;
-            cn.AitPercent = AitPercent;
-            cn.AitAmount = AitAmount;
-            cn.TotalAmount = TotalAmount;
-            cn.Size = Size;
-            cn.KPNumber = KPNumber;
-            cn.Ex1=Ex1;
-            if (!ModelState.IsValid)
+            //CNInfo cn = new CNInfo();
+            //cn.CNType = CNType;
+            //cn.PolySize = PolySize;
+            //cn.CNDate = DateTime.Now; 
+            //    //Convert.ToDateTime(CNDate);
+            //cn.ServiceType = ServiceType;
+            //cn.PartyId = PartyId;
+            //cn.Destination = Destination;
+            //cn.Follio = Follio;
+            //cn.ConsingeeName = ConsingeeName;
+            //cn.ConsigneeAddress = ConsigneeAddress;
+            //cn.ItemInfo = ItemInfo;
+            //cn.Kgpiece = Kgpiece;
+            //cn.RateType = RateType;
+            //cn.Weight = Weight;
+            //cn.ServiceCharge = ServiceCharge;
+            //cn.VatStatus = VatStatus;
+            //cn.VatPercent = VatPercent;
+            //cn.VatAmount = VatAmount;
+            //cn.AitStatus = AitStatus;
+            //cn.AitPercent = AitPercent;
+            //cn.AitAmount = AitAmount;
+            //cn.TotalAmount = TotalAmount;
+            //cn.Size = Size;
+            //cn.KPNumber = KPNumber;
+            //cn.Ex1=Ex1;
+            if (ModelState.IsValid==false)
             {
-                return Json("Model is not valid", JsonRequestBehavior.AllowGet);
+                var errors = ModelState.Select(x => x.Value.Errors).Where(y => y.Count > 0).ToList();
+                string msg = "";
+                foreach (var item in errors)
+                {
+                    foreach (var ermsg in item)
+                    {
+                        msg = msg + ermsg.ErrorMessage;
+                    }
+                    //msg=item.
+                }
+                return Json(msg, JsonRequestBehavior.AllowGet);
             }
 
             db.CNInfoset.Add(cn);
-            db.SaveChanges();
-
-            return Json(cn, JsonRequestBehavior.AllowGet);
+           var result= db.SaveChanges();
+            return Json("1", JsonRequestBehavior.AllowGet);
         }
 
         // DELETE: api/CNInfoes/5

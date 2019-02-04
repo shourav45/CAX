@@ -10,7 +10,9 @@ namespace WebApi.Models
     {
         [Key]
         public int DestinationId { get; set; }
+        [Required]
         public string District { get; set; }
+
         public string Area { get; set; }
         public string AddBy { get; set; }
         public string AddDate { get; set; }

@@ -72,8 +72,12 @@ namespace WebApi.ApiControllers
 
         // POST: api/Destinations
         [ResponseType(typeof(Destination))]
-        public IHttpActionResult PostDestination(Destination destination)
+        public IHttpActionResult PostDestination(string DistrictName,string Area)
         {
+            Destination destination = new Destination();
+            destination.District = DistrictName;
+            destination.Area = Area;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

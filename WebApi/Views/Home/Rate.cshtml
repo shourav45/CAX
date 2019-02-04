@@ -21,7 +21,7 @@
                                 </label>
                                 <div class="col-md-8">
                                     <div class="row-fluid">
-                                        <select  data-live-search="true" ng-options="party.PartyInfoId as party.Name for party in PartyList" ng-model="NewRate.PartyInfoId" id="PartyInfoId" name="PartyInfoId" required>
+                                        <select  data-live-search="true" class="form-control" ng-options="party.PartyInfoId as party.Name for party in PartyList" ng-model="NewRate.PartyInfoId" id="PartyInfoId" name="PartyInfoId" required>
                                             <option value="" selected>Select Party</option>
                                         </select>
                                         <div class="form-control-focus"> </div>
@@ -37,7 +37,7 @@
                                 </label>
                                 <div class="col-md-8">
                                     <div class="row-fluid">
-                                        <select class="selectpicker" name="RateType" ng-model="NewRate.RateType" id="RateType" data-show-subtext="false" data-live-search="false" style="z-index: 01;width: 100%;" required>
+                                        <select class="form-control" name="RateType" ng-model="NewRate.RateType" id="RateType" data-show-subtext="false" data-live-search="false" style="z-index: 01;width: 100%;" required>
                                             <option value="" data-subtext="">Select Rate Type</option>
                                             <option value="Document" data-subtext="">Document</option>
                                             <option value="Parcel" data-subtext="">Parcel</option>

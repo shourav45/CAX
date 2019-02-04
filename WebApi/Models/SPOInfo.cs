@@ -10,8 +10,10 @@ namespace WebApi.Models
     {
         [Key]
         public int SPOInfoId { get; set; }
+        [Required]
         public string Name { get; set; }
         public string Designation { get; set; }
+        [Required]
         public string Mobile1 { get; set; }
         public string Mobile2 { get; set; }
         public string Address { get; set; }

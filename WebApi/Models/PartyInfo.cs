@@ -10,9 +10,11 @@ namespace WebApi.Models
     {
         [Key]
         public int PartyInfoId { get; set; }
+        [Required]
         public string Name { get; set; }
         public string Address { get; set; }
         public string Telephone { get; set; }
+        [Required]
         public string Mobile { get; set; }
         public string Email { get; set; }
         public string SPOId { get; set; }

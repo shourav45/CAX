@@ -10,7 +10,6 @@ namespace WebApi.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "WebApi.Models.dbcontext";
         }
 
         protected override void Seed(WebApi.Models.dbcontext context)

@@ -12,9 +12,13 @@ namespace WebApi.Models
         [Key]
         public int RateInfoId { get; set; }
         public string PartyInfoId { get; set; }
+        [Required]
         public string RateType { get; set; }
+        [Required]
         public string FirstKP { get; set; }//for poly large
+        [Required]
         public string FirstKPRate { get; set; }//for poly medium
+        [Required]
         public string AfterFirstKPRate { get; set; }//for poly small
         public string AddBy { get; set; }
         public string AddDate { get; set; }
