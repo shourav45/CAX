@@ -1,321 +1,231 @@
 ﻿
 @{
-    ViewBag.Title = "User";
+    ViewBag.Title = "AddParty";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 
-<div class="row" ng-controller="ZonalClt">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Document Booking
+<div class="row" style="background-color:dimgrey;height:750px;margin-top: 8%;" ng-controller="FrmlClt">
+    <form ng-submit="submitForm()" name="caxform" method="post" novalidate style="height: 78%;width: 94%;background-color: white;margin-top: 2%;margin-left: 3%;">
+        <div class="col-md-12" style="background-color: blue;height: 9%;border: groove;width: 99%;margin-left: 6px;margin-top: 5px;">
+            <p style="color:white;text-align: center;font-size: xx-large;font-weight: bold;">Booking CN Documents</p>
+        </div>
+        <div class="row" style="margin-left: 1%;">
+            <div class="col-md-6">
+                <table class="table table-borderless" style="border-right: groove;">
+                    <tr>
+                        <td style="width: 29%;vertical-align: middle;">
+                            <label> Date :</label>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" name="CNDate" ng-model="Book.CNDate" id="datepicker" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle;">
+                            <label>Destination :</label>
+                        </td>
+                        <td>
+                            <select class="form-control" name="UserName" ng-model="Book.Destination" data-show-subtext="true" data-live-search="true" required>
+                                <option value="" data-subtext="">Select Destination</option>
+                                <option ng-repeat="dest in DestinationList" value="{{dest.DestinationId}}" data-subtext="{{dest.Area}}">{{dest.District}}->{{dest.Area}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle;">
+                            <label>Party :</label>
+                        </td>
+                        <td>
+                            <select id="PartyName" class="form-control" ng-change="LoadPartyRate(Book.PartyId,'Document')" name="PartyName" ng-model="Book.PartyId" data-show-subtext="false" data-live-search="true" required>
+                                <option value="" data-subtext="">Select Party</option>
+                                <option ng-repeat="party in PartyList" value="{{party.PartyInfoId}}" data-subtext="">{{party.Name}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle;">
+                            <label>Party Code :</label>
+                        </td>
+                        <td>
+                            <input class="form-control" name="PartyInfoId" type="text" ng-model="Book.PartyId" required />
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle;">
+                            <label>CN Type :</label>
+                        </td>
+                        <td>
+                            <input class="form-control" name="CNType" type="text" disabled ng-model="Book.CNType" required />
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle;">
+                            <label>Service Type :</label>
+                        </td>
+                        <td>
+                            <select class="form-control" name="ServiceType" ng-model="Book.ServiceType" data-show-subtext="false" data-live-search="false" required>
+                                <option value="" data-subtext="">Select Service Type</option>
+                                <option value="In Dhaka" data-subtext="">In Dhaka</option>
+                                <option value="Out Dhaka" data-subtext="">Out Dhaka</option>
+                            </select>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle;">
+                            <label> Fo/L No : </label>
+                        </td>
+                        <td>
+                            <input class="form-control" name="Follio" type="text" ng-model="Book.Follio" required />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle;">
+                            <label>Consignee Name : </label>
+                        </td>
+                        <td>
+                            <input class="form-control" name="ConsingeeName" type="text" ng-model="Book.ConsingeeName" required />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle;">
+                            <label>Consignee Address :</label>
+                        </td>
+                        <td>
+                            <textarea class="form-control" name="ConsigneeAddress" ng-model="Book.ConsigneeAddress" required></textarea>
+                        </td>
+                    </tr>
+
+                </table>
             </div>
-            <div class="panel-body">
-                <div class="row">
-                    <form name="caxform" ng-submit="submitForm()" method="post" novalidate>
-                        <input type="text" style="display:none" ng-model="IsEdit" readonly />
-                       
-                        <div style="width: 45%; float:left">
-                            
-                            <div style="padding-bottom: 12%;" ng-class="{ 'has-error' : submitted && caxform.CNDate.$invalid}">
-                                <label class="col-md-4 control-label">
-                                    Date :
-                                    <span style="color:red">*</span>
+            <div class="col-md-6">
+                <table class="table table-borderless">
+                    <tr>
+                        <td style="width: 20%;vertical-align: middle;">
+                            <label> Item Info :</label>
+                        </td>
+                        <td>
+                            <textarea class="form-control" name="ItemInfo" ng-model="Book.ItemInfo" required></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle;">
+                            <label>Document Type:</label>
+                        </td>
+                        <td>
+                            <select class="form-control" ng-change="FillRateEntry()" name="Ex1" ng-model="Book.Size" required>
+                                <option value="" data-subtext="">Select Document Type</option>
+                                <option value="Big" data-subtext="">Big Document</option>
+                                <option value="General" data-subtext="">General Document</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle;">
+                            <label>Rate Type :</label>
+                        </td>
+                        <td>
+                            <div class="col-md-8">
+                                <label class="radio-inline">
+                                    <input type="radio" name="optionsRadiosInline" ng-model="Book.RateType" ng-click="FillRateEntry()" id="optionsRadiosInline1" value="Auto" required />Auto
                                 </label>
-                                <div class="col-md-8">
-                                    <input class="form-control" type="text" name="CNDate" ng-model="Book.CNDate" id="datepicker" required>
-                                    <span ng-show="submitted &&  caxform.CNDate.$error.required" class="text-danger">Date is Required</span>
-                                </div>
-                            </div>
-                            <div style="padding-bottom: 12%;" ng-class="{ 'has-error' : submitted && caxform.UserName.$invalid}">
-                                <label class="col-md-4 control-label">
-                                    Destination :
-                                    <span style="color:red">*</span>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optionsRadiosInline" ng-model="Book.RateType" ng-click="FillRateEntry()" id="optionsRadiosInline2" value="Flat" required />Flat
                                 </label>
-                                <div class="col-md-8">
-                                    <select class="form-control"  name="UserName" ng-model="Book.Destination" data-show-subtext="true" data-live-search="true"  required>
-                                        <option value="" data-subtext="">Select Destination</option>
-                                        <option ng-repeat="dest in DestinationList" value="{{dest.DestinationId}}" data-subtext="{{dest.Area}}">{{dest.District}}->{{dest.Area}}</option>
-                                    </select>
-                                    <span ng-show="submitted &&  caxform.UserName.$error.required" class="text-danger">Destination is Required</span>
-
-                                </div>
+                                <span ng-show="submitted &&  caxform.optionsRadiosInline.$error.required" class="text-danger">Rate type is Required</span>
                             </div>
-                            <div style="padding-bottom: 12%;" ng-class="{ 'has-error' : submitted && caxform.PartyName.$invalid}">
-                                <label class="col-md-4 control-label">
-                                    Party Name :
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-8">
-                                    <select  class="form-control" ng-change="LoadPartyRate(Book.PartyInfoId,'Document')"  name="PartyName" ng-model="Book.PartyInfoId" data-show-subtext="false" data-live-search="true" required>
-                                        <option value="" data-subtext="">Select Party</option>
-                                        <option ng-repeat="party in PartyList" value="{{party.PartyInfoId}}" data-subtext="">{{party.Name}}</option>
-                                    </select>
-                                    <span ng-show="submitted &&  caxform.PartyName.$error.required" class="text-danger">Party is Required</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle;">
+                            <label>Party Code :</label>
+                        </td>
+                        <td>
+                            <input class="form-control" name="PartyInfoId" type="text" ng-model="Book.PartyId" required />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle;">
+                            <label>Total Piece:</label>
+                        </td>
+                        <td>
+                            <input class="text-center form-control" name="KPNumber" ng-model="Book.KPNumber" type="text" required />
+                        </td>
+                    </tr>
+                </table>
+                <table class="table-borderless" style="margin-left: 7%;">
+                    <tr>
+                        <td style="padding-bottom: 3%;" ng-class="{ 'has-error' : submitted && caxform.FirstPieceNumber.$invalid}">
+                            <label class="control-label">
+                                First   :
+                            </label>
+                            <input class="text-center" name="FirstPieceNumber" disabled id="FirstPieceNumber" ng-model="FirstPieceNumber" type="text" required />
+                            <span ng-show="submitted &&  caxform.FirstPieceNumber.$error.required" class="text-danger">Required</span>
 
-                                </div>
+                            <label class="control-label">
+                                Piece Rate :
+                            </label>
+                            <input class="text-center" disabled id="FirstPieceRate" name="FirstPieceRate" ng-model="FirstPieceRate" type="text" required />
+                            <span ng-show="submitted &&  caxform.FirstPieceRate.$error.required" class="text-danger">Required</span>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom: 3%;" ng-class="{ 'has-error' : submitted && caxform.AfterFirstPieceRate.$invalid}">
+                            <label class="control-label">
+                                After :
+                            </label>
+                            <input class="text-center" disabled ng-model="FirstPieceNumber" type="text" required />
+                            <label class="control-label">
+                                Piece Rate :
+                            </label>
+                            <input class="text-center" disabled id="AfterFirstPieceRate" name="AfterFirstPieceRate" ng-model="AfterFirstPieceRate" type="text" required />
+                            <span ng-show="submitted &&  caxform.AfterFirstPieceRate.$error.required" class="text-danger">Required</span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;padding-bottom: 4%;">
+                            <a class="btn btn-info" ng-click="DoCalculate()" href="">Calculate</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-right: 22%;" ng-class="{ 'has-error' : submitted && caxform.TotalAmount.$invalid}">
+                            <label class="col-md-4 control-label">
+                                Total:
+                                <span style="color:red">*</span>
+                            </label>
+                            <div class="col-md-8">
+                                <input class="text-center form-control" name="TotalAmount" disabled ng-model="Book.TotalAmount" type="text" required />
+                                <div class="form-control-focus"> </div>
+                                <span ng-show="submitted &&  caxform.TotalAmount.$error.required" class="text-danger">Required</span>
                             </div>
-                            <div style="padding-bottom: 12%;" ng-class="{ 'has-error' : submitted && caxform.PartyInfoId.$invalid}">
-                                <label class="col-md-4 control-label">
-                                    Party Code :
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-8">
-                                    <input class="form-control" name="PartyInfoId" type="text" disabled ng-model="Book.PartyId" required/>
-                                    <span ng-show="submitted &&  caxform.PartyInfoId.$error.required" class="text-danger">Party code is Required</span>
+                        </td>
 
-                                </div>
-                            </div>
-                            <div style="padding-bottom: 12%;" ng-class="{ 'has-error' : submitted && caxform.CNType.$invalid}">
-                                <label class="col-md-4 control-label">
-                                    CN Type :
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-8">
-                                    <input class="form-control" name="CNType" type="text" disabled ng-model="Book.CNType" required/>
-                                    <span ng-show="submitted &&  caxform.CNType.$error.required" class="text-danger">CN type is Required</span>
-
-                                </div>
-                            </div>
-                            <div style="padding-bottom: 12%;" ng-class="{ 'has-error' : submitted && caxform.ServiceType.$invalid}">
-                                <label class="col-md-4 control-label">
-                                    Service Type :
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-8">
-                                    <select  class="form-control" name="ServiceType" ng-model="Book.ServiceType" data-show-subtext="false" data-live-search="false"  required>
-                                        <option value="" data-subtext="">Select Service Type</option>
-                                        <option value="In Dhaka" data-subtext="">In Dhaka</option>
-                                        <option value="Out Dhaka" data-subtext="">Out Dhaka</option>
-                                    </select>
-                                    <span ng-show="submitted &&  caxform.ServiceType.$error.required" class="text-danger">Service type is Required</span>
-
-                                </div>
-                            </div>
-                            <div style="padding-bottom: 12%;" ng-class="{ 'has-error' : submitted && caxform.Follio.$invalid}">
-                                <label class="col-md-4 control-label">
-                                    Fo/L No :
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-8">
-                                    <input class="form-control" name="Follio" type="text" ng-model="Book.Follio" required/>
-                                    <span ng-show="submitted &&  caxform.Follio.$error.required" class="text-danger">Fo/L is Required</span>
-
-                                </div>
-                            </div>
-                            <div style="padding-bottom: 12%;" ng-class="{ 'has-error' : submitted && caxform.ConsingeeName.$invalid}">
-                                <label class="col-md-4 control-label">
-                                    Consignee Name :
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-8">
-                                    <input class="form-control" name="ConsingeeName" type="text" ng-model="Book.ConsingeeName" required/>
-                                    <span ng-show="submitted &&  caxform.ConsingeeName.$error.required" class="text-danger">Consignee name is Required</span>
-
-                                </div>
-                            </div>
-                            <div style="padding-bottom: 12%;" ng-class="{ 'has-error' : submitted && caxform.ConsigneeAddress.$invalid}">
-                                <label class="col-md-4 control-label">
-                                    Consignee Address :
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-8">
-                                   <textarea class="form-control" name="ConsigneeAddress" ng-model="Book.ConsigneeAddress" required></textarea>
-                                    <span ng-show="submitted &&  caxform.ConsigneeAddress.$error.required" class="text-danger">Consignee Address is Required</span>
-
-                                </div>
-                            </div>
-
-                        </div>                        
-
-                        <div style="width: 55%; float:right">
-                            
-                            <div style="padding-bottom: 12%;" ng-class="{ 'has-error' : submitted && caxform.ItemInfo.$invalid}">
-                                <label class="col-md-4 control-label">
-                                    Item Info :
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-8">
-                                    <textarea class="form-control" name="ItemInfo" ng-model="Book.ItemInfo" required></textarea>
-                                    <span ng-show="submitted &&  caxform.ItemInfo.$error.required" class="text-danger">Item Info is Required</span>
-                                </div>
-                            </div>
-                            
-                            <div style="padding-bottom: 12%;" ng-class="{ 'has-error' : submitted && caxform.Ex1.$invalid}">
-                                <label class="col-md-4 control-label">
-                                    Document Type:
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-8">
-                                    <select class="form-control" ng-change="FillRateEntry()" name="Ex1" ng-model="Book.Size" required>
-                                        <option value="" data-subtext="">Select Document Type</option>
-                                        <option value="Big" data-subtext="">Big Document</option>
-                                        <option value="General" data-subtext="">General Document</option>
-                                    </select>
-                                    <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Size is Required</span>
-                                </div>
-                                </div>
-                               
-
-                                <div style="padding-bottom: 12%;" ng-class="{ 'has-error' : submitted && caxform.optionsRadiosInline.$invalid}">
-                                    <label class="col-md-4 control-label">
-                                        Rate Type :
-                                        <span style="color:red">*</span>
-                                    </label>
-                                    <div class="col-md-8">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="optionsRadiosInline" ng-model="Book.RateType" ng-click="FillRateEntry()"  id="optionsRadiosInline1" value="Auto" required/>Auto
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="optionsRadiosInline" ng-model="Book.RateType" ng-click="FillRateEntry()"  id="optionsRadiosInline2" value="Flat" required/>Flat
-                                        </label>
-                                        <span ng-show="submitted &&  caxform.optionsRadiosInline.$error.required" class="text-danger">Rate type is Required</span>
-
-                                    </div>
-                                </div>
-
-                                <table class="table-bordered">
-                                    <tr>
-                                        <td style="padding-bottom: 8%;">
-                                        <label class="col-md-4 control-label">
-                                           Total Piece:
-                                            <span style="color:red">*</span>
-                                        </label>
-                                        <div class="col-md-8" ng-class="{ 'has-error' : submitted && caxform.KPNumber.$invalid}">
-                                            <input class="text-center form-control" name="KPNumber" ng-model="Book.KPNumber" type="text" required />
-                                            <div class="form-control-focus"> </div>
-                                            <span ng-show="submitted &&  caxform.KPNumber.$error.required" class="text-danger">Total Piece is Required</span>
-                                        </div>
-                                        </td>
-                                       
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-bottom: 8%;" ng-class="{ 'has-error' : submitted && caxform.FirstPieceNumber.$invalid}">
-                                            <label class="control-label">
-                                                First   :
-                                                </label>
-                                                <input class="text-center" name="FirstPieceNumber" disabled id="FirstPieceNumber" ng-model="FirstPieceNumber" type="text" required/>
-                                            <span ng-show="submitted &&  caxform.FirstPieceNumber.$error.required" class="text-danger">Required</span>
-
-                                            <label class="control-label">
-                                                Piece Rate :
-                                            </label>
-                                             <input class="text-center" disabled id="FirstPieceRate" name="FirstPieceRate" ng-model="FirstPieceRate" type="text" required/>
-                                            <span ng-show="submitted &&  caxform.FirstPieceRate.$error.required" class="text-danger">Required</span>
-                                        </td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-bottom: 8%;" ng-class="{ 'has-error' : submitted && caxform.AfterFirstPieceRate.$invalid}">
-                                            <label class="control-label">
-                                                After :
-                                            </label>
-                                            <input class="text-center" disabled ng-model="FirstPieceNumber" type="text" required/>
-                                            <label class="control-label">
-                                                Piece Rate :
-                                            </label>
-                                             <input class="text-center" disabled id="AfterFirstPieceRate" name="AfterFirstPieceRate" ng-model="AfterFirstPieceRate" type="text" required/>
-                                            <span ng-show="submitted &&  caxform.AfterFirstPieceRate.$error.required" class="text-danger">Required</span>
-
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: center;padding-bottom: 4%;">
-                                            <a class="btn btn-info" ng-click="DoCalculate()" href="">Calculate</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-bottom: 8%;" ng-class="{ 'has-error' : submitted && caxform.TotalAmount.$invalid}">
-                                            <label class="col-md-4 control-label">
-                                                Total:
-                                                <span style="color:red">*</span>
-                                            </label>
-                                            <div class="col-md-8">
-                                                <input class="text-center form-control" name="TotalAmount" disabled ng-model="Book.TotalAmount" type="text"  required/>
-                                                <div class="form-control-focus"> </div>
-                                                <span ng-show="submitted &&  caxform.TotalAmount.$error.required" class="text-danger">Required</span>
-                                            </div>
-                                        </td>
-                                       
-                                    </tr>
-                                </table>
-
-                            </div>
-                       
-                        <div class="col-md-12">
-                            <input type="submit" class="btn btn-primary" style="width:16%;margin-left: 9px;" ng-click="submitted=true" value="Add" />
-                            <input type="reset" id="frmresetbtn" class="btn btn-warning" style="float:left;width: 16%;margin-left: 28%;" ng-click="submitted=false" value="Reset" />
-                        </div>
-                        <br />
-                        <hr />
-                    </form>
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <!-- Advanced Tables -->
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover" datatable="ng" dt-options="vm.dtOptions">
-                                        <thead>
-                                            <tr>
-                                                <th>SL/No</th>
-                                                <th>CN Number</th>
-                                                <th>CN Type</th>
-                                                <th>CN Date</th>
-                                                <th>Service Type</th>
-                                                <th>Party</th>
-                                                <th>Destination</th>
-                                                <th>Total Amount</th>
-                                                <th>Actions</th>
-                                               
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="cn in CnInfoList">
-                                                <td>{{$index + 1}}</td>
-                                                <td>{{cn.CNInfoId}}</td>
-                                                <td>{{cn.CNType}}</td>
-                                                <td>{{cn.CNDate.replace('/Date(','').replace(')/','') |  date:"dd/MM/yyyy"}}</td>
-                                                <td>{{cn.ServiceType}}</td>
-                                                <td>{{cn.PartyId}}</td>
-                                                <td>{{cn.Destination}}</td>
-                                                <td>{{cn.TotalAmount}}</td>
-                                              
-                                                <td>
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-default btn" ng-click="Edit(cn);"><i class="glyphicon glyphicon-pencil"></i></button>
-                                                        <button type="button" class="btn btn-default btn" ng-click="Delete(cn);"><i class="glyphicon glyphicon-trash"></i></button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                            </div>
-                        </div>
-                        <!--End Advanced Tables -->
-                    </div>
-                </div>
+                    </tr>
+                </table>
             </div>
         </div>
-    </div>
+        <div class="col-md-12" style="background-color: blue;height: 7%;border: groove;width: 99%;margin-left: 6px;margin-top: -19px;">
+            <input type="submit" class="btn btn-primary" style="width:16%;margin-left: 9px;" ng-click="submitted=true" value="Add" />
+            <input type="reset" id="frmresetbtn" class="btn btn-warning" style="float:left;width: 16%;margin-left: 34%" ng-click="submitted=false" value="Reset" />
+        </div>
+    </form>
 </div>
-
 @section Scripts{
     <!-- Page-Level Plugin Scripts-->
-<script type="text/javascript">
+    <script type="text/javascript">
 $(document).ready(function() {
     $('#datepicker').datepicker({ format: "yyyy/mm/dd" });
 });
-</script>
+    </script>
 
     <script>
-            CNApp.controller('ZonalClt', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
+        CNApp.controller('FrmlClt', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
             init();
             function init() {
                 initialize();
@@ -323,7 +233,7 @@ $(document).ready(function() {
                 LoadCnInfo();
                 LoadDestinationList();
             }
-           
+
             function initialize() {
                 $scope.vm = {};
                 $scope.vm.dtOptions = DTOptionsBuilder.newOptions()
@@ -343,15 +253,19 @@ $(document).ready(function() {
                     day = ("0" + date.getDate()).slice(-2);
                 return new Date([date.getFullYear(), mnth, day].join("-"));
             }
-
             $scope.DoCalculate= function DoCalculate()
             {
+                if ($scope.Book.KPNumber == undefined || $scope.Book.KPNumber == 0)
+                {
+                    toastr.warning('Please enter total piece number first.');
+                    return;
+                }
                 var FirstAmount = $scope.FirstPieceNumber * $scope.FirstPieceRate;
                 var LeftPiece = $scope.Book.KPNumber - $scope.FirstPieceNumber;
                 var SecoundAmount = LeftPiece * $scope.AfterFirstPieceRate;
                 var TotalAmount = FirstAmount + SecoundAmount;
                 $scope.Book.TotalAmount = TotalAmount;
-                
+
             }
             $scope.FillRateEntry = function FillRateEntry()
             {
@@ -378,6 +292,12 @@ $(document).ready(function() {
                     var availablePartyRate = $.grep($scope.PartyRate, function (obj) {
                         return obj.Ex1 == $scope.Book.Size;
                     });
+                    if (availablePartyRate.length == 0)
+                    {
+                        toastr.warning('Rate not found. Please go for flat entry or add rate first.');
+                        return;
+
+                    }
                     if(availablePartyRate != null && availablePartyRate != undefined){
                         $scope.Book.KPNumber = "";
                         $scope.FirstPieceNumber = availablePartyRate[0].FirstKP;
@@ -385,17 +305,14 @@ $(document).ready(function() {
                         $scope.AfterFirstPieceRate = availablePartyRate[0].AfterFirstKPRate;
                         $scope.Book.TotalAmount = "";
                     }
-                } 
+                }
             }
-
             $scope.ToggleRateEntryFields = function ToggleRateEntryFields(disabled) {
                 $("#FirstPieceNumber").prop("disabled", disabled);
                 $("#FirstPieceRate").prop("disabled", disabled);
                 $("#AfterFirstPieceRate").prop("disabled", disabled);
             }
-
-            $scope.LoadPartyRate=function LoadPartyRate(PartyId,RateType) {
-              
+            $scope.LoadPartyRate = function LoadPartyRate(PartyId, RateType) {
                 $http.get("/RateInfoes/GetRateByPartyId?PartyId=" + PartyId + '&RateType=' + RateType)
                        .then(function successCallback(response) {
                            $scope.PartyRate = response.data;
@@ -405,9 +322,6 @@ $(document).ready(function() {
                                toastr.warning('Rate not found. Please add rate or go for flat entry.');
                                return;
                            }
-
-
-
                        }, function errorCallback(response) {
                            //error msg
                        });
@@ -479,7 +393,6 @@ $(document).ready(function() {
                         }
                     });
             }
-
             $scope.submitForm = function () {
                 if ($scope.caxform.$invalid)
                     return;
@@ -501,7 +414,6 @@ $(document).ready(function() {
                 }
                 else //for new user
                 {
-                    console.log($scope.Book);
                     $http.post("/CNInfoes/PostCNInfo?CNType=" + $scope.Book.CNType +
                         "&PolySize=NULL&CNDate="+ $scope.Book.CNDate +
                         "&ServiceType=" + $scope.Book.ServiceType + "&PartyId=" + $scope.Book.PartyId +
@@ -528,10 +440,7 @@ $(document).ready(function() {
                                 //error msg
                             });
                 }
-
-
             }
         });
-                    
     </script>
 }

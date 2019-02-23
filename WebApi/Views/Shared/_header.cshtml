@@ -1,235 +1,84 @@
-﻿   <!-- navbar top -->
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar">
-    <!-- navbar-header -->
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="@Url.Action("Index","Home")">
-            <img src="~/assets/img/logo.png" alt="" />
-        </a>
+﻿@{
+    HttpCookie myCookie = Request.Cookies["UserCookie"];
+    string UserAccess = myCookie.Values["UserAccess"].ToString();
+}
+
+<nav class="row navbar-fixed-top" style="background-color:white;height:130px;width: 100%;">
+    <div class="row" style="background-color:blue;height:25%;width: 100%;">
+        <div class="col-lg-1" style="padding-top: 2px;">
+            <img src="~/assets/img/favico.jpg" style="height:27px;padding-left:82%;padding-top: 6%;" />
+        </div>
+        <div class="col-lg-8">
+            <h4 style="color:white;margin-left: -1%;">CAX - Continental Courier Service Ltd.</h4>
+       </div>
+</div>
+    <div class="row" style="padding:0.5%;">
+        <div class="col-lg-1">
+            <a href="#" style="color:black;text-decoration: none;padding-left: 82%;font-size: large;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">File</a>
+            <ul class="dropdown-menu" style="margin-left: 70%;">
+                <li><a href="@Url.Action("Document","Home")">Documents</a></li>
+                <li><a href="@Url.Action("Parcel","Home")">Parcel</a></li>
+                <li><a href="@Url.Action("Poly","Home")">Poly</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-1">
+            <a href="#" style="color:black;text-decoration: none;font-size: large;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Find/Update</a>
+            <ul class="dropdown-menu">
+                <li><a href="#">CN Update</a></li>
+                <li><a href="#">CN Search</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-1" style="width: 5%;">
+            <a href="#" style="color:black;text-decoration: none;font-size: large;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Party Entry</a></li>
+                <li><a href="#">Rate Entry</a></li>
+                <li><a href="#">Zonal Entry</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Report</a></li>
+                <li><a href="#">Print CN</a></li>
+                <li><a href="#">Delete Information from Database</a></li>
+                <li><a href="#">User Create</a></li>
+                <li><a href="@Url.Action("LogOut","Home")">Logout</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-1">
+            <a href="#" style="color:black;text-decoration: none;font-size: large;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About Us</a>
+            <ul class="dropdown-menu">
+                <li><a href="#">About</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-1">
+            <a href="#" style="color:black;text-decoration: none;font-size: large;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@myCookie.Values["Name"].ToString()</a>
+        </div>
+        <div class="col-lg-1">
+            <a href="@Url.Action("LogOut","Home")" style="color:black;text-decoration: none;font-size: large;" role="button">Logout</a>
+        </div>
     </div>
-    <!-- end navbar-header -->
-    <!-- navbar-top-links -->
-    <ul class="nav navbar-top-links navbar-right">
-        <!-- main dropdown -->
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <span class="top-label label label-danger">3</span><i class="fa fa-envelope fa-3x"></i>
-            </a>
-            <!-- dropdown-messages -->
-            <ul class="dropdown-menu dropdown-messages">
-                <li>
-                    <a href="#">
-                        <div>
-                            <strong><span class=" label label-danger">Andrew Smith</span></strong>
-                            <span class="pull-right text-muted">
-                                <em>Yesterday</em>
-                            </span>
-                        </div>
-                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <strong><span class=" label label-info">Jonney Depp</span></strong>
-                            <span class="pull-right text-muted">
-                                <em>Yesterday</em>
-                            </span>
-                        </div>
-                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <strong><span class=" label label-success">Jonney Depp</span></strong>
-                            <span class="pull-right text-muted">
-                                <em>Yesterday</em>
-                            </span>
-                        </div>
-                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a class="text-center" href="#">
-                        <strong>Read All Messages</strong>
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                </li>
-            </ul>
-            <!-- end dropdown-messages -->
-        </li>
+    <div class="row">
+        <table style="margin-left:76px;width: 66%;" class="table table-borderless">
+            <tr>
+                <td>
+                    <button type="button" onclick="location.href='@Url.Action("Document", "Home")'" style="font-size: 18px;width: 100%;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Documents</button>
+                </td>
+                <td>
+                    <button type="button" onclick="location.href='@Url.Action("Parcel", "Home")'"  style="font-size:18px;width: 100%;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Parcel</button>
+                </td>
+                <td>
+                    <button type="button" onclick="location.href='@Url.Action("Poly", "Home")'" style="width: 138%;width: 100%;font-size: 18px;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Poly</button>
+                </td>
+                <td>
+                    <button type="button" style="width: 138%;width: 100%;font-size: 18px;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">CN Update</button>
+                </td>
+                <td>
+                    <button type="button" style="width: 138%;width: 100%;font-size: 18px;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">CN Search</button>
+                </td>
+                <td>
+                    <button type="button" style="width: 138%;width: 100%;font-size: 18px;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Reports</button>
 
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <span class="top-label label label-success">4</span>  <i class="fa fa-tasks fa-3x"></i>
-            </a>
-            <!-- dropdown tasks -->
-            <ul class="dropdown-menu dropdown-tasks">
-                <li>
-                    <a href="#">
-                        <div>
-                            <p>
-                                <strong>Task 1</strong>
-                                <span class="pull-right text-muted">40% Complete</span>
-                            </p>
-                            <div class="progress progress-striped active">
-                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                    <span class="sr-only">40% Complete (success)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <p>
-                                <strong>Task 2</strong>
-                                <span class="pull-right text-muted">20% Complete</span>
-                            </p>
-                            <div class="progress progress-striped active">
-                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                    <span class="sr-only">20% Complete</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <p>
-                                <strong>Task 3</strong>
-                                <span class="pull-right text-muted">60% Complete</span>
-                            </p>
-                            <div class="progress progress-striped active">
-                                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                    <span class="sr-only">60% Complete (warning)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <p>
-                                <strong>Task 4</strong>
-                                <span class="pull-right text-muted">80% Complete</span>
-                            </p>
-                            <div class="progress progress-striped active">
-                                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                                    <span class="sr-only">80% Complete (danger)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a class="text-center" href="#">
-                        <strong>See All Tasks</strong>
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                </li>
-            </ul>
-            <!-- end dropdown-tasks -->
-        </li>
+                </td>
+            </tr>
+        </table>
 
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <span class="top-label label label-warning">5</span>  <i class="fa fa-bell fa-3x"></i>
-            </a>
-            <!-- dropdown alerts-->
-            <ul class="dropdown-menu dropdown-alerts">
-                <li>
-                    <a href="#">
-                        <div>
-                            <i class="fa fa-comment fa-fw"></i>New Comment
-                            <span class="pull-right text-muted small">4 minutes ago</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <i class="fa fa-twitter fa-fw"></i>3 New Followers
-                            <span class="pull-right text-muted small">12 minutes ago</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <i class="fa fa-envelope fa-fw"></i>Message Sent
-                            <span class="pull-right text-muted small">4 minutes ago</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <i class="fa fa-tasks fa-fw"></i>New Task
-                            <span class="pull-right text-muted small">4 minutes ago</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <i class="fa fa-upload fa-fw"></i>Server Rebooted
-                            <span class="pull-right text-muted small">4 minutes ago</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a class="text-center" href="#">
-                        <strong>See All Alerts</strong>
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                </li>
-            </ul>
-            <!-- end dropdown-alerts -->
-        </li>
-
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-user fa-3x"></i>
-            </a>
-            <!-- dropdown user-->
-            <ul class="dropdown-menu dropdown-user">
-                <li>
-                    <a href="#"><i class="fa fa-user fa-fw"></i>User Profile</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-gear fa-fw"></i>Settings</a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="@Url.Action("LogOut","Home")"><i class="fa fa-sign-out fa-fw"></i>Logout</a>
-                </li>
-            </ul>
-            <!-- end dropdown-user -->
-        </li>
-        <!-- end main dropdown -->
-    </ul>
-    <!-- end navbar-top-links -->
+    </div>
 </nav>
-    <!-- end navbar top -->

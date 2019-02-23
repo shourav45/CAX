@@ -191,7 +191,10 @@ namespace WebApi.Controllers
         {
             return View();
         }
-       
+        public ActionResult test()
+        {
+            return View();
+        }
         public ActionResult LogOut()
         {
             HttpCookie myCookie = new HttpCookie("UserCookie");

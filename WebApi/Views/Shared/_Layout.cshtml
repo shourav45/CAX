@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -36,24 +37,13 @@
 
 </head>
 <body ng-app="MainApp">
-
-    <div>
-        <div id="wrapper">
             @Html.Partial("_header");
-            @Html.Partial("_sidenav");
-            <div id="page-wrapper">
-                <hr />
-                @RenderBody()
-            </div>
-            <hr />
-        </div>
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+    <div class="row" style="width: 93%;margin-left: 4%;margin-top: 1%;">
+        @RenderBody()
     </div>
-
-
-
+        <footer style="margin-left: 3%;">
+            <p>&copy; @DateTime.Now.Year - Continental Courier Service Ltd.</p>
+        </footer>
     @RenderSection("scripts", required: false)
 </body>
 </html>
