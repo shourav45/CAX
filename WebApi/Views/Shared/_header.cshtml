@@ -19,26 +19,26 @@
                 <li><a href="@Url.Action("Document","Home")">Documents</a></li>
                 <li><a href="@Url.Action("Parcel","Home")">Parcel</a></li>
                 <li><a href="@Url.Action("Poly","Home")">Poly</a></li>
+                <li><a href="@Url.Action("BulkUpload","Home")">Bulk Upload</a></li>
             </ul>
         </div>
         <div class="col-lg-1">
             <a href="#" style="color:black;text-decoration: none;font-size: large;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Find/Update</a>
             <ul class="dropdown-menu">
-                <li><a href="#">CN Update</a></li>
-                <li><a href="#">CN Search</a></li>
+                <li><a href="@Url.Action("CNList","Home")">CN Update/Search</a></li>
             </ul>
         </div>
         <div class="col-lg-1" style="width: 5%;">
             <a href="#" style="color:black;text-decoration: none;font-size: large;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
             <ul class="dropdown-menu">
-                <li><a href="#">Party Entry</a></li>
-                <li><a href="#">Rate Entry</a></li>
-                <li><a href="#">Zonal Entry</a></li>
+                <li><a href="@Url.Action("AddParty","Home")">Party Entry</a></li>
+                <li><a href="@Url.Action("Rate","Home")">Rate Entry</a></li>
+                <li><a href="@Url.Action("Zonal","Home")">Zonal Entry</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="#">Report</a></li>
                 <li><a href="#">Print CN</a></li>
                 <li><a href="#">Delete Information from Database</a></li>
-                <li><a href="#">User Create</a></li>
+                <li><a href="@Url.Action("AddUser","Home")">User Create</a></li>
                 <li><a href="@Url.Action("LogOut","Home")">Logout</a></li>
             </ul>
         </div>
@@ -68,10 +68,10 @@
                     <button type="button" onclick="location.href='@Url.Action("Poly", "Home")'" style="width: 138%;width: 100%;font-size: 18px;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Poly</button>
                 </td>
                 <td>
-                    <button type="button" style="width: 138%;width: 100%;font-size: 18px;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">CN Update</button>
+                    <button type="button" onclick="location.href='@Url.Action("CNList", "Home")'" style="width: 138%;width: 100%;font-size: 18px;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Update/Search</button>
                 </td>
                 <td>
-                    <button type="button" style="width: 138%;width: 100%;font-size: 18px;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">CN Search</button>
+                    <button type="button" onclick="location.href='@Url.Action("BulkUpload", "Home")'" style="width: 138%;width: 100%;font-size: 18px;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Bulk Upload</button>
                 </td>
                 <td>
                     <button type="button" style="width: 138%;width: 100%;font-size: 18px;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Reports</button>

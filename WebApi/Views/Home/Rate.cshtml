@@ -2,285 +2,295 @@
     ViewBag.Title = "User";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div class="row" ng-controller="RateClt">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Rate Menu
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <form name="caxform" ng-submit="submitForm()" method="post" novalidate>
-                        <input type="text" style="display:none" ng-model="IsEdit" readonly />
-                        <div class="col-lg-6">
-                            <div class="" ng-class="{ 'has-error' : submitted && caxform.PartyInfoId.$invalid}">
-                                <label class="col-md-4 control-label">
-                                    Select Party :
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-8">
-                                    <div class="row-fluid">
-                                        <select  data-live-search="true" class="form-control" ng-options="party.PartyInfoId as party.Name for party in PartyList" ng-model="NewRate.PartyInfoId" id="PartyInfoId" name="PartyInfoId" required>
-                                            <option value="" selected>Select Party</option>
-                                        </select>
-                                        <div class="form-control-focus"> </div>
-                                        <span ng-show="submitted &&  caxform.PartyInfoId.$error.required" class="text-danger">Please Select a Party</span>
+<link href="~/assets/css/bootstrap-select.min.css" rel="stylesheet" />
+<link href="~/assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+<div class="row" style="background-color:dimgrey;height:800px;margin-top: 8%;">
+    <div name="caxform" style="height: 100%;width: 94%;background-color: white;margin-top: 2%;margin-left: 3%;">
+        <div class="row" ng-controller="RateClt">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Rate Menu
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <form name="caxform" ng-submit="submitForm()" method="post" novalidate>
+                                <input type="text" style="display:none" ng-model="IsEdit" readonly />
+                                <div class="col-lg-6">
+                                    <div class="" ng-class="{ 'has-error' : submitted && caxform.PartyInfoId.$invalid}">
+                                        <label class="col-md-4 control-label">
+                                            Select Party :
+                                            <span style="color:red">*</span>
+                                        </label>
+                                        <div class="col-md-8">
+                                            <div class="row-fluid">
+                                                <select data-live-search="true" class="form-control" ng-options="party.PartyInfoId as party.Name for party in PartyList" ng-model="NewRate.PartyInfoId" id="PartyInfoId" name="PartyInfoId" required>
+                                                    <option value="" selected>Select Party</option>
+                                                </select>
+                                                <div class="form-control-focus"> </div>
+                                                <span ng-show="submitted &&  caxform.PartyInfoId.$error.required" class="text-danger">Please Select a Party</span>
+                                            </div>
+                                            <br />
+                                        </div>
                                     </div>
-                                    <br />
-                                </div>
-                            </div>
-                            <div class="" ng-class="{ 'has-error' : submitted && caxform.RateType.$invalid}">
-                                <label class="col-md-4 control-label">
-                                    Select Rate Type :
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-8">
-                                    <div class="row-fluid">
-                                        <select class="form-control" name="RateType" ng-model="NewRate.RateType" id="RateType" data-show-subtext="false" data-live-search="false" style="z-index: 01;width: 100%;" required>
-                                            <option value="" data-subtext="">Select Rate Type</option>
-                                            <option value="Document" data-subtext="">Document</option>
-                                            <option value="Parcel" data-subtext="">Parcel</option>
-                                            <option value="Poly" data-subtext="">Poly</option>
-                                        </select>
-                                        <div class="form-control-focus"> </div>
-                                        <span ng-show="submitted &&  caxform.RateType.$error.required" class="text-danger">Please Select a Rate Type</span>
+                                    <div class="" ng-class="{ 'has-error' : submitted && caxform.RateType.$invalid}">
+                                        <label class="col-md-4 control-label">
+                                            Select Rate Type :
+                                            <span style="color:red">*</span>
+                                        </label>
+                                        <div class="col-md-8">
+                                            <div class="row-fluid">
+                                                <select class="form-control" name="RateType" ng-model="NewRate.RateType" id="RateType" data-show-subtext="false" data-live-search="false" style="z-index: 01;width: 100%;" required>
+                                                    <option value="" data-subtext="">Select Rate Type</option>
+                                                    <option value="Document" data-subtext="">Document</option>
+                                                    <option value="Parcel" data-subtext="">Parcel</option>
+                                                    <option value="Poly" data-subtext="">Poly</option>
+                                                </select>
+                                                <div class="form-control-focus"> </div>
+                                                <span ng-show="submitted &&  caxform.RateType.$error.required" class="text-danger">Please Select a Rate Type</span>
+                                            </div>
+                                            <br />
+                                        </div>
                                     </div>
-                                    <br />
-                                </div>
-                                </div>
-                                
 
-                            </div>
-                        <div class="col-lg-6" style="padding-bottom: 5%;" ng-show="NewRate.RateType=='Document'">
-                            <div style="padding-bottom: 7%;" ng-class="{ 'has-error' : submitted && caxform.Ex1.$invalid}">
-                                <label class="col-md-5 control-label">
-                                    Document Type:
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-6">
-                                    <select class="form-control" name="Ex1" ng-model="NewRate.Ex1">
-                                        <option value="" data-subtext="">Select Document Type</option>
-                                        <option value="Big" data-subtext="">Big Document</option>
-                                        <option value="General" data-subtext="">General Document</option>
-                                    </select>
-                                    <div class="form-control-focus"> </div>
-                                    <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
 
                                 </div>
-                                <br />
-                            </div>
+                                <div class="col-lg-6" style="padding-bottom: 5%;" ng-show="NewRate.RateType=='Document'">
+                                    <div style="padding-bottom: 7%;" ng-class="{ 'has-error' : submitted && caxform.Ex1.$invalid}">
+                                        <label class="col-md-5 control-label">
+                                            Document Type:
+                                            <span style="color:red">*</span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <select class="form-control" name="Ex1" ng-model="NewRate.Ex1">
+                                                <option value="" data-subtext="">Select Document Type</option>
+                                                <option value="Big" data-subtext="">Big Document</option>
+                                                <option value="General" data-subtext="">General Document</option>
+                                            </select>
+                                            <div class="form-control-focus"> </div>
+                                            <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
 
-                               <div style="padding-bottom: 7%;" ng-class="{ 'has-error' : submitted && caxform.FirstKP.$invalid}">
-                                   <label class="col-md-5 control-label">
-                                       First Piece Number :
-                                       <span style="color:red">*</span>
-                                   </label>
-                                   <div class="col-md-6">
-                                       <input type="text" ng-model="NewRate.FirstKP" class="col-md-2 form-control" placeholder="Kg / Piece" id="FirstKP" name="FirstKP" required>
-                                       <div class="form-control-focus"> </div>
-                                       <span ng-show="submitted &&  caxform.FirstKP.$error.required" class="text-danger">Please enter number</span>
+                                        </div>
+                                        <br />
+                                    </div>
 
-                                   </div>
-                                   <br />
-                               </div>
-                            <div style="padding-bottom: 10%;"  ng-class="{ 'has-error' : submitted && caxform.FirstKPRate.$invalid}">
-                                <label class="col-md-5 control-label">
-                                    First Piece Rate:
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-6">
-                                    <input type="text" ng-model="NewRate.FirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="FirstKPRate" name="FirstKPRate" required>
-                                    <div class="form-control-focus"> </div>
-                                    <span ng-show="submitted &&  caxform.FirstKPRate.$error.required" class="text-danger">Please enter rate</span>
+                                    <div style="padding-bottom: 7%;" ng-class="{ 'has-error' : submitted && caxform.FirstKP.$invalid}">
+                                        <label class="col-md-5 control-label">
+                                            First Piece Number :
+                                            <span style="color:red">*</span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" ng-model="NewRate.FirstKP" class="col-md-2 form-control" placeholder="Kg / Piece" id="FirstKP" name="FirstKP" required>
+                                            <div class="form-control-focus"> </div>
+                                            <span ng-show="submitted &&  caxform.FirstKP.$error.required" class="text-danger">Please enter number</span>
 
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div style="padding-bottom: 10%;" ng-class="{ 'has-error' : submitted && caxform.FirstKPRate.$invalid}">
+                                        <label class="col-md-5 control-label">
+                                            First Piece Rate:
+                                            <span style="color:red">*</span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" ng-model="NewRate.FirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="FirstKPRate" name="FirstKPRate" required>
+                                            <div class="form-control-focus"> </div>
+                                            <span ng-show="submitted &&  caxform.FirstKPRate.$error.required" class="text-danger">Please enter rate</span>
+
+                                        </div>
+                                    </div>
+
+                                    <div ng-class="{ 'has-error' : submitted && caxform.AfterFirstKPRate.$invalid}">
+                                        <label class="col-md-5 control-label">
+                                            After <label>{{NewRate.FirstKP}}</label> Piece Rate:
+                                            <span style="color:red">*</span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" ng-model="NewRate.AfterFirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="AfterFirstKPRate" name="AfterFirstKPRate" required>
+                                            <div class="form-control-focus"> </div>
+                                            <span ng-show="submitted &&  caxform.AfterFirstKPRate.$error.required" class="text-danger">Please enter rate</span>
+                                        </div>
+                                    </div>
                                 </div>
-                              </div>
-                                
-                            <div ng-class="{ 'has-error' : submitted && caxform.AfterFirstKPRate.$invalid}">
-                                <label class="col-md-5 control-label">
-                                    After <label>{{NewRate.FirstKP}}</label> Piece Rate:
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-6">
-                                    <input type="text" ng-model="NewRate.AfterFirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="AfterFirstKPRate" name="AfterFirstKPRate" required>
-                                    <div class="form-control-focus"> </div>
-                                    <span ng-show="submitted &&  caxform.AfterFirstKPRate.$error.required" class="text-danger">Please enter rate</span>
-                                </div>
-                            </div>
-                            </div>
 
-                        <div class="col-lg-6" style="padding-bottom: 5%;" ng-show="NewRate.RateType=='Parcel'">
-                            <div style="padding-bottom: 7%;" ng-class="{ 'has-error' : submitted && caxform.Ex1.$invalid}">
-                                <label class="col-md-5 control-label">
-                                    Parcel Type:
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-6">
-                                    <select class="form-control" name="Ex1" ng-model="NewRate.Ex1">
-                                        <option value="" data-subtext="">Select Parcel Type</option>
-                                        <option value="Big" data-subtext="">Big Parcel</option>
-                                        <option value="General" data-subtext="">General Parcel</option>
-                                    </select>
-                                    <div class="form-control-focus"> </div>
-                                    <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
-                                </div>
-                                <br />
-                            </div>
+                                <div class="col-lg-6" style="padding-bottom: 5%;" ng-show="NewRate.RateType=='Parcel'">
+                                    <div style="padding-bottom: 7%;" ng-class="{ 'has-error' : submitted && caxform.Ex1.$invalid}">
+                                        <label class="col-md-5 control-label">
+                                            Parcel Type:
+                                            <span style="color:red">*</span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <select class="form-control" name="Ex1" ng-model="NewRate.Ex1">
+                                                <option value="" data-subtext="">Select Parcel Type</option>
+                                                <option value="Big" data-subtext="">Big Parcel</option>
+                                                <option value="General" data-subtext="">General Parcel</option>
+                                            </select>
+                                            <div class="form-control-focus"> </div>
+                                            <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
+                                        </div>
+                                        <br />
+                                    </div>
 
-                            <div style="padding-bottom: 7%;" ng-class="{ 'has-error' : submitted && caxform.FirstKP.$invalid}">
-                                <label class="col-md-5 control-label">
-                                    First KG Number :
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-6">
-                                    <input type="text" ng-model="NewRate.FirstKP" class="col-md-2 form-control" placeholder="Kg / Piece" id="FirstKP" name="FirstKP" required>
-                                    <div class="form-control-focus"> </div>
-                                    <span ng-show="submitted &&  caxform.FirstKP.$error.required" class="text-danger">Please enter number</span>
+                                    <div style="padding-bottom: 7%;" ng-class="{ 'has-error' : submitted && caxform.FirstKP.$invalid}">
+                                        <label class="col-md-5 control-label">
+                                            First KG Number :
+                                            <span style="color:red">*</span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" ng-model="NewRate.FirstKP" class="col-md-2 form-control" placeholder="Kg / Piece" id="FirstKP" name="FirstKP" required>
+                                            <div class="form-control-focus"> </div>
+                                            <span ng-show="submitted &&  caxform.FirstKP.$error.required" class="text-danger">Please enter number</span>
 
-                                </div>
-                                <br />
-                            </div>
-                            <div style="padding-bottom: 10%;" ng-class="{ 'has-error' : submitted && caxform.FirstKPRate.$invalid}">
-                                <label class="col-md-5 control-label">
-                                    First <label>{{NewRate.FirstKP}}</label> KG Rate:
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-6">
-                                    <input type="text" ng-model="NewRate.FirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="FirstKPRate" name="FirstKPRate" required>
-                                    <div class="form-control-focus"> </div>
-                                    <span ng-show="submitted &&  caxform.FirstKPRate.$error.required" class="text-danger">Please enter rate</span>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div style="padding-bottom: 10%;" ng-class="{ 'has-error' : submitted && caxform.FirstKPRate.$invalid}">
+                                        <label class="col-md-5 control-label">
+                                            First <label>{{NewRate.FirstKP}}</label> KG Rate:
+                                            <span style="color:red">*</span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" ng-model="NewRate.FirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="FirstKPRate" name="FirstKPRate" required>
+                                            <div class="form-control-focus"> </div>
+                                            <span ng-show="submitted &&  caxform.FirstKPRate.$error.required" class="text-danger">Please enter rate</span>
 
-                                </div>
-                            </div>
+                                        </div>
+                                    </div>
 
-                            <div ng-class="{ 'has-error' : submitted && caxform.AfterFirstKPRate.$invalid}">
-                                <label class="col-md-5 control-label">
-                                    After <label>{{NewRate.FirstKPRate}}</label> KG Rate:
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-6">
-                                    <input type="text" ng-model="NewRate.AfterFirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="AfterFirstKPRate" name="AfterFirstKPRate" required>
-                                    <div class="form-control-focus"> </div>
-                                    <span ng-show="submitted &&  caxform.AfterFirstKPRate.$error.required" class="text-danger">Please enter rate</span>
+                                    <div ng-class="{ 'has-error' : submitted && caxform.AfterFirstKPRate.$invalid}">
+                                        <label class="col-md-5 control-label">
+                                            After <label>{{NewRate.FirstKPRate}}</label> KG Rate:
+                                            <span style="color:red">*</span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" ng-model="NewRate.AfterFirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="AfterFirstKPRate" name="AfterFirstKPRate" required>
+                                            <div class="form-control-focus"> </div>
+                                            <span ng-show="submitted &&  caxform.AfterFirstKPRate.$error.required" class="text-danger">Please enter rate</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+
+                                <div class="col-lg-6" style="padding-bottom: 5%;" ng-show="NewRate.RateType=='Poly'">
+                                    <div style="padding-bottom: 7%;" ng-class="{ 'has-error' : submitted && caxform.Ex1.$invalid}">
+                                        <label class="col-md-5 control-label">
+                                            Poly Type:
+                                            <span style="color:red">*</span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <select class="form-control" name="Ex1" ng-model="NewRate.Ex1">
+                                                <option value="" data-subtext="">Select Poly Type</option>
+                                                <option value="Big" data-subtext="">Big Poly</option>
+                                                <option value="Medium" data-subtext="">Medium Poly</option>
+                                                <option value="Small" data-subtext="">Small Poly</option>
+                                                <option value="Mobile" data-subtext="">Mobile Poly</option>
+                                            </select>
+                                            <div class="form-control-focus"> </div>
+                                            <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
+                                        </div>
+                                        <br />
+                                    </div>
+
+                                    <div style="padding-bottom: 7%;" ng-class="{ 'has-error' : submitted && caxform.FirstKP.$invalid}">
+                                        <label class="col-md-5 control-label">
+                                            First Poly Number :
+                                            <span style="color:red">*</span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" ng-model="NewRate.FirstKP" class="col-md-2 form-control" placeholder="Kg / Piece" id="FirstKP" name="FirstKP" required>
+                                            <div class="form-control-focus"> </div>
+                                            <span ng-show="submitted &&  caxform.FirstKP.$error.required" class="text-danger">Please enter number</span>
+
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div style="padding-bottom: 10%;" ng-class="{ 'has-error' : submitted && caxform.FirstKPRate.$invalid}">
+                                        <label class="col-md-5 control-label">
+                                            First <label>{{NewRate.FirstKP}}</label> Poly Rate:
+                                            <span style="color:red">*</span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" ng-model="NewRate.FirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="FirstKPRate" name="FirstKPRate" required>
+                                            <div class="form-control-focus"> </div>
+                                            <span ng-show="submitted &&  caxform.FirstKPRate.$error.required" class="text-danger">Please enter rate</span>
+
+                                        </div>
+                                    </div>
+
+                                    <div ng-class="{ 'has-error' : submitted && caxform.AfterFirstKPRate.$invalid}">
+                                        <label class="col-md-5 control-label">
+                                            After <label>{{NewRate.FirstKPRate}}</label> Poly Rate:
+                                            <span style="color:red">*</span>
+                                        </label>
+                                        <div class="col-md-6">
+                                            <input type="text" ng-model="NewRate.AfterFirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="AfterFirstKPRate" name="AfterFirstKPRate" required>
+                                            <div class="form-control-focus"> </div>
+                                            <span ng-show="submitted &&  caxform.AfterFirstKPRate.$error.required" class="text-danger">Please enter rate</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="padding-bottom: 5%;">
+                                    <input type="submit" class="btn btn-primary" style="width:16%;margin-left: 9px;" ng-click="submitted=true" value="Add" />
+                                    <input type="reset" id="frmresetbtn" class="btn btn-warning" style="float:left;width: 16%;margin-left: 28%;" ng-click="submitted=false" value="Reset" />
+                                </div>
+                                <hr />
+                            </form>
                         </div>
 
-                        <div class="col-lg-6" style="padding-bottom: 5%;" ng-show="NewRate.RateType=='Poly'">
-                            <div style="padding-bottom: 7%;" ng-class="{ 'has-error' : submitted && caxform.Ex1.$invalid}">
-                                <label class="col-md-5 control-label">
-                                    Poly Type:
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-6">
-                                    <select class="form-control" name="Ex1" ng-model="NewRate.Ex1">
-                                        <option value="" data-subtext="">Select Poly Type</option>
-                                        <option value="Big" data-subtext="">Big Poly</option>
-                                        <option value="Medium" data-subtext="">Medium Poly</option>
-                                        <option value="Small" data-subtext="">Small Poly</option>
-                                    </select>
-                                    <div class="form-control-focus"> </div>
-                                    <span ng-show="submitted &&  caxform.Ex1.$error.required" class="text-danger">Please Select</span>
-                                </div>
-                                <br />
-                            </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <!-- Advanced Tables -->
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered table-hover" datatable="ng" dt-options="vm.dtOptions">
+                                                <thead>
+                                                    <tr>
+                                                        <th>SL/No</th>
+                                                        <th>Party</th>
+                                                        <th>Party Code</th>
+                                                        <th>Rate Type</th>
+                                                        <th>Size</th>
+                                                        <th>First KG/Piece Number</th>
+                                                        <th>First KG/Piece Rate</th>
+                                                        <th>After First KG/Piece Rate</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="rate in RateList">
+                                                        <td>{{$index + 1}}</td>
+                                                        <td>{{rate.Ex2}}</td>
+                                                        <td>{{rate.PartyInfoId}}</td>
+                                                        <td>{{rate.RateType}}</td>
+                                                        <td>{{rate.Ex1}} {{rate.RateType}}</td>
+                                                        <td>{{rate.FirstKP}}</td>
+                                                        <td>{{rate.FirstKPRate}}</td>
+                                                        <td>{{rate.AfterFirstKPRate}}</td>
 
-                            <div style="padding-bottom: 7%;" ng-class="{ 'has-error' : submitted && caxform.FirstKP.$invalid}">
-                                <label class="col-md-5 control-label">
-                                    First Poly Number :
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-6">
-                                    <input type="text" ng-model="NewRate.FirstKP" class="col-md-2 form-control" placeholder="Kg / Piece" id="FirstKP" name="FirstKP" required>
-                                    <div class="form-control-focus"> </div>
-                                    <span ng-show="submitted &&  caxform.FirstKP.$error.required" class="text-danger">Please enter number</span>
+                                                        <td>
+                                                            <div class="btn-group">
+                                                                <button type="button" class="btn btn-default btn" ng-click="Edit(rate);"><i class="glyphicon glyphicon-pencil"></i></button>
+                                                                <button type="button" class="btn btn-default btn" ng-click="Delete(rate);"><i class="glyphicon glyphicon-trash"></i></button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
 
+                                    </div>
                                 </div>
-                                <br />
-                            </div>
-                            <div style="padding-bottom: 10%;" ng-class="{ 'has-error' : submitted && caxform.FirstKPRate.$invalid}">
-                                <label class="col-md-5 control-label">
-                                    First <label>{{NewRate.FirstKP}}</label> Poly Rate:
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-6">
-                                    <input type="text" ng-model="NewRate.FirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="FirstKPRate" name="FirstKPRate" required>
-                                    <div class="form-control-focus"> </div>
-                                    <span ng-show="submitted &&  caxform.FirstKPRate.$error.required" class="text-danger">Please enter rate</span>
-
-                                </div>
-                            </div>
-
-                            <div ng-class="{ 'has-error' : submitted && caxform.AfterFirstKPRate.$invalid}">
-                                <label class="col-md-5 control-label">
-                                    After <label>{{NewRate.FirstKPRate}}</label> Poly Rate:
-                                    <span style="color:red">*</span>
-                                </label>
-                                <div class="col-md-6">
-                                    <input type="text" ng-model="NewRate.AfterFirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="AfterFirstKPRate" name="AfterFirstKPRate" required>
-                                    <div class="form-control-focus"> </div>
-                                    <span ng-show="submitted &&  caxform.AfterFirstKPRate.$error.required" class="text-danger">Please enter rate</span>
-                                </div>
+                                <!--End Advanced Tables -->
                             </div>
                         </div>
-                        <div class="col-md-12" style="padding-bottom: 5%;">
-                            <input type="submit" class="btn btn-primary" style="width:16%;margin-left: 9px;" ng-click="submitted=true" value="Add" />
-                            <input type="reset" id="frmresetbtn" class="btn btn-warning" style="float:left;width: 16%;margin-left: 28%;" ng-click="submitted=false" value="Reset" />
-                        </div>
-                        <hr />
-                    </form>
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <!-- Advanced Tables -->
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover" datatable="ng" dt-options="vm.dtOptions">
-                                        <thead>
-                                            <tr>
-                                                <th>SL/No</th>
-                                                <th>Party</th>
-                                                <th>Party Code</th>
-                                                <th>Rate Type</th>
-                                                <th>First KG/Piece Number</th>
-                                                <th>First KG/Piece Rate</th>
-                                                <th>After First KG/Piece Rate</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="rate in RateList">
-                                                <td>{{$index + 1}}</td>
-                                                <td>{{rate.Ex1}}</td>
-                                                <td>{{rate.PartyInfoId}}</td>
-                                                <td>{{rate.RateType}}</td>
-                                                <td>{{rate.FirstKP}}</td>
-                                                <td>{{rate.FirstKPRate}}</td>
-                                                <td>{{rate.AfterFirstKPRate}}</td>
-
-                                                <td>
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-default btn" ng-click="Edit(rate);"><i class="glyphicon glyphicon-pencil"></i></button>
-                                                        <button type="button" class="btn btn-default btn" ng-click="Delete(rate);"><i class="glyphicon glyphicon-trash"></i></button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                            </div>
-                        </div>
-                        <!--End Advanced Tables -->
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
+
 
 @section Scripts{
 <!-- Page-Level Plugin Scripts-->

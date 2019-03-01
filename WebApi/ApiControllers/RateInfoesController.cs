@@ -23,7 +23,7 @@ namespace WebApi.ApiControllers
             foreach (var rate in RateList)
             {
                 PartyInfo Party = db.PartyInfoset.Where(p => p.PartyInfoId.ToString() == rate.PartyInfoId).FirstOrDefault();
-                rate.Ex1 = Party.Name;
+                rate.Ex2 = Party.Name;
             }
             return Json(RateList,JsonRequestBehavior.AllowGet);
         }

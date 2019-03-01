@@ -1,10 +1,13 @@
-﻿using System;
+﻿using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApi.Models;
-
 namespace WebApi.Controllers
 {
     public class HomeController : Controller
@@ -152,36 +155,107 @@ namespace WebApi.Controllers
 
         public ActionResult Parcel()
         {
-            return View();
+            int Auth = AuthCheck();
+            if (Auth == 1)
+                return View();
+            return RedirectToAction("Login", "Home");
         }
         public ActionResult Poly()
         {
-            return View();
+            int Auth = AuthCheck();
+            if (Auth == 1)
+                return View();
+            return RedirectToAction("Login", "Home");
         }
         public ActionResult OtherBooking()
         {
-            return View();
+            int Auth = AuthCheck();
+            if (Auth == 1)
+                return View();
+            return RedirectToAction("Login", "Home");
+        }
+        public ActionResult CNList()
+        {
+            int Auth = AuthCheck();
+            if (Auth == 1)
+                return View();
+            return RedirectToAction("Login", "Home");
+        }
+        public ActionResult BulkUpload()
+        {
+            int Auth = AuthCheck();
+            if (Auth == 1)
+                return View();
+            return RedirectToAction("Login", "Home");
+        }
+        public ActionResult DownloadExcel()
+        {
+            MemoryStream memStream;
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("CN Bulk Upload");
+                worksheet.Cells[1, 1].Value = "CNType";
+                worksheet.Cells[1, 2].Value = "DeliveryStatus";
+                worksheet.Cells[1, 3].Value = "Status";
+                worksheet.Cells[1, 4].Value = "CNDate";
+                worksheet.Cells[1, 5].Value = "PartyId";
+                worksheet.Cells[1, 6].Value = "Destination";
+                worksheet.Cells[1, 7].Value = "Follio";
+                worksheet.Cells[1, 8].Value = "ConsingeeName";
+                worksheet.Cells[1, 9].Value = "ConsigneeAddress";
+                worksheet.Cells[1, 10].Value = "ItemInfo";
+                worksheet.Cells[1, 11].Value = "Kgpiece";
+                worksheet.Cells[1, 12].Value = "Weight";
+                worksheet.Cells[1, 13].Value = "ServiceCharge";
+                worksheet.Cells[1, 14].Value = "TotalAmount";
+                worksheet.Cells[1, 15].Value = "Size";
+                worksheet.Cells[1, 16].Value = "KPNumber";
+                var rngTable = worksheet.Cells["A1:E1"];
+                rngTable.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                rngTable.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(253, 233, 217));
+                rngTable.Style.Border.Bottom.Style = ExcelBorderStyle.Medium;
+
+                memStream = new MemoryStream(package.GetAsByteArray());
+            }
+            return File(memStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "CN Bulk Upload Sample format.xlsx");
         }
         public ActionResult DeliveryStatus()
         {
-            return View();
+            int Auth = AuthCheck();
+            if (Auth == 1)
+                return View();
+            return RedirectToAction("Login", "Home");
         }
         public ActionResult CNPrint()
         {
-            return View();
+            int Auth = AuthCheck();
+            if (Auth == 1)
+                return View();
+            return RedirectToAction("Login", "Home");
         }
         public ActionResult Accounts()
         {
-            return View();
+            int Auth = AuthCheck();
+            if (Auth == 1)
+                return View();
+            return RedirectToAction("Login", "Home");
         }
 
+        
         public ActionResult BillInfoReport()
         {
-            return View();
+            int Auth = AuthCheck();
+            if (Auth == 1)
+                return View();
+            return RedirectToAction("Login", "Home");
         }
         public ActionResult CNInfoReport()
         {
-            return View();
+            int Auth = AuthCheck();
+            if (Auth == 1)
+                return View();
+            return RedirectToAction("Login", "Home");
         }
         public ActionResult SalesReport()
         {

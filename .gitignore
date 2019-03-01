@@ -196,3 +196,4 @@ packages/
 /WebApi/obj/Debug/WebApi.dll
 /WebApi/obj/Debug/WebApi.pdb
 /WebApi/obj/Debug/WebApp.csproj.FileListAbsolute.txt
+/WebApi/App_Data

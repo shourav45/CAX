@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "BulkUpload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script type="text/javascript" src="js/bootstrap-filestyle.min.js"> </script>
+
+<div class="row" style="background-color:dimgrey;height:550px;">
+    <form name="caxform" method="post" novalidate style="height: 100%;width: 94%;background-color: white;margin-top: 8%;margin-left: 3%;">
+        <div class="col-md-12" style="background-color: red;height: 9%;border: groove;width: 99%;margin-left: 6px;margin-top: 5px;">
+            <p style="color:white;text-align: center;font-size: xx-large;font-weight: bold;">Bulk Upload</p>
+        </div>
+        <div class="row" style="margin-left: 1%;">
+            <div class="col-md-5">
+                <a target="_blank" href="@Url.Action("DownloadExcel", "Home")"  style="font-size: 18px;width: 40%;font-family: sans-serif;height: 34px;margin-top: 3%;margin-left:58%" class="btn btn-success btn-rounded"> Download Format</a>
+            </div>
+            <div class="col-md-2">
+                <input type="file" class="filestyle" style="margin-top: 12%;" data-icon="false">
+            </div>
+            <div class="col-md-5">
+                <button type="button" onclick="location.href='@Url.Action("Document", "Home")'" style="margin-left: 16%;font-size: 18px;width: 40%;font-family: sans-serif;height: 34px;margin-top: 3%;" class="btn btn-success btn-rounded">Upload</button>
+            </div>
+        </div>
+     
+    </form>
+ 
+</div>

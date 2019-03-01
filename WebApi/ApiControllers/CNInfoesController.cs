@@ -22,7 +22,7 @@ namespace WebApi.ApiControllers
         [System.Web.Http.HttpGet]
         public ActionResult GetCNInfoset()
         {
-            List<CNInfo> CNList = db.CNInfoset.OrderByDescending(cn=>cn.CNInfoId).Take(5).ToList();
+            List<CNInfo> CNList = db.CNInfoset.OrderByDescending(cn=>cn.CNInfoId).Take(100).ToList();
             foreach (var cn in CNList)
             {
                 PartyInfo Party = db.PartyInfoset.Where(p => p.PartyInfoId.ToString() == cn.PartyId).FirstOrDefault();
@@ -89,32 +89,6 @@ namespace WebApi.ApiControllers
         [System.Web.Http.HttpPost]
         public ActionResult PostCNInfo(CNInfo cn)
         {
-            //CNInfo cn = new CNInfo();
-            //cn.CNType = CNType;
-            //cn.PolySize = PolySize;
-            //cn.CNDate = DateTime.Now; 
-            //    //Convert.ToDateTime(CNDate);
-            //cn.ServiceType = ServiceType;
-            //cn.PartyId = PartyId;
-            //cn.Destination = Destination;
-            //cn.Follio = Follio;
-            //cn.ConsingeeName = ConsingeeName;
-            //cn.ConsigneeAddress = ConsigneeAddress;
-            //cn.ItemInfo = ItemInfo;
-            //cn.Kgpiece = Kgpiece;
-            //cn.RateType = RateType;
-            //cn.Weight = Weight;
-            //cn.ServiceCharge = ServiceCharge;
-            //cn.VatStatus = VatStatus;
-            //cn.VatPercent = VatPercent;
-            //cn.VatAmount = VatAmount;
-            //cn.AitStatus = AitStatus;
-            //cn.AitPercent = AitPercent;
-            //cn.AitAmount = AitAmount;
-            //cn.TotalAmount = TotalAmount;
-            //cn.Size = Size;
-            //cn.KPNumber = KPNumber;
-            //cn.Ex1=Ex1;
             if (ModelState.IsValid==false)
             {
                 var errors = ModelState.Select(x => x.Value.Errors).Where(y => y.Count > 0).ToList();
@@ -125,11 +99,15 @@ namespace WebApi.ApiControllers
                     {
                         msg = msg + ermsg.ErrorMessage;
                     }
-                    //msg=item.
                 }
                 return Json(msg, JsonRequestBehavior.AllowGet);
             }
-
+            cn.AddBy = User.Identity.Name;
+            cn.AddDate = DateTime.Now.ToString();
+            cn.Status = "A";
+            cn.Ex1 = "";
+            cn.DeliveryStatus = "0";
+            cn.ServiceCharge = "0";//need to add on the form
             db.CNInfoset.Add(cn);
            var result= db.SaveChanges();
             return Json("1", JsonRequestBehavior.AllowGet);
