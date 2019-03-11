@@ -5,25 +5,116 @@
 }
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-<script type="text/javascript" src="js/bootstrap-filestyle.min.js"> </script>
-
-<div class="row" style="background-color:dimgrey;height:550px;">
-    <form name="caxform" method="post" novalidate style="height: 100%;width: 94%;background-color: white;margin-top: 8%;margin-left: 3%;">
-        <div class="col-md-12" style="background-color: red;height: 9%;border: groove;width: 99%;margin-left: 6px;margin-top: 5px;">
+https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/2.1.0/bootstrap-filestyle.js
+<div class="row" style="background-color:dimgrey;height:550px;" ng-controller="FrmlClt">
+    <form name="caxform" id="caxform" ng-submit="submitForm()" enctype="multipart/form-data" method="post"  style="height: 75%;width: 70%;background-color: white;margin-top: 8%;margin-left: 3%;">
+        <div class="col-md-12" style="background-color: red;height: 12%;border: groove;width: 99%;margin-left: 6px;margin-top: 5px;">
             <p style="color:white;text-align: center;font-size: xx-large;font-weight: bold;">Bulk Upload</p>
         </div>
-        <div class="row" style="margin-left: 1%;">
-            <div class="col-md-5">
-                <a target="_blank" href="@Url.Action("DownloadExcel", "Home")"  style="font-size: 18px;width: 40%;font-family: sans-serif;height: 34px;margin-top: 3%;margin-left:58%" class="btn btn-success btn-rounded"> Download Format</a>
-            </div>
-            <div class="col-md-2">
-                <input type="file" class="filestyle" style="margin-top: 12%;" data-icon="false">
-            </div>
-            <div class="col-md-5">
-                <button type="button" onclick="location.href='@Url.Action("Document", "Home")'" style="margin-left: 16%;font-size: 18px;width: 40%;font-family: sans-serif;height: 34px;margin-top: 3%;" class="btn btn-success btn-rounded">Upload</button>
-            </div>
+        <div class="row">
+            <table class="table table-borderless align-content-center" style="width:45%; align-content: center;text-align: center;margin-left: 24%;">
+                <tr>
+                    <td>
+                        <label style="float:right">Execel format :</label>
+
+                    </td>
+                    <td>
+                        <a target="_blank" href="@Url.Action("DownloadExcel", "Home")" class="btn btn-primary btn-rounded"><i class="fa fa-cloud-download"></i> Download Format</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="float:right">Select Party :</label>
+
+                    </td>
+                    <td>
+                        <select id="PartyName" class="form-control" name="PartyName" ng-model="ex.PartyId" data-show-subtext="false" data-live-search="true" required>
+                            <option value="" data-subtext="">Select Party</option>
+                            <option ng-repeat="party in PartyList" value="{{party.PartyInfoId}}" data-subtext="">{{party.Name}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="float:right">CN Date :</label>
+
+                    </td>
+                    <td>
+                        <input class="form-control" type="text" name="CNDate" ng-model="ex.CNDate" id="datepicker" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="float:right">Select Execel </label>
+                    </td>
+                    <td>
+                        <input type="file"  class="form-control" name="excelfile" data-icon="false" ng-model="ex.excelfile" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <button type="submit"  ng-click="submitted=true" class="btn btn-success btn-rounded">Upload</button>
+                    </td>
+                </tr>
+            </table>
+           
         </div>
-     
     </form>
- 
 </div>
+@section Scripts{
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#datepicker').datepicker({ format: "dd/mm/yyyy" });
+});
+</script>
+    <script>
+        CNApp.controller('FrmlClt', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
+            init();
+            function init() {
+                initialize();
+                LoadPartyList();
+                LoadDestinationList();
+            }
+
+            function initialize() {
+                $scope.vm = {};
+                $scope.vm.dtOptions = DTOptionsBuilder.newOptions()
+                  .withOption('order', [0, 'asc']);
+            }
+
+            function LoadDestinationList() {
+                $http.get("/api/Destinations")
+                       .then(function successCallback(response) {
+                           $scope.DestinationList = response.data;
+                           toastr.options.positionClass = 'toast-bottom-right';
+                       }, function errorCallback(response) {
+                           //error msg
+                       });
+            }
+            function LoadPartyList() {
+                $http.get("/api/PartyInfoes")
+                       .then(function successCallback(response) {
+                           $scope.PartyList = response.data;
+                           toastr.options.positionClass = 'toast-bottom-right';
+                       }, function errorCallback(response) {
+                       });
+            }
+            $scope.submitForm = function () {
+              
+                var form = new FormData($("#caxform")[0]);
+                console.log(form);
+                $.ajax({
+                    url: '/BulkUpload/UploadExcel',
+                    method: "POST",
+                    dataType: 'json',
+                    data: form,
+                    processData: false,
+                    contentType: false,
+                    success: function(result){},
+                    error: function(er){}
+                });
+            }
+        });
+    </script>
+}

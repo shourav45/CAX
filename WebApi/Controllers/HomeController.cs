@@ -191,30 +191,54 @@ namespace WebApi.Controllers
         public ActionResult DownloadExcel()
         {
             MemoryStream memStream;
-
             using (var package = new ExcelPackage())
             {
                 var worksheet = package.Workbook.Worksheets.Add("CN Bulk Upload");
-                worksheet.Cells[1, 1].Value = "CNType";
-                worksheet.Cells[1, 2].Value = "DeliveryStatus";
-                worksheet.Cells[1, 3].Value = "Status";
-                worksheet.Cells[1, 4].Value = "CNDate";
-                worksheet.Cells[1, 5].Value = "PartyId";
-                worksheet.Cells[1, 6].Value = "Destination";
-                worksheet.Cells[1, 7].Value = "Follio";
-                worksheet.Cells[1, 8].Value = "ConsingeeName";
-                worksheet.Cells[1, 9].Value = "ConsigneeAddress";
-                worksheet.Cells[1, 10].Value = "ItemInfo";
-                worksheet.Cells[1, 11].Value = "Kgpiece";
-                worksheet.Cells[1, 12].Value = "Weight";
-                worksheet.Cells[1, 13].Value = "ServiceCharge";
-                worksheet.Cells[1, 14].Value = "TotalAmount";
-                worksheet.Cells[1, 15].Value = "Size";
-                worksheet.Cells[1, 16].Value = "KPNumber";
-                var rngTable = worksheet.Cells["A1:E1"];
+                worksheet.Cells[1, 1].Value = "CN Type";
+                worksheet.Cells[1, 2].Value = "Destination";
+                worksheet.Cells[1, 3].Value = "Fo/L No";
+                worksheet.Cells[1, 4].Value = "Consingee Name";
+                worksheet.Cells[1, 5].Value = "Consignee Address";
+                worksheet.Cells[1, 6].Value = "Item Info";
+                worksheet.Cells[1, 7].Value = "Size";
+                worksheet.Cells[1, 8].Value = "Total Piece/Weight";
+                worksheet.Cells[1, 9].Value = "Service Charge";
+                worksheet.Cells[1, 10].Value = "Total Amount";
+                worksheet.Cells[1, 11].Value = "Others";
+                //sample data
+                worksheet.Cells[2, 1].Value = "Document";
+                worksheet.Cells[2, 2].Value = "Barisal";
+                worksheet.Cells[2, 3].Value = "111";
+                worksheet.Cells[2, 4].Value = "Rafiq Hossain";
+                worksheet.Cells[2, 5].Value = "MOhammadpur, Dhaka";
+                worksheet.Cells[2, 6].Value = "Cheque book";
+                worksheet.Cells[2, 7].Value = "Big";
+                worksheet.Cells[2, 8].Value = "300";
+                worksheet.Cells[2, 9].Value = "10";
+                worksheet.Cells[2, 10].Value = "3010";
+                worksheet.Cells[2, 11].Value = "Others";
+                
+                //var cell = (Microsoft.Office.Interop.Excel.Range)oSheet.Cells[row, 1];
+                //cell.Validation.Delete();
+                //cell.Validation.Add(
+                //   XlDVType.xlValidateList,
+                //   XlDVAlertStyle.xlValidAlertInformation,
+                //   XlFormatConditionOperator.xlBetween,
+                //   flatList,
+                //   Type.Missing);
+
+                //cell.Validation.IgnoreBlank = true;
+                //cell.Validation.InCellDropdown = true;
+
+                worksheet.DefaultColWidth = 18;
+                worksheet.DefaultRowHeight = 20;
+                
+                var rngTable = worksheet.Cells["A1:K1"];
                 rngTable.Style.Fill.PatternType = ExcelFillStyle.Solid;
                 rngTable.Style.Fill.BackgroundColor.SetColor(Color.FromArgb(253, 233, 217));
                 rngTable.Style.Border.Bottom.Style = ExcelBorderStyle.Medium;
+                rngTable.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                
 
                 memStream = new MemoryStream(package.GetAsByteArray());
             }

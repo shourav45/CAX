@@ -191,8 +191,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\BulkUpload\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllers\BulkUploadController.cs" />
     <Compile Include="ApiControllers\CNInfoesController.cs" />
     <Compile Include="ApiControllers\DestinationsController.cs" />
     <Compile Include="ApiControllers\PartyInfoesController.cs" />

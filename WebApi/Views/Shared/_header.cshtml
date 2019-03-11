@@ -3,7 +3,7 @@
     string UserAccess = myCookie.Values["UserAccess"].ToString();
 }
 
-<nav class="row navbar-fixed-top" style="background-color:white;height:130px;width: 100%;">
+<nav class="row navbar-fixed-top" style="background-color:white;height:15%;width: 100%;">
     <div class="row" style="background-color:blue;height:25%;width: 100%;">
         <div class="col-lg-1" style="padding-top: 2px;">
             <img src="~/assets/img/favico.jpg" style="height:27px;padding-left:82%;padding-top: 6%;" />
@@ -12,10 +12,37 @@
             <h4 style="color:white;margin-left: -1%;">CAX - Continental Courier Service Ltd.</h4>
        </div>
 </div>
-    <div class="row" style="padding:0.5%;">
-        <div class="col-lg-1">
-            <a href="#" style="color:black;text-decoration: none;padding-left: 82%;font-size: large;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">File</a>
-            <ul class="dropdown-menu" style="margin-left: 70%;">
+
+    <div class="row" style="height: 26%;">
+        <table style="margin-left:76px;width: 66%;" class="table table-borderless">
+            <tr>
+                <td>
+                    <button type="button" onclick="location.href='@Url.Action("Document", "Home")'" style="font-size: 18px;width: 100%;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Documents</button>
+                </td>
+                <td>
+                    <button type="button" onclick="location.href='@Url.Action("Parcel", "Home")'"  style="font-size:18px;width: 100%;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Parcel</button>
+                </td>
+                <td>
+                    <button type="button" onclick="location.href='@Url.Action("Poly", "Home")'" style="width: 138%;width: 100%;font-size: 18px;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Poly</button>
+                </td>
+                <td>
+                    <button type="button" onclick="location.href='@Url.Action("CNList", "Home")'" style="width: 138%;width: 100%;font-size: 18px;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Update/Search</button>
+                </td>
+                <td>
+                    <button type="button" onclick="location.href='@Url.Action("BulkUpload", "Home")'" style="width: 138%;width: 100%;font-size: 18px;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Bulk Upload</button>
+                </td>
+                <td>
+                    <button type="button" style="width: 138%;width: 100%;font-size: 18px;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Reports</button>
+
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    <div class="row" style="padding:0.5%;margin-top: 2%;">
+        <div class="col-lg-1" style="margin-left: 5%;width: 4%;">
+            <a href="#" style="color:black;text-decoration: none;font-size: large;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">File</a>
+            <ul class="dropdown-menu">
                 <li><a href="@Url.Action("Document","Home")">Documents</a></li>
                 <li><a href="@Url.Action("Parcel","Home")">Parcel</a></li>
                 <li><a href="@Url.Action("Poly","Home")">Poly</a></li>
@@ -55,30 +82,5 @@
             <a href="@Url.Action("LogOut","Home")" style="color:black;text-decoration: none;font-size: large;" role="button">Logout</a>
         </div>
     </div>
-    <div class="row">
-        <table style="margin-left:76px;width: 66%;" class="table table-borderless">
-            <tr>
-                <td>
-                    <button type="button" onclick="location.href='@Url.Action("Document", "Home")'" style="font-size: 18px;width: 100%;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Documents</button>
-                </td>
-                <td>
-                    <button type="button" onclick="location.href='@Url.Action("Parcel", "Home")'"  style="font-size:18px;width: 100%;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Parcel</button>
-                </td>
-                <td>
-                    <button type="button" onclick="location.href='@Url.Action("Poly", "Home")'" style="width: 138%;width: 100%;font-size: 18px;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Poly</button>
-                </td>
-                <td>
-                    <button type="button" onclick="location.href='@Url.Action("CNList", "Home")'" style="width: 138%;width: 100%;font-size: 18px;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Update/Search</button>
-                </td>
-                <td>
-                    <button type="button" onclick="location.href='@Url.Action("BulkUpload", "Home")'" style="width: 138%;width: 100%;font-size: 18px;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Bulk Upload</button>
-                </td>
-                <td>
-                    <button type="button" style="width: 138%;width: 100%;font-size: 18px;font-family: sans-serif;height: 34px;" class="btn btn-danger btn-rounded">Reports</button>
 
-                </td>
-            </tr>
-        </table>
-
-    </div>
 </nav>
