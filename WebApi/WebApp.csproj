@@ -450,16 +450,10 @@
     <Content Include="Views\Home\Parcel.cshtml" />
     <Content Include="Views\Home\Poly.cshtml" />
     <Content Include="Views\Home\OtherBooking.cshtml" />
-    <Content Include="Views\Home\DeliveryStatus.cshtml" />
-    <Content Include="Views\Home\CNPrint.cshtml" />
-    <Content Include="Views\Home\Accounts.cshtml" />
-    <Content Include="Views\Home\BillInfoReport.cshtml" />
-    <Content Include="Views\Home\CNInfoReport.cshtml" />
-    <Content Include="Views\Home\SalesReport.cshtml" />
-    <Content Include="Views\Home\PartyReport.cshtml" />
     <Content Include="Views\Home\test.cshtml" />
     <Content Include="Views\Home\CNList.cshtml" />
     <Content Include="Views\Home\BulkUpload.cshtml" />
+    <Content Include="Views\Home\Reports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -473,6 +467,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201902041810441_newdb.resx">
       <DependentUpon>201902041810441_newdb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RDLC\rptSingleCN.rdlc">
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="RDLC\rptDailySales.rdlc">
       <SubType>Designer</SubType>

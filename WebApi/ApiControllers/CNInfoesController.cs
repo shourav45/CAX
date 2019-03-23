@@ -110,7 +110,7 @@ namespace WebApi.ApiControllers
             cn.ServiceCharge = "0";//need to add on the form
             db.CNInfoset.Add(cn);
            var result= db.SaveChanges();
-            return Json("1", JsonRequestBehavior.AllowGet);
+            return Json(cn.CNInfoId, JsonRequestBehavior.AllowGet);
         }
 
         // DELETE: api/CNInfoes/5

@@ -244,55 +244,15 @@ namespace WebApi.Controllers
             }
             return File(memStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "CN Bulk Upload Sample format.xlsx");
         }
-        public ActionResult DeliveryStatus()
+        public ActionResult Reports()
         {
             int Auth = AuthCheck();
             if (Auth == 1)
                 return View();
             return RedirectToAction("Login", "Home");
         }
-        public ActionResult CNPrint()
-        {
-            int Auth = AuthCheck();
-            if (Auth == 1)
-                return View();
-            return RedirectToAction("Login", "Home");
-        }
-        public ActionResult Accounts()
-        {
-            int Auth = AuthCheck();
-            if (Auth == 1)
-                return View();
-            return RedirectToAction("Login", "Home");
-        }
-
-        
-        public ActionResult BillInfoReport()
-        {
-            int Auth = AuthCheck();
-            if (Auth == 1)
-                return View();
-            return RedirectToAction("Login", "Home");
-        }
-        public ActionResult CNInfoReport()
-        {
-            int Auth = AuthCheck();
-            if (Auth == 1)
-                return View();
-            return RedirectToAction("Login", "Home");
-        }
-        public ActionResult SalesReport()
-        {
-            return View();
-        }
-        public ActionResult PartyReport()
-        {
-            return View();
-        }
-        public ActionResult test()
-        {
-            return View();
-        }
+       
+    
         public ActionResult LogOut()
         {
             HttpCookie myCookie = new HttpCookie("UserCookie");

@@ -6,8 +6,8 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 
-<div class="row" style="background-color:dimgrey;height:800px;margin-top: 8%;" ng-controller="FrmlClt">
-    <form ng-submit="submitForm()" name="caxform" method="post" novalidate style="height: 100%;width: 94%;background-color: white;margin-top: 2%;margin-left: 3%;">
+<div class="row" style="background-color:dimgrey;height:918px;" ng-controller="FrmlClt">
+    <form ng-submit="submitForm()" name="caxform" method="post" novalidate style="height: 84%;width: 94%;background-color: white;margin-top: 10%;margin-left: 3%;">
         <div class="col-md-12" style="background-color: red;height: 7%;border: groove;width: 99%;margin-left: 6px;margin-top: 5px;">
             <p style="color:white;text-align: center;font-size: xx-large;font-weight: bold;">Booking CN Parcel</p>
         </div>
@@ -19,7 +19,7 @@
                             <label> Date :</label>
                         </td>
                         <td ng-class="{ 'has-error' : submitted && caxform.CNDate.$invalid}">
-                            <input class="form-control" type="text" name="CNDate" ng-model="Book.CNDate" id="datepicker" required>
+                            <input autocomplete="off" class="form-control" type="text" name="CNDate" ng-model="Book.CNDate" id="datepicker" required>
                             <span ng-show="submitted &&  caxform.CNDate.$error.required" class="text-danger">Date is Required</span>
                         </td>
                     </tr>
@@ -170,12 +170,12 @@
                             <label class="control-label">
                                 First   :
                             </label>
-                            <input class="text-center" name="FirstPieceNumber" disabled id="FirstPieceNumber" ng-model="FirstPieceNumber" type="text" required />
+                            <input style="width:26%" class="text-center" name="FirstPieceNumber" disabled id="FirstPieceNumber" ng-model="FirstPieceNumber" type="text" required />
 
                             <label class="control-label">
                                 KG Rate :
                             </label>
-                            <input class="text-center" disabled id="FirstPieceRate" name="FirstPieceRate" ng-model="FirstPieceRate" type="text" required />
+                            <input style="width:26%" class="text-center" disabled id="FirstPieceRate" name="FirstPieceRate" ng-model="FirstPieceRate" type="text" required />
                             <span ng-show="submitted &&  caxform.FirstPieceNumber.$error.required" class="text-danger">Required</span>
 
                         </td>
@@ -186,11 +186,11 @@
                             <label class="control-label">
                                 After :
                             </label>
-                            <input class="text-center" disabled ng-model="FirstPieceNumber" type="text" required />
+                            <input style="width:26%" class="text-center" disabled ng-model="FirstPieceNumber" type="text" required />
                             <label class="control-label">
                                 KG Rate :
                             </label>
-                            <input class="text-center" disabled id="AfterFirstPieceRate" name="AfterFirstPieceRate" ng-model="AfterFirstPieceRate" type="text" required />
+                            <input style="width:26%" class="text-center" disabled id="AfterFirstPieceRate" name="AfterFirstPieceRate" ng-model="AfterFirstPieceRate" type="text" required />
                             <span ng-show="submitted &&  caxform.AfterFirstPieceRate.$error.required" class="text-danger">Required</span>
 
                         </td>
@@ -226,9 +226,9 @@
 @section Scripts{
     <!-- Page-Level Plugin Scripts-->
     <script type="text/javascript">
-$(document).ready(function() {
-    $('#datepicker').datepicker({ format: "dd/mm/yyyy" });
-});
+        $(document).ready(function () {
+            $('#datepicker').datepicker({ format: "dd/mm/yyyy" });
+        });
     </script>
     <script>
         CNApp.controller('FrmlClt', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
@@ -251,7 +251,7 @@ $(document).ready(function() {
             $scope.DateConvert = function DateConvert(str) {
                 var re = /\/Date\(([0-9]*)\)\//;
                 var m = str.match(re);
-                var dt =new Date(parseInt(m[1]));
+                var dt = new Date(parseInt(m[1]));
                 var date = new Date(dt),
                     mnth = ("0" + (date.getMonth() + 1)).slice(-2),
                     day = ("0" + date.getDate()).slice(-2);
@@ -273,8 +273,7 @@ $(document).ready(function() {
                     $scope.Book.TotalAmount = TotalAmount;
                 }
             }
-            $scope.FillRateEntry = function FillRateEntry()
-            {
+            $scope.FillRateEntry = function FillRateEntry() {
                 var rateType = $("input[name=optionsRadiosInline]:checked").val();
                 if (rateType != null && rateType != undefined && rateType == "Flat") {
                     // Enabling flat entry
@@ -296,13 +295,12 @@ $(document).ready(function() {
                     var availablePartyRate = $.grep($scope.PartyRate, function (obj) {
                         return obj.Ex1 == $scope.Book.Size && obj.RateType == 'Parcel';
                     });
-                    if (availablePartyRate.length == 0)
-                    {
+                    if (availablePartyRate.length == 0) {
                         toastr.warning('Rate not found. Please go for flat entry or add rate first.');
                         return;
 
                     }
-                    if(availablePartyRate != null && availablePartyRate != undefined){
+                    if (availablePartyRate != null && availablePartyRate != undefined) {
                         $scope.Book.KPNumber = "";
                         $scope.FirstPieceNumber = availablePartyRate[0].FirstKP;
                         $scope.FirstPieceRate = availablePartyRate[0].FirstKPRate;
@@ -322,7 +320,7 @@ $(document).ready(function() {
                            $scope.PartyRate = response.data;
                            console.log($scope.PartyRate);
                            toastr.options.positionClass = 'toast-bottom-right';
-                           if ($scope.PartyRate =='0') {
+                           if ($scope.PartyRate == '0') {
                                toastr.warning('Rate not found. Please add rate or go for flat entry.');
                                return;
                            }
@@ -351,23 +349,41 @@ $(document).ready(function() {
             $scope.submitForm = function () {
                 if ($scope.caxform.$invalid)
                     return;
-                $http.post("/CNInfoes/PostCNInfo?CNType=Parcel"+
-                        "&PolySize=NULL&CNDate="+ $scope.Book.CNDate +
+                $http.post("/CNInfoes/PostCNInfo?CNType=Parcel" +
+                        "&PolySize=NULL&CNDate=" + $scope.Book.CNDate +
                         "&ServiceType=" + $scope.Book.ServiceType + "&PartyId=" + $scope.Book.PartyId +
                     "&Destination=" + $scope.Book.Destination + "&Follio=" + $scope.Book.Follio +
                     "&ConsingeeName=" + $scope.Book.ConsingeeName + "&ConsigneeAddress=" + $scope.Book.ConsigneeAddress +
                     "&ItemInfo=" + $scope.Book.ItemInfo + "&Kgpiece=" + $scope.Book.KPNumber +
-                    "&RateType=" + $scope.Book.RateType + "&Weight=" + "0" + "&ServiceCharge="+ $scope.Book.ServiceCharge +
+                    "&RateType=" + $scope.Book.RateType + "&Weight=" + "0" + "&ServiceCharge=" + $scope.Book.ServiceCharge +
                     "&VatStatus=0&VatPercent=0&VatAmount=0&AitStatus=0&AitPercent=0&AitAmount=0&TotalAmount=" + $scope.Book.TotalAmount +
                     "&Size=" + $scope.Book.Size + "&KPNumber=" + $scope.Book.KPNumber + "&Ex1=" + $scope.Book.Size)
                             .then(function successCallback(response) {
                                 console.log(response.data);
 
-                                if (response.data == '1')
-                                {
+                                if (response.data != '0') {
                                     $scope.Book = [];
                                     $("#frmresetbtn").trigger("click");
-                                    sweetAlert("Success!!", "CN added successfully", "success");
+                                    swal({
+                                        title: "Success!",
+                                        text: "CN added successfully! Print now?",
+                                        type: "success",
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#DD6B55',
+                                        confirmButtonText: 'Yes, Print now',
+                                        cancelButtonText: "No, Print later",
+                                        closeOnConfirm: false,
+                                        closeOnCancel: false
+                                    },
+                               function (isConfirm) {
+                                   if (isConfirm) {
+                                       swal.close();
+                                       var win = window.open('../Report/QuickPrint?CN=' + response.data, '_blank');
+                                       win.focus();
+                                   } else {
+                                       swal.close();
+                                   }
+                               });
                                     return;
                                 }
                                 sweetAlert("Sorry!!", response.data, "error");

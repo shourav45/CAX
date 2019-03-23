@@ -14,9 +14,25 @@ namespace WebApi.Controllers
     {
         private dbcontext db;
         // GET: Report
-        public ActionResult Index()
+        public ActionResult QuickPrint(int CN)
         {
-            return View();
+            db = new dbcontext();
+          List<CNInfo> cnData = db.CNInfoset.Where(c=>c.CNInfoId==CN).ToList();
+            Warning[] warnings;
+            string mimeType;
+            string[] streamids;
+            string encoding;
+            string filenameExtension;
+
+            var viewer = new ReportViewer();
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptSingleCN.rdlc");
+
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.Refresh();
+
+            var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+
+            return File(bytes, mimeType);
         }
 
         public ActionResult DayReport()
