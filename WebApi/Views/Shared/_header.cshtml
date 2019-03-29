@@ -13,6 +13,35 @@
             </td>
         </tr>
     </table>
+   
+    <div class="container-fluid" style="background-color: antiquewhite;height: 55px;padding-top: 8px;">
+        <table id="productSizes" class="" style="margin-left: 5%;">
+            <tbody>
+                <tr class="d-flex">
+                    <td class="col-1">
+                        <button type="button" onclick="location.href='@Url.Action("Document", "Home")'" style="font-size: 18px;font-family: sans-serif;" class="btn btn-danger btn-rounded">Documents</button>
+
+                    </td>
+                    <td class="col-1" style="padding-left: 3%;padding-right: 3%;">
+                        <button type="button" onclick="location.href='@Url.Action("Parcel", "Home")'" style="font-size:18px;font-family: sans-serif;" class="btn btn-danger btn-rounded">Parcel</button>
+                    </td>
+                    <td class="col-1" style="padding-left: 6%;">
+                        <button type="button" onclick="location.href='@Url.Action("Poly", "Home")'" style="font-size: 18px;font-family: sans-serif;" class="btn btn-danger btn-rounded">Poly</button>
+                    </td>
+                    <td class="col-1" style="padding-left: 8%;padding-right: 3%;">
+                        <button type="button" onclick="location.href='@Url.Action("CNList", "Home")'" style="font-size: 18px;font-family: sans-serif;" class="btn btn-danger btn-rounded">Update/Search</button>
+                    </td>
+                    <td class="col-1" style="padding-left: 9%;">
+                        <button type="button" onclick="location.href='@Url.Action("BulkUpload", "Home")'" style="font-size: 18px;font-family: sans-serif;" class="btn btn-danger btn-rounded">Bulk Upload</button>
+                    </td>
+                    <td class="col-1" style="padding-left: 10%;padding-right: 3%;">
+                        <button type="button"  onclick="location.href='@Url.Action("Reports","Home")'" style="font-size: 18px;font-family: sans-serif;" class="btn btn-danger btn-rounded">Reports</button>
+                    </td>
+                    <td class="col-6">-</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <div class="container-fluid" style="background-color: white;height: 41px;">
         <table id="productSizes" class="table" style="margin-left: 5%;">
             <tbody>
@@ -63,33 +92,4 @@
             </tbody>
         </table>
     </div>
-    <div class="container-fluid" style="background-color: antiquewhite;height: 55px;padding-top: 8px;">
-        <table id="productSizes" class="" style="margin-left: 5%;">
-            <tbody>
-                <tr class="d-flex">
-                    <td class="col-1">
-                        <button type="button" onclick="location.href='@Url.Action("Document", "Home")'" style="font-size: 18px;font-family: sans-serif;" class="btn btn-danger btn-rounded">Documents</button>
-
-                    </td>
-                    <td class="col-1" style="padding-left: 3%;padding-right: 3%;">
-                        <button type="button" onclick="location.href='@Url.Action("Parcel", "Home")'" style="font-size:18px;font-family: sans-serif;" class="btn btn-danger btn-rounded">Parcel</button>
-                    </td>
-                    <td class="col-1" style="padding-left: 6%;">
-                        <button type="button" onclick="location.href='@Url.Action("Poly", "Home")'" style="font-size: 18px;font-family: sans-serif;" class="btn btn-danger btn-rounded">Poly</button>
-                    </td>
-                    <td class="col-1" style="padding-left: 8%;padding-right: 3%;">
-                        <button type="button" onclick="location.href='@Url.Action("CNList", "Home")'" style="font-size: 18px;font-family: sans-serif;" class="btn btn-danger btn-rounded">Update/Search</button>
-                    </td>
-                    <td class="col-1" style="padding-left: 9%;">
-                        <button type="button" onclick="location.href='@Url.Action("BulkUpload", "Home")'" style="font-size: 18px;font-family: sans-serif;" class="btn btn-danger btn-rounded">Bulk Upload</button>
-                    </td>
-                    <td class="col-1" style="padding-left: 10%;padding-right: 3%;">
-                        <button type="button"  onclick="location.href='@Url.Action("Reports","Home")'" style="font-size: 18px;font-family: sans-serif;" class="btn btn-danger btn-rounded">Reports</button>
-                    </td>
-                    <td class="col-6">-</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
 </div>

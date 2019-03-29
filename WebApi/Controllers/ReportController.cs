@@ -13,7 +13,259 @@ namespace WebApi.Controllers
     public class ReportController : Controller
     {
         private dbcontext db;
-        // GET: Report
+
+        public ActionResult CNUserEntryReport(DateTime CNDate,int CNDestination)
+        {
+            db = new dbcontext();
+            List<CNInfo> cnData = db.CNInfoset.ToList();
+           
+            Warning[] warnings;
+            string mimeType;
+            string[] streamids;
+            string encoding;
+            string filenameExtension;
+
+            var viewer = new ReportViewer();
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptDailySales.rdlc");
+
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.Refresh();
+
+            var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+
+            return File(bytes, mimeType);
+        }
+        public ActionResult CNFullManifest(DateTime CNDate, int CNDestination)
+        {
+            db = new dbcontext();
+            List<CNInfo> cnData = db.CNInfoset.ToList();
+
+            Warning[] warnings;
+            string mimeType;
+            string[] streamids;
+            string encoding;
+            string filenameExtension;
+
+            var viewer = new ReportViewer();
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptDailySales.rdlc");
+
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.Refresh();
+
+            var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+
+            return File(bytes, mimeType);
+        }
+        public ActionResult CNPartManifest(DateTime CNDate, int CNDestination)
+        {
+            db = new dbcontext();
+            List<CNInfo> cnData = db.CNInfoset.ToList();
+
+            Warning[] warnings;
+            string mimeType;
+            string[] streamids;
+            string encoding;
+            string filenameExtension;
+
+            var viewer = new ReportViewer();
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptDailySales.rdlc");
+
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.Refresh();
+
+            var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+
+            return File(bytes, mimeType);
+        }
+        public ActionResult SaleDailyTotal(DateTime SaleDate, string SaleSOPName)
+        {
+            db = new dbcontext();
+            List<CNInfo> cnData = db.CNInfoset.ToList();
+
+            Warning[] warnings;
+            string mimeType;
+            string[] streamids;
+            string encoding;
+            string filenameExtension;
+
+            var viewer = new ReportViewer();
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptDailySales.rdlc");
+
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.Refresh();
+
+            var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+
+            return File(bytes, mimeType);
+        }
+        public ActionResult SaleSPOReport(DateTime SaleDate, string SaleSOPName)
+        {
+            db = new dbcontext();
+            List<CNInfo> cnData = db.CNInfoset.ToList();
+
+            Warning[] warnings;
+            string mimeType;
+            string[] streamids;
+            string encoding;
+            string filenameExtension;
+
+            var viewer = new ReportViewer();
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptDailySales.rdlc");
+
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.Refresh();
+
+            var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+
+            return File(bytes, mimeType);
+        }
+        public ActionResult SaleSPOTotalReport(DateTime SaleDate, string SaleSOPName)
+        {
+            db = new dbcontext();
+            List<CNInfo> cnData = db.CNInfoset.ToList();
+
+            Warning[] warnings;
+            string mimeType;
+            string[] streamids;
+            string encoding;
+            string filenameExtension;
+
+            var viewer = new ReportViewer();
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptDailySales.rdlc");
+
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.Refresh();
+
+            var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+
+            return File(bytes, mimeType);
+        }
+        public ActionResult BillMonthly(DateTime BillDate, int PartyId,string CNType,int Discount)
+        {
+            db = new dbcontext();
+            List<CNInfo> cnData = db.CNInfoset.ToList();
+
+            Warning[] warnings;
+            string mimeType;
+            string[] streamids;
+            string encoding;
+            string filenameExtension;
+
+            var viewer = new ReportViewer();
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptDailySales.rdlc");
+
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.Refresh();
+
+            var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+
+            return File(bytes, mimeType);
+        }
+        public ActionResult BillMonthlyDetails(DateTime BillDate, int PartyId, string CNType, int Discount)
+        {
+            db = new dbcontext();
+            List<CNInfo> cnData = db.CNInfoset.ToList();
+
+            Warning[] warnings;
+            string mimeType;
+            string[] streamids;
+            string encoding;
+            string filenameExtension;
+
+            var viewer = new ReportViewer();
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptDailySales.rdlc");
+
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.Refresh();
+
+            var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+
+            return File(bytes, mimeType);
+        }
+        public ActionResult PartyFolioReport(DateTime PartyDate, int PartyId, string UpdateStatus)
+        {
+            db = new dbcontext();
+            List<CNInfo> cnData = db.CNInfoset.ToList();
+
+            Warning[] warnings;
+            string mimeType;
+            string[] streamids;
+            string encoding;
+            string filenameExtension;
+
+            var viewer = new ReportViewer();
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptDailySales.rdlc");
+
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.Refresh();
+
+            var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+
+            return File(bytes, mimeType);
+        }
+        public ActionResult PartyShipperCopy(DateTime PartyDate, int PartyId, string UpdateStatus)
+        {
+            db = new dbcontext();
+            List<CNInfo> cnData = db.CNInfoset.ToList();
+
+            Warning[] warnings;
+            string mimeType;
+            string[] streamids;
+            string encoding;
+            string filenameExtension;
+
+            var viewer = new ReportViewer();
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptDailySales.rdlc");
+
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.Refresh();
+
+            var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+
+            return File(bytes, mimeType);
+        }
+        public ActionResult PartyNonUpdateReport(DateTime PartyDate, int PartyId, string UpdateStatus)
+        {
+            db = new dbcontext();
+            List<CNInfo> cnData = db.CNInfoset.ToList();
+
+            Warning[] warnings;
+            string mimeType;
+            string[] streamids;
+            string encoding;
+            string filenameExtension;
+
+            var viewer = new ReportViewer();
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptDailySales.rdlc");
+
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.Refresh();
+
+            var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+
+            return File(bytes, mimeType);
+        }
+        public ActionResult PartyUpdateReport(DateTime PartyDate, int PartyId, string UpdateStatus)
+        {
+            db = new dbcontext();
+            List<CNInfo> cnData = db.CNInfoset.ToList();
+
+            Warning[] warnings;
+            string mimeType;
+            string[] streamids;
+            string encoding;
+            string filenameExtension;
+
+            var viewer = new ReportViewer();
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptDailySales.rdlc");
+
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.Refresh();
+
+            var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+
+            return File(bytes, mimeType);
+        }
         public ActionResult QuickPrint(int CN)
         {
             db = new dbcontext();
@@ -33,11 +285,6 @@ namespace WebApi.Controllers
             var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
 
             return File(bytes, mimeType);
-        }
-
-        public ActionResult DayReport()
-        {
-            return View();
         }
 
         public ActionResult GetDailyReport()
