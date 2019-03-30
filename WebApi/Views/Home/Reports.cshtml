@@ -9,19 +9,19 @@
    <div style="margin-top: 12%;">
 
        <div style="background-color:#a72525eb;width: 64%;margin-left: 18%;color:white;height: 460px;">
-           <h2 style="font-size: xx-large;text-align: center;padding-top: 2%;font-weight: 800;text-decoration: underline;">View Reports</h2>
+           <h2 style="font-size: initial;text-align: center;padding-top: 2%;font-weight: 800;text-decoration: underline;">View Reports</h2>
            <ul class="nav nav-tabs row" style="width: 98%;margin-left: 1%;">
-               <li class="active"><a href="#home" style="font-size: x-large;font-weight: 800;">CN Info</a></li>
-               <li><a href="#menu1" style="font-size: x-large;font-weight: 800;">Sales Info</a></li>
-               <li><a href="#menu2" style="font-size: x-large;font-weight: 800;">Bill Info</a></li>
-               <li><a href="#menu3" style="font-size: x-large;font-weight: 800;">Party Report</a></li>
+               <li class="active"><a href="#home" style="font-size: initial;font-weight: 800;">CN Info</a></li>
+               <li><a href="#menu1" style="font-size: initial;font-weight: 800;">Sales Info</a></li>
+               <li><a href="#menu2" style="font-size: initial;font-weight: 800;">Bill Info</a></li>
+               <li><a href="#menu3" style="font-size: initial;font-weight: 800;">Party Report</a></li>
            </ul>
 
            <div class="tab-content">
                <div id="home" class="tab-pane fade in active">
                   <div class="row" style="margin-top: 4%;">
                     <div class="form-group" style="margin-bottom: 8%;">
-                        <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                        <div class="col-md-4 label" style="text-align: right;font-size: large;font-weight: 800;">
                             Date :
                         </div>
                         <div class="col-md-6">
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                      <div class="form-group"  style="margin-bottom: 5%;">
-                         <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                         <div class="col-md-4 label" style="text-align: right;font-size: large;font-weight: 800;">
                              Destination :
                          </div>
                          <div class="col-md-6">
@@ -40,15 +40,15 @@
                          </div>
                      </div>
                       <div class="form-group" style="margin-bottom: 5%;">
-                          <div class="col-md-12" style="margin-top: 5%;margin-bottom: 2%;text-align: center;font-size: x-large;font-weight: 800;">
+                          <div class="col-md-12" style="margin-top: 5%;margin-bottom: 2%;text-align: center;font-weight: 800;">
                               <a class="btn btn-default" ng-click="CNUserEntryReport()" href="#" style="font-weight: 800;color: white;width: 50%;background-color: rgb(32, 212, 126);">User Entry Report</a>
                           </div>
                       </div>
                       <div class="form-group" style="margin-bottom: 5%;">
-                          <div class="col-md-6" style="text-align: right;font-size: x-large;font-weight: 800;">
+                          <div class="col-md-6" style="text-align: right;font-weight: 800;">
                               <a class="btn btn-default green" ng-click="CNFullManifest()" href="#" style="font-weight: 800;color: white;width: 80%;background-color: rgb(32, 212, 126);">Full Menifest</a>
                           </div>
-                          <div class="col-md-6" style="text-align: left;font-size: x-large;font-weight: 800;">
+                          <div class="col-md-6" style="text-align: left;font-weight: 800;">
                               <a class="btn btn-default green" ng-click="CNPartManifest()" href="#" style="font-weight: 800;color: white;width: 80%;background-color: rgb(32, 212, 126);">Part Menifest</a>
                           </div>
                       </div>
@@ -215,7 +215,7 @@ $(document).ready(function() {
     $("#datepicker2").datepicker({
         changeMonth: true,
         changeYear: true,
-        dateFormat: 'd MM, y',
+        dateFormat: 'MM yy',
         maxDate: 'today'
     });
     $("#datepicker3").datepicker({
@@ -252,52 +252,204 @@ $(document).ready(function(){
                 $scope.vm = {};
                 $scope.vm.dtOptions = DTOptionsBuilder.newOptions()
                   .withOption('order', [0, 'asc']);
+                $scope.Party = {};
+                $scope.Bill = {};
+                $scope.Sale = {};
+                $scope.CNInfo = {};
             }
 
 
             //party report
             $scope.PartyFolioReport = function () {
+                if ($scope.Party.Date == null || $scope.Party.Date == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select date please.');
+                    return;
+                }
+                if ($scope.Party.PartyId == null || $scope.Party.PartyId == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select party name please.');
+                    return;
+                }
+                if ($scope.Party.UpdateStatus == null || $scope.Party.UpdateStatus == '') {
+                    $scope.Party.UpdateStatus = 'N/A';
+                }
                 window.open('/Report/PartyFolioReport?PartyDate=' + $scope.Party.Date + '&PartyId=' + $scope.Party.PartyId + '&UpdateStatus=' + $scope.Party.UpdateStatus, '_blank');
             }
             $scope.PartyShipperCopy = function () {
+                if ($scope.Party.Date == null || $scope.Party.Date == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select date please.');
+                    return;
+                }
+                if ($scope.Party.PartyId == null || $scope.Party.PartyId == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select party name please.');
+                    return;
+                }
+                if ($scope.Party.UpdateStatus == null || $scope.Party.UpdateStatus == '') {
+                    $scope.Party.UpdateStatus = 'N/A';
+                }
                 window.open('/Report/PartyShipperCopy?PartyDate=' + $scope.Party.Date + '&PartyId=' + $scope.Party.PartyId + '&UpdateStatus=' + $scope.Party.UpdateStatus, '_blank');
             }
             $scope.PartyNonUpdateReport = function () {
+                if ($scope.Party.Date == null || $scope.Party.Date == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select date please.');
+                    return;
+                }
+                if ($scope.Party.PartyId == null || $scope.Party.PartyId == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select party name please.');
+                    return;
+                }
+                if ($scope.Party.UpdateStatus == null || $scope.Party.UpdateStatus == '') {
+                    $scope.Party.UpdateStatus = 'N/A';
+                }
                 window.open('/Report/PartyNonUpdateReport?PartyDate=' + $scope.Party.Date + '&PartyId=' + $scope.Party.PartyId + '&UpdateStatus=' + $scope.Party.UpdateStatus, '_blank');
             }
             $scope.PartyUpdateReport = function () {
+                if ($scope.Party.Date == null || $scope.Party.Date == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select date please.');
+                    return;
+                }
+                if ($scope.Party.PartyId == null || $scope.Party.PartyId == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select party name please.');
+                    return;
+                }
+                if ($scope.Party.UpdateStatus == null || $scope.Party.UpdateStatus == '') {
+                    $scope.Party.UpdateStatus = 'N/A';
+                }
                 $window.open('/Report/PartyUpdateReport?PartyDate=' + $scope.Party.Date + '&PartyId=' + $scope.Party.PartyId + '&UpdateStatus=' + $scope.Party.UpdateStatus, '_blank');
             }
             //Bill info
             $scope.BillMonthly = function () {
+                if ($scope.Bill.Date == undefined || $scope.Bill.Date == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select date please.');
+                    return;
+                }
+                if ($scope.Bill.PartyId == undefined || $scope.Bill.PartyId == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select party name please.');
+                    return;
+                }
+                if ($scope.Bill.CNType == undefined || $scope.Bill.CNType == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select CN type.');
+                    return;
+                }
+                if ($scope.Bill.Discount == null || $scope.Bill.Discount == '') {
+                    $scope.Bill.Discount = 0;
+                }
                 window.open('/Report/BillMonthly?BillDate=' + $scope.Bill.Date + '&PartyId=' + $scope.Bill.PartyId + '&CNType=' + $scope.Bill.CNType + '&Discount=' + $scope.Bill.Discount, '_blank');
             }
             $scope.BillMonthlyDetails = function () {
+                if ($scope.Bill.Date == undefined || $scope.Bill.Date == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select date please.');
+                    return;
+                }
+                if ($scope.Bill.PartyId == undefined || $scope.Bill.PartyId == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select party name please.');
+                    return;
+                }
+                if ($scope.Bill.CNType == undefined || $scope.Bill.CNType == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select CN type.');
+                    return;
+                }
+                if ($scope.Bill.Discount == null || $scope.Bill.Discount=='') {
+                    $scope.Bill.Discount = 0;
+                }
                 window.open('/Report/BillMonthlyDetails?BillDate=' + $scope.Bill.Date + '&PartyId=' + $scope.Bill.PartyId + '&CNType=' + $scope.Bill.CNType + '&Discount=' + $scope.Bill.Discount, '_blank');
             }
            //sales info
             $scope.SaleDailyTotal = function () {
+                if ($scope.Sale.Date == undefined || $scope.Sale.Date == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select date please.');
+                    return;
+                }
+                if ($scope.Sale.SPOName == undefined || $scope.Sale.SPOName == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select SPO name please.');
+                    return;
+                }
                 window.open('/Report/SaleDailyTotal?SaleDate=' + $scope.Sale.Date + '&SaleSOPName=' + $scope.Sale.SPOName, '_blank');
             }
             $scope.SaleSPOReport = function () {
+                if ($scope.Sale.Date == undefined || $scope.Sale.Date == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select date please.');
+                    return;
+                }
+                if ($scope.Sale.SPOName == undefined || $scope.Sale.SPOName == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select SPO name please.');
+                    return;
+                }
                 window.open('/Report/SaleSPOReport?SaleDate=' + $scope.Sale.Date + '&SaleSOPName=' + $scope.Sale.SPOName, '_blank');
             }
             $scope.SaleSPOTotalReport = function () {
+                if ($scope.Sale.Date == undefined || $scope.Sale.Date == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select date please.');
+                    return;
+                }
+                if ($scope.Sale.SPOName == undefined || $scope.Sale.SPOName == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select SPO name please.');
+                    return;
+                }
                 window.open('/Report/SaleSPOTotalReport?SaleDate=' + $scope.Sale.Date + '&SaleSOPName=' + $scope.Sale.SPOName, '_blank');
             }
             //cn info
             $scope.CNUserEntryReport =function()
             {
+                if ($scope.CNInfo.Date == undefined || $scope.CNInfo.Date == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select date please.');
+                    return;
+                }
+                if ($scope.CNInfo.DestinationId == undefined || $scope.CNInfo.DestinationId == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select destination please.');
+                    return;
+                }
                 window.open('/Report/CNUserEntryReport?CNDate=' + $scope.CNInfo.Date + '&CNDestination=' + $scope.CNInfo.DestinationId, '_blank');
             }
 
             $scope.CNFullManifest = function()
             {
+                if ($scope.CNInfo.Date == undefined || $scope.CNInfo.Date == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select date please.');
+                    return;
+                }
+                if ($scope.CNInfo.DestinationId == undefined || $scope.CNInfo.DestinationId == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select date please.');
+                    return;
+                }
                 window.open('/Report/CNFullManifest?CNDate=' + $scope.CNInfo.Date + '&CNDestination=' + $scope.CNInfo.DestinationId, '_blank');
             }
 
             $scope.CNPartManifest = function()
             {
+                if ($scope.CNInfo.Date == undefined || $scope.CNInfo.Date == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select date please.');
+                    return;
+                }
+                if ($scope.CNInfo.DestinationId == undefined || $scope.CNInfo.DestinationId == '') {
+                    toastr.options.positionClass = 'toast-bottom-right';
+                    toastr.warning('Select date please.');
+                    return;
+                }
                 window.open('/Report/CNPartManifest?CNDate=' + $scope.CNInfo.Date + '&CNDestination=' + $scope.CNInfo.DestinationId, '_blank');
             }
 
