@@ -3,6 +3,280 @@
     ViewBag.Title = "Reports";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<div class="row" style="background-color:dimgrey;height:650px;" ng-controller="FrmlClt">
+   <div style="margin-top: 12%;">
 
-<h2>Reports</h2>
+       <div style="background-color:#a72525eb;width: 64%;margin-left: 18%;color:white;height: 460px;">
+           <h2 style="font-size: xx-large;text-align: center;padding-top: 2%;font-weight: 800;text-decoration: underline;">View Reports</h2>
+           <ul class="nav nav-tabs row" style="width: 98%;margin-left: 1%;">
+               <li class="active"><a href="#home" style="font-size: x-large;font-weight: 800;">CN Info</a></li>
+               <li><a href="#menu1" style="font-size: x-large;font-weight: 800;">Sales Info</a></li>
+               <li><a href="#menu2" style="font-size: x-large;font-weight: 800;">Bill Info</a></li>
+               <li><a href="#menu3" style="font-size: x-large;font-weight: 800;">Party Report</a></li>
+           </ul>
 
+           <div class="tab-content">
+               <div id="home" class="tab-pane fade in active">
+                  <div class="row" style="margin-top: 4%;">
+                    <div class="form-group" style="margin-bottom: 8%;">
+                        <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                            Date :
+                        </div>
+                        <div class="col-md-6">
+                            <input autocomplete="off" type="text" id="datepicker1"  class="form-control" />
+                        </div>
+                    </div>
+                     <div class="form-group"  style="margin-bottom: 5%;">
+                         <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                             Destination :
+                         </div>
+                         <div class="col-md-6">
+                             <select class="form-control" name="UserName" ng-model="Destination" data-show-subtext="true" data-live-search="true" required>
+                                 <option value="" data-subtext="">Select Destination</option>
+                                 <option ng-repeat="dest in DestinationList" value="{{dest.DestinationId}}" data-subtext="{{dest.Area}}">{{dest.District}}->{{dest.Area}}</option>
+                             </select>
+                         </div>
+                     </div>
+                      <div class="form-group" style="margin-bottom: 5%;">
+                          <div class="col-md-12" style="margin-top: 5%;margin-bottom: 2%;text-align: center;font-size: x-large;font-weight: 800;">
+                              <a class="btn btn-default" href="#" style="font-weight: 800;color: white;width: 50%;background-color: rgb(32, 212, 126);">User Entry Report</a>
+                          </div>
+                      </div>
+                      <div class="form-group" style="margin-bottom: 5%;">
+                          <div class="col-md-6" style="text-align: right;font-size: x-large;font-weight: 800;">
+                              <a class="btn btn-default green" href="#" style="font-weight: 800;color: white;width: 80%;background-color: rgb(32, 212, 126);">Full Menifest</a>
+                          </div>
+                          <div class="col-md-6" style="text-align: left;font-size: x-large;font-weight: 800;">
+                              <a class="btn btn-default green" href="#" style="font-weight: 800;color: white;width: 80%;background-color: rgb(32, 212, 126);">Part Menifest</a>
+                          </div>
+                      </div>
+                     
+                  </div>
+               </div>
+               <div id="menu1" class="tab-pane fade">
+                   <div class="row" style="margin-top: 4%;">
+                       <div class="form-group" style="margin-bottom: 8%;">
+                           <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                               Date :
+                           </div>
+                           <div class="col-md-6">
+                               <input autocomplete="off" type="text" id="datepicker2" class="form-control" />
+                           </div>
+                       </div>
+                       <div class="form-group" style="margin-bottom: 5%;">
+                           <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                               SPO Name :
+                           </div>
+                           <div class="col-md-6">
+                               <input class="form-control" />
+                           </div>
+                          
+                       </div>
+                       <div class="form-group" style="margin-bottom: 5%;">
+                           <div class="col-md-12" style="margin-top: 5%;margin-bottom: 2%;text-align: center;font-size: x-large;font-weight: 800;">
+                               <a class="btn btn-default" href="#" style="font-weight: 800;color: white;width: 50%;background-color: rgb(32, 212, 126);">Daily Sales Report In Total</a>
+                           </div>
+                       </div>
+                       <div class="form-group" style="margin-bottom: 5%;">
+                           <div class="col-md-6" style="text-align: right;font-size: x-large;font-weight: 800;">
+                               <a class="btn btn-default green" href="#" style="font-weight: 800;color: white;width: 80%;background-color: rgb(32, 212, 126);">SPO Sales Report</a>
+                           </div>
+                           <div class="col-md-6" style="text-align: left;font-size: x-large;font-weight: 800;">
+                               <a class="btn btn-default green" href="#" style="font-weight: 800;color: white;width: 80%;background-color: rgb(32, 212, 126);">SPO Sales Report In Total</a>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div id="menu2" class="tab-pane fade">
+                   <div class="row" style="margin-top: 4%;">
+                       <div class="form-group" style="margin-bottom: 8%;">
+                           <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                               Date :
+                           </div>
+                           <div class="col-md-6">
+                               <input autocomplete="off" type="text" id="datepicker3" class="form-control" />
+                           </div>
+                       </div>
+
+                       <div class="form-group" style="margin-bottom: 5%;">
+                           <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                               Party Name :
+                           </div>
+                           <div class="col-md-6">
+                               <select id="PartyName" class="form-control" name="PartyName" ng-model="Book.PartyId" data-show-subtext="false" data-live-search="true" required>
+                                   <option value="" data-subtext="">Select Party</option>
+                                   <option ng-repeat="party in PartyList" value="{{party.PartyInfoId}}" data-subtext="">{{party.Name}}</option>
+                               </select>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row" style="margin-top: 3%;">
+                       <div class="form-group" style="margin-bottom: 8%;">
+                           <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                               CN / Item Type :
+                           </div>
+                           <div class="col-md-6">
+                               <input class="form-control" />
+                           </div>
+                       </div>
+
+                       <div class="form-group" style="margin-bottom: 14%;">
+                           <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                              Discount :
+                           </div>
+                           <div class="col-md-6">
+                               <input class="form-control" />
+                           </div>
+                       </div>
+
+                       <table class="table table-borderless" style="width: 92%;margin-left: 5%;">
+                           <tr>
+                               <td style="text-align: right;">
+                                   <a class="btn btn-default green" href="#" style="width: 88%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Monthly Bill</a>
+                               </td>
+                               <td>
+                                   <a class="btn btn-default green" href="#" style="width: 62%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Monthly Bill Details</a>
+                               </td>
+                           </tr>
+                       </table>
+                       
+                   </div>
+                </div>
+               <div id="menu3" class="tab-pane fade">
+                   <div class="row" style="margin-top: 4%;">
+                       <div class="form-group" style="margin-bottom: 8%;">
+                           <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                               Date :
+                           </div>
+                           <div class="col-md-6">
+                               <input autocomplete="off" type="text" id="datepicker4" class="form-control" />
+                           </div>
+                       </div>
+
+                       <div class="form-group" style="margin-bottom: 5%;">
+                           <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                               Party Name :
+                           </div>
+                           <div class="col-md-6">
+                               <select id="PartyName" class="form-control"  name="PartyName" ng-model="Book.PartyId" data-show-subtext="false" data-live-search="true" required>
+                                   <option value="" data-subtext="">Select Party</option>
+                                   <option ng-repeat="party in PartyList" value="{{party.PartyInfoId}}" data-subtext="">{{party.Name}}</option>
+                               </select>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row" style="margin-top: 3%;">
+                       <div class="form-group" style="margin-bottom: 6%;">
+                           <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                              Update Status :
+                           </div>
+                           <div class="col-md-6">
+                               <input class="form-control" />
+                           </div>
+                       </div>
+
+                       <table class="table table-borderless" style="width: 92%;margin-left: 5%;">
+                           <tr>
+                               <td style="text-align: right;">
+                                   <a class="btn btn-default green" href="#" style="width: 60%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Follio Report By Party</a>
+                               </td>
+                               <td>
+                                   <a class="btn btn-default green" href="#" style="width: 60%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Shipper Copy Report</a>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td style="text-align: right;">
+                                   <a class="btn btn-default green" href="#" style="width: 60%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Non Update Report</a>
+                               </td>
+                               <td>
+                                   <a class="btn btn-default green" href="#" style="width: 60%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Update Report</a>
+                               </td>
+                           </tr>
+                       </table>
+
+                   </div>
+               </div>
+           </div>
+       </div>
+
+
+   </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#datepicker1").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'd MM, y'
+    });
+    $("#datepicker2").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'd MM, y'
+    });
+    $("#datepicker3").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'd MM, y'
+    });
+    $("#datepicker4").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'd MM, y'
+    });
+});
+</script>
+<script>
+$(document).ready(function(){
+  $(".nav-tabs a").click(function(){
+    $(this).tab('show');
+  });
+});
+</script>
+<script>
+        CNApp.controller('FrmlClt', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
+            init();
+            function init() {
+                initialize();
+                LoadPartyList();
+                LoadDestinationList();
+            }
+
+            function initialize() {
+                $scope.vm = {};
+                $scope.vm.dtOptions = DTOptionsBuilder.newOptions()
+                  .withOption('order', [0, 'asc']);
+            }
+
+            $scope.DateConvert = function DateConvert(str) {
+                var re = /\/Date\(([0-9]*)\)\//;
+                var m = str.match(re);
+                var dt =new Date(parseInt(m[1]));
+                var date = new Date(dt),
+                    mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+                    day = ("0" + date.getDate()).slice(-2);
+                return new Date([date.getFullYear(), mnth, day].join("-"));
+            }
+          
+         
+            function LoadDestinationList() {
+                $http.get("/api/Destinations")
+                       .then(function successCallback(response) {
+                           $scope.DestinationList = response.data;
+                           toastr.options.positionClass = 'toast-bottom-right';
+                       }, function errorCallback(response) {
+                           //error msg
+                       });
+            }
+            function LoadPartyList() {
+                $http.get("/api/PartyInfoes")
+                       .then(function successCallback(response) {
+                           $scope.PartyList = response.data;
+                           toastr.options.positionClass = 'toast-bottom-right';
+                       }, function errorCallback(response) {
+                       });
+            }
+        });
+</script>
