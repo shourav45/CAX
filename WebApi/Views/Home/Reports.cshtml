@@ -25,7 +25,7 @@
                             Date :
                         </div>
                         <div class="col-md-6">
-                            <input autocomplete="off" type="text" id="datepicker1"  class="form-control" />
+                            <input autocomplete="off" ng-model="CNInfo.Date" type="text" id="datepicker1"  class="form-control" />
                         </div>
                     </div>
                      <div class="form-group"  style="margin-bottom: 5%;">
@@ -33,7 +33,7 @@
                              Destination :
                          </div>
                          <div class="col-md-6">
-                             <select class="form-control" name="UserName" ng-model="Destination" data-show-subtext="true" data-live-search="true" required>
+                             <select class="form-control" name="UserName" ng-model="CNInfo.DestinationId" data-show-subtext="true" data-live-search="true" required>
                                  <option value="" data-subtext="">Select Destination</option>
                                  <option ng-repeat="dest in DestinationList" value="{{dest.DestinationId}}" data-subtext="{{dest.Area}}">{{dest.District}}->{{dest.Area}}</option>
                              </select>
@@ -41,15 +41,15 @@
                      </div>
                       <div class="form-group" style="margin-bottom: 5%;">
                           <div class="col-md-12" style="margin-top: 5%;margin-bottom: 2%;text-align: center;font-size: x-large;font-weight: 800;">
-                              <a class="btn btn-default" href="#" style="font-weight: 800;color: white;width: 50%;background-color: rgb(32, 212, 126);">User Entry Report</a>
+                              <a class="btn btn-default" ng-click="CNUserEntryReport()" href="#" style="font-weight: 800;color: white;width: 50%;background-color: rgb(32, 212, 126);">User Entry Report</a>
                           </div>
                       </div>
                       <div class="form-group" style="margin-bottom: 5%;">
                           <div class="col-md-6" style="text-align: right;font-size: x-large;font-weight: 800;">
-                              <a class="btn btn-default green" href="#" style="font-weight: 800;color: white;width: 80%;background-color: rgb(32, 212, 126);">Full Menifest</a>
+                              <a class="btn btn-default green" ng-click="CNFullManifest()" href="#" style="font-weight: 800;color: white;width: 80%;background-color: rgb(32, 212, 126);">Full Menifest</a>
                           </div>
                           <div class="col-md-6" style="text-align: left;font-size: x-large;font-weight: 800;">
-                              <a class="btn btn-default green" href="#" style="font-weight: 800;color: white;width: 80%;background-color: rgb(32, 212, 126);">Part Menifest</a>
+                              <a class="btn btn-default green" ng-click="CNPartManifest()" href="#" style="font-weight: 800;color: white;width: 80%;background-color: rgb(32, 212, 126);">Part Menifest</a>
                           </div>
                       </div>
                      
@@ -62,7 +62,7 @@
                                Date :
                            </div>
                            <div class="col-md-6">
-                               <input autocomplete="off" type="text" id="datepicker2" class="form-control" />
+                               <input autocomplete="off" type="text" ng-model="Sale.Date" id="datepicker2" class="form-control" />
                            </div>
                        </div>
                        <div class="form-group" style="margin-bottom: 5%;">
@@ -70,21 +70,21 @@
                                SPO Name :
                            </div>
                            <div class="col-md-6">
-                               <input class="form-control" />
+                               <input ng-model="Sale.SPOName" class="form-control" />
                            </div>
                           
                        </div>
                        <div class="form-group" style="margin-bottom: 5%;">
                            <div class="col-md-12" style="margin-top: 5%;margin-bottom: 2%;text-align: center;font-size: x-large;font-weight: 800;">
-                               <a class="btn btn-default" href="#" style="font-weight: 800;color: white;width: 50%;background-color: rgb(32, 212, 126);">Daily Sales Report In Total</a>
+                               <a class="btn btn-default" ng-click="SaleDailyTotal()" href="#" style="font-weight: 800;color: white;width: 50%;background-color: rgb(32, 212, 126);">Daily Sales Report In Total</a>
                            </div>
                        </div>
                        <div class="form-group" style="margin-bottom: 5%;">
                            <div class="col-md-6" style="text-align: right;font-size: x-large;font-weight: 800;">
-                               <a class="btn btn-default green" href="#" style="font-weight: 800;color: white;width: 80%;background-color: rgb(32, 212, 126);">SPO Sales Report</a>
+                               <a class="btn btn-default green" ng-click="SaleSPOReport()" href="#" style="font-weight: 800;color: white;width: 80%;background-color: rgb(32, 212, 126);">SPO Sales Report</a>
                            </div>
                            <div class="col-md-6" style="text-align: left;font-size: x-large;font-weight: 800;">
-                               <a class="btn btn-default green" href="#" style="font-weight: 800;color: white;width: 80%;background-color: rgb(32, 212, 126);">SPO Sales Report In Total</a>
+                               <a class="btn btn-default green" ng-click="SaleSPOTotalReport()" href="#" style="font-weight: 800;color: white;width: 80%;background-color: rgb(32, 212, 126);">SPO Sales Report In Total</a>
                            </div>
                        </div>
                    </div>
@@ -96,7 +96,7 @@
                                Date :
                            </div>
                            <div class="col-md-6">
-                               <input autocomplete="off" type="text" id="datepicker3" class="form-control" />
+                               <input autocomplete="off" ng-model="Bill.Date" type="text" id="datepicker3" class="form-control" />
                            </div>
                        </div>
 
@@ -105,7 +105,7 @@
                                Party Name :
                            </div>
                            <div class="col-md-6">
-                               <select id="PartyName" class="form-control" name="PartyName" ng-model="Book.PartyId" data-show-subtext="false" data-live-search="true" required>
+                               <select id="PartyName" class="form-control" name="PartyName" ng-model="Bill.PartyId" data-show-subtext="false" data-live-search="true" required>
                                    <option value="" data-subtext="">Select Party</option>
                                    <option ng-repeat="party in PartyList" value="{{party.PartyInfoId}}" data-subtext="">{{party.Name}}</option>
                                </select>
@@ -118,7 +118,7 @@
                                CN / Item Type :
                            </div>
                            <div class="col-md-6">
-                               <input class="form-control" />
+                               <input class="form-control" ng-model="Bill.CNType"/>
                            </div>
                        </div>
 
@@ -127,17 +127,17 @@
                               Discount :
                            </div>
                            <div class="col-md-6">
-                               <input class="form-control" />
+                               <input class="form-control" ng-model="Bill.Discount"/>
                            </div>
                        </div>
 
                        <table class="table table-borderless" style="width: 92%;margin-left: 5%;">
                            <tr>
                                <td style="text-align: right;">
-                                   <a class="btn btn-default green" href="#" style="width: 88%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Monthly Bill</a>
+                                   <a class="btn btn-default green" ng-click="BillMonthly()" href="#" style="width: 88%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Monthly Bill</a>
                                </td>
                                <td>
-                                   <a class="btn btn-default green" href="#" style="width: 62%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Monthly Bill Details</a>
+                                   <a class="btn btn-default green" ng-click="BillMonthlyDetails()" href="#" style="width: 62%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Monthly Bill Details</a>
                                </td>
                            </tr>
                        </table>
@@ -151,7 +151,7 @@
                                Date :
                            </div>
                            <div class="col-md-6">
-                               <input autocomplete="off" type="text" id="datepicker4" class="form-control" />
+                               <input autocomplete="off" ng-model="Party.Date" type="text" id="datepicker4" class="form-control" />
                            </div>
                        </div>
 
@@ -160,7 +160,7 @@
                                Party Name :
                            </div>
                            <div class="col-md-6">
-                               <select id="PartyName" class="form-control"  name="PartyName" ng-model="Book.PartyId" data-show-subtext="false" data-live-search="true" required>
+                               <select id="PartyName" class="form-control"  name="PartyName" ng-model="Party.PartyId" data-show-subtext="false" data-live-search="true" required>
                                    <option value="" data-subtext="">Select Party</option>
                                    <option ng-repeat="party in PartyList" value="{{party.PartyInfoId}}" data-subtext="">{{party.Name}}</option>
                                </select>
@@ -173,25 +173,25 @@
                               Update Status :
                            </div>
                            <div class="col-md-6">
-                               <input class="form-control" />
+                               <input class="form-control" ng-model="Party.UpdateStatus" />
                            </div>
                        </div>
 
                        <table class="table table-borderless" style="width: 92%;margin-left: 5%;">
                            <tr>
                                <td style="text-align: right;">
-                                   <a class="btn btn-default green" href="#" style="width: 60%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Follio Report By Party</a>
+                                   <a class="btn btn-default green" ng-click="PartyFolioReport()" href="#" style="width: 60%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Follio Report By Party</a>
                                </td>
                                <td>
-                                   <a class="btn btn-default green" href="#" style="width: 60%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Shipper Copy Report</a>
+                                   <a class="btn btn-default green" ng-click="PartyShipperCopy()" href="#" style="width: 60%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Shipper Copy Report</a>
                                </td>
                            </tr>
                            <tr>
                                <td style="text-align: right;">
-                                   <a class="btn btn-default green" href="#" style="width: 60%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Non Update Report</a>
+                                   <a class="btn btn-default green" ng-click="PartyNonUpdateReport()" href="#" style="width: 60%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Non Update Report</a>
                                </td>
                                <td>
-                                   <a class="btn btn-default green" href="#" style="width: 60%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Update Report</a>
+                                   <a class="btn btn-default green" ng-click="PartyUpdateReport()" href="#" style="width: 60%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Update Report</a>
                                </td>
                            </tr>
                        </table>
@@ -209,22 +209,26 @@ $(document).ready(function() {
     $("#datepicker1").datepicker({
         changeMonth: true,
         changeYear: true,
-        dateFormat: 'd MM, y'
+        dateFormat: 'd MM, y',
+        maxDate: 'today'
     });
     $("#datepicker2").datepicker({
         changeMonth: true,
         changeYear: true,
-        dateFormat: 'd MM, y'
+        dateFormat: 'd MM, y',
+        maxDate: 'today'
     });
     $("#datepicker3").datepicker({
         changeMonth: true,
         changeYear: true,
-        dateFormat: 'd MM, y'
+        dateFormat: 'd MM, y',
+        maxDate: 'today'
     });
     $("#datepicker4").datepicker({
         changeMonth: true,
         changeYear: true,
-        dateFormat: 'd MM, y'
+        dateFormat: 'd MM, y',
+        maxDate: 'today'
     });
 });
 </script>
@@ -250,6 +254,53 @@ $(document).ready(function(){
                   .withOption('order', [0, 'asc']);
             }
 
+
+            //party report
+            $scope.PartyFolioReport = function () {
+                window.open('/Report/PartyFolioReport?PartyDate=' + $scope.Party.Date + '&PartyId=' + $scope.Party.PartyId + '&UpdateStatus=' + $scope.Party.UpdateStatus, '_blank');
+            }
+            $scope.PartyShipperCopy = function () {
+                window.open('/Report/PartyShipperCopy?PartyDate=' + $scope.Party.Date + '&PartyId=' + $scope.Party.PartyId + '&UpdateStatus=' + $scope.Party.UpdateStatus, '_blank');
+            }
+            $scope.PartyNonUpdateReport = function () {
+                window.open('/Report/PartyNonUpdateReport?PartyDate=' + $scope.Party.Date + '&PartyId=' + $scope.Party.PartyId + '&UpdateStatus=' + $scope.Party.UpdateStatus, '_blank');
+            }
+            $scope.PartyUpdateReport = function () {
+                $window.open('/Report/PartyUpdateReport?PartyDate=' + $scope.Party.Date + '&PartyId=' + $scope.Party.PartyId + '&UpdateStatus=' + $scope.Party.UpdateStatus, '_blank');
+            }
+            //Bill info
+            $scope.BillMonthly = function () {
+                window.open('/Report/BillMonthly?BillDate=' + $scope.Bill.Date + '&PartyId=' + $scope.Bill.PartyId + '&CNType=' + $scope.Bill.CNType + '&Discount=' + $scope.Bill.Discount, '_blank');
+            }
+            $scope.BillMonthlyDetails = function () {
+                window.open('/Report/BillMonthlyDetails?BillDate=' + $scope.Bill.Date + '&PartyId=' + $scope.Bill.PartyId + '&CNType=' + $scope.Bill.CNType + '&Discount=' + $scope.Bill.Discount, '_blank');
+            }
+           //sales info
+            $scope.SaleDailyTotal = function () {
+                window.open('/Report/SaleDailyTotal?SaleDate=' + $scope.Sale.Date + '&SaleSOPName=' + $scope.Sale.SPOName, '_blank');
+            }
+            $scope.SaleSPOReport = function () {
+                window.open('/Report/SaleSPOReport?SaleDate=' + $scope.Sale.Date + '&SaleSOPName=' + $scope.Sale.SPOName, '_blank');
+            }
+            $scope.SaleSPOTotalReport = function () {
+                window.open('/Report/SaleSPOTotalReport?SaleDate=' + $scope.Sale.Date + '&SaleSOPName=' + $scope.Sale.SPOName, '_blank');
+            }
+            //cn info
+            $scope.CNUserEntryReport =function()
+            {
+                window.open('/Report/CNUserEntryReport?CNDate=' + $scope.CNInfo.Date + '&CNDestination=' + $scope.CNInfo.DestinationId, '_blank');
+            }
+
+            $scope.CNFullManifest = function()
+            {
+                window.open('/Report/CNFullManifest?CNDate=' + $scope.CNInfo.Date + '&CNDestination=' + $scope.CNInfo.DestinationId, '_blank');
+            }
+
+            $scope.CNPartManifest = function()
+            {
+                window.open('/Report/CNPartManifest?CNDate=' + $scope.CNInfo.Date + '&CNDestination=' + $scope.CNInfo.DestinationId, '_blank');
+            }
+
             $scope.DateConvert = function DateConvert(str) {
                 var re = /\/Date\(([0-9]*)\)\//;
                 var m = str.match(re);
@@ -258,9 +309,7 @@ $(document).ready(function(){
                     mnth = ("0" + (date.getMonth() + 1)).slice(-2),
                     day = ("0" + date.getDate()).slice(-2);
                 return new Date([date.getFullYear(), mnth, day].join("-"));
-            }
-          
-         
+            }         
             function LoadDestinationList() {
                 $http.get("/api/Destinations")
                        .then(function successCallback(response) {
