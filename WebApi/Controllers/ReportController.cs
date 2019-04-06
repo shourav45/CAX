@@ -54,7 +54,7 @@ namespace WebApi.Controllers
             pram.Add(p2);
             DataTable dt = SqlHelper.ExecuteDataset(connection, CommandType.StoredProcedure, "CargoManifest", pram.ToArray()).Tables[0];
 
-            List<VMCNCargoManifest> dt = SqlHelper.ExecuteDataTable("", "CargoManifest", new object[] { CNDate, CNDestination }).ToList<VMCNCargoManifest>();
+           // List<VMCNCargoManifest> dt = SqlHelper.ExecuteDataTable("", "CargoManifest", new object[] { CNDate, CNDestination }).ToList<VMCNCargoManifest>();
             var viewer = new ReportViewer();
             Warning[] warnings;
             string mimeType;
@@ -62,7 +62,7 @@ namespace WebApi.Controllers
             string encoding;
             string filenameExtension;
             List<ReportParameter> param = new List<ReportParameter>();
-            var viewer = new ReportViewer();
+           // var viewer = new ReportViewer();
             viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptFullManifest.rdlc");
             viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", dt));
             viewer.LocalReport.Refresh();

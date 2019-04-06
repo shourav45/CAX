@@ -477,9 +477,12 @@
     <EmbeddedResource Include="Migrations\201902041810441_newdb.resx">
       <DependentUpon>201902041810441_newdb.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="RDLC\rptCNCargoManifest.rdlc" />
+    <EmbeddedResource Include="RDLC\rptCNUserEntryCount.rdlc" />
     <EmbeddedResource Include="RDLC\rptFullManifest.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="RDLC\rptSPOSalesDaily 1.rdlc" />
     <EmbeddedResource Include="RDLC\rptUserEntry.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
