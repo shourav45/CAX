@@ -7,6 +7,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Mvc;
@@ -17,7 +18,6 @@ namespace WebApi.ApiControllers
     public class CNInfoesController : Controller
     {
         private dbcontext db = new dbcontext();
-
         // GET: api/CNInfoes
         [System.Web.Http.HttpGet]
         public ActionResult GetCNInfoset()
@@ -65,6 +65,9 @@ namespace WebApi.ApiControllers
                 return Json("Model is not valid", JsonRequestBehavior.AllowGet);
             }
 
+            HttpCookie myCookie = Request.Cookies["UserCookie"];
+            cNInfo.AddBy = myCookie.Values["UserInfoId"].ToString();
+
             db.Entry(cNInfo).State = EntityState.Modified;
 
             try
@@ -102,7 +105,8 @@ namespace WebApi.ApiControllers
                 }
                 return Json(msg, JsonRequestBehavior.AllowGet);
             }
-            cn.AddBy = User.Identity.Name;
+            HttpCookie myCookie = Request.Cookies["UserCookie"];
+            cn.AddBy = myCookie.Values["UserInfoId"].ToString();
             cn.AddDate = DateTime.Now.ToString();
             cn.Status = "A";
             cn.Ex1 = "";

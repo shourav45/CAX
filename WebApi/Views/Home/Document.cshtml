@@ -87,7 +87,7 @@
                             <label> Fo/L No : </label>
                         </td>
                         <td ng-class="{ 'has-error' : submitted && caxform.Follio.$invalid}">
-                            <input class="form-control" name="Follio" type="text" ng-model="Book.Follio" required />
+                            <input autocomplete="off" class="form-control" name="Follio" type="text" ng-model="Book.Follio" required />
                             <span ng-show="submitted &&  caxform.Follio.$error.required" class="text-danger">Fo/L is Required</span>
                         </td>
                     </tr>
@@ -96,13 +96,13 @@
                             <label>Consignee Name : </label>
                         </td>
                         <td ng-class="{ 'has-error' : submitted && caxform.ConsingeeName.$invalid}">
-                            <input class="form-control" name="ConsingeeName" type="text" ng-model="Book.ConsingeeName" required />
+                            <input  autocomplete="off" class="form-control" name="ConsingeeName" type="text" ng-model="Book.ConsingeeName" required />
                             <span ng-show="submitted &&  caxform.ConsingeeName.$error.required" class="text-danger">Consignee name is Required</span>
                         </td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle;">
-                            <label>Consignee Address :</label>
+                            <label>Consignee Address:</label>
                         </td>
                         <td ng-class="{ 'has-error' : submitted && caxform.ConsigneeAddress.$invalid}">
                             <textarea class="form-control" name="ConsigneeAddress" ng-model="Book.ConsigneeAddress" required></textarea>
@@ -159,7 +159,7 @@
                             <label>Total Piece:</label>
                         </td>
                         <td ng-class="{ 'has-error' : submitted && caxform.KPNumber.$invalid}">
-                            <input class="text-center form-control" name="KPNumber" ng-model="Book.KPNumber" type="text" required />
+                            <input class="text-left form-control" name="KPNumber" ng-model="Book.KPNumber" type="number" required />
                             <span ng-show="submitted &&  caxform.KPNumber.$error.required" class="text-danger">Total Piece is Required</span>
 
                         </td>
@@ -171,12 +171,12 @@
                             <label class="control-label">
                                 First   :
                             </label>
-                            <input style="width:26%" class="text-center" name="FirstPieceNumber" disabled id="FirstPieceNumber" ng-model="FirstPieceNumber" type="text" required />
+                            <input style="width:26%" class="text-center" name="FirstPieceNumber" disabled id="FirstPieceNumber" ng-model="FirstPieceNumber" type="number" required />
 
                             <label class="control-label" >
                                 Piece Rate :
                             </label>
-                            <input  style="width:26%" class="text-center" disabled id="FirstPieceRate" name="FirstPieceRate" ng-model="FirstPieceRate" type="text" required />
+                            <input  style="width:26%" class="text-center" disabled id="FirstPieceRate" name="FirstPieceRate" ng-model="FirstPieceRate" type="number" required />
                             <span ng-show="submitted &&  caxform.FirstPieceNumber.$error.required" class="text-danger">Required</span>
 
                         </td>
@@ -187,11 +187,11 @@
                             <label class="control-label">
                                 After :
                             </label>
-                            <input  style="width:26%" class="text-center" disabled ng-model="FirstPieceNumber" type="text" required />
+                            <input  style="width:26%" class="text-center" disabled ng-model="FirstPieceNumber" type="number" required />
                             <label class="control-label">
                                 Piece Rate :
                             </label>
-                            <input  style="width:26%" class="text-center" disabled id="AfterFirstPieceRate" name="AfterFirstPieceRate" ng-model="AfterFirstPieceRate" type="text" required />
+                            <input  style="width:26%" class="text-center" disabled id="AfterFirstPieceRate" name="AfterFirstPieceRate" ng-model="AfterFirstPieceRate" type="number" required />
                             <span ng-show="submitted &&  caxform.AfterFirstPieceRate.$error.required" class="text-danger">Required</span>
 
                         </td>
@@ -228,7 +228,12 @@
     <!-- Page-Level Plugin Scripts-->
     <script type="text/javascript">
 $(document).ready(function() {
-    $('#datepicker').datepicker({ format: "dd/mm/yyyy" });
+    $("#datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'd MM, y',
+        maxDate: 'today'
+    });
 });
     </script>
     <script>
@@ -311,9 +316,9 @@ $(document).ready(function() {
                     }
                     if(availablePartyRate != null && availablePartyRate != undefined){
                         $scope.Book.KPNumber = "";
-                        $scope.FirstPieceNumber = availablePartyRate[0].FirstKP;
-                        $scope.FirstPieceRate = availablePartyRate[0].FirstKPRate;
-                        $scope.AfterFirstPieceRate = availablePartyRate[0].AfterFirstKPRate;
+                        $scope.FirstPieceNumber =parseInt(availablePartyRate[0].FirstKP);
+                        $scope.FirstPieceRate = parseInt(availablePartyRate[0].FirstKPRate);
+                        $scope.AfterFirstPieceRate = parseInt(availablePartyRate[0].AfterFirstKPRate);
                         $scope.Book.TotalAmount = "";
                     }
                 }
@@ -366,7 +371,7 @@ $(document).ready(function() {
                     "&ItemInfo=" + $scope.Book.ItemInfo + "&Kgpiece=" + $scope.Book.KPNumber +
                     "&RateType=" + $scope.Book.RateType + "&Weight=" + "0" + "&ServiceCharge="+ $scope.Book.ServiceCharge +
                     "&VatStatus=0&VatPercent=0&VatAmount=0&AitStatus=0&AitPercent=0&AitAmount=0&TotalAmount=" + $scope.Book.TotalAmount +
-                    "&Size=" + $scope.Book.Size + "&KPNumber=" + $scope.Book.KPNumber + "&Ex1=" + $scope.Book.Size)
+                    "&Size=" + $scope.Book.Size + "&KPNumber=" + $scope.Book.KPNumber + "&Ex1=" + $scope.AfterFirstPieceRate)
                             .then(function successCallback(response) {
                                 console.log(response.data);
 

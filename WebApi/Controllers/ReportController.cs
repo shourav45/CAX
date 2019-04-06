@@ -54,6 +54,8 @@ namespace WebApi.Controllers
             pram.Add(p2);
             DataTable dt = SqlHelper.ExecuteDataset(connection, CommandType.StoredProcedure, "CargoManifest", pram.ToArray()).Tables[0];
 
+            List<VMCNCargoManifest> dt = SqlHelper.ExecuteDataTable("", "CargoManifest", new object[] { CNDate, CNDestination }).ToList<VMCNCargoManifest>();
+            var viewer = new ReportViewer();
             Warning[] warnings;
             string mimeType;
             string[] streamids;

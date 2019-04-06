@@ -90,6 +90,7 @@ namespace WebApi.Controllers
             myCookie.Values.Add("UserPassword", user.UserPassword.ToString());
             myCookie.Values.Add("Designation", user.Designation.ToString());
             myCookie.Values.Add("UserAccess", user.UserRole.ToString());
+            myCookie.Values.Add("UserInfoId", user.UserInfoId.ToString());
             //set cookie expiry date-time. Made it to last for next 12 hours.
             myCookie.Expires = DateTime.Now.AddHours(12);
             //Most important, write the cookie to client.
