@@ -677,6 +677,7 @@ C:\Users\Bidhan\Downloads\Compressed\CAX-Solution (New theme)\WebApi\bin\Antlr3.
 C:\Users\Bidhan\Downloads\Compressed\CAX-Solution (New theme)\WebApi\bin\EntityFramework.dll
 C:\Users\Bidhan\Downloads\Compressed\CAX-Solution (New theme)\WebApi\bin\EntityFramework.SqlServer.dll
 C:\Users\Bidhan\Downloads\Compressed\CAX-Solution (New theme)\WebApi\bin\EPPlus.dll
+C:\Users\Bidhan\Downloads\Compressed\CAX-Solution (New theme)\WebApi\bin\FastMember.dll
 C:\Users\Bidhan\Downloads\Compressed\CAX-Solution (New theme)\WebApi\bin\Microsoft.AI.Agent.Intercept.dll
 C:\Users\Bidhan\Downloads\Compressed\CAX-Solution (New theme)\WebApi\bin\Microsoft.AI.DependencyCollector.dll
 C:\Users\Bidhan\Downloads\Compressed\CAX-Solution (New theme)\WebApi\bin\Microsoft.AI.PerfCounterCollector.dll

@@ -1,6 +1,9 @@
 ﻿using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -13,43 +16,53 @@ namespace WebApi.Controllers
     public class ReportController : Controller
     {
         private dbcontext db;
-
-        public ActionResult CNUserEntryReport(DateTime CNDate,int CNDestination)
+        private string connection = ConfigurationManager.ConnectionStrings["ConnString1"].ConnectionString;
+        public ActionResult CNUserEntryReport(DateTime CNDate,string CNDestination)
         {
             db = new dbcontext();
-            List<CNInfo> cnData = db.CNInfoset.ToList();
-           
+            //List<CNInfo> cnData = db.CNInfoset.ToList();
+            if (CNDestination == "undefined")
+            {
+                CNDestination = "0";
+            }
+
+            List<SqlParameter> pram = new List<SqlParameter>();
+            SqlParameter p1 = new SqlParameter("@CNDate",CNDate);
+            SqlParameter p2 = new SqlParameter("@DestinationId", CNDestination);
+            pram.Add(p1);
+            pram.Add(p2);
+            DataTable dt= SqlHelper.ExecuteDataset(connection, CommandType.StoredProcedure, "UserCNEntryCount",pram.ToArray()).Tables[0];
+
             Warning[] warnings;
             string mimeType;
             string[] streamids;
             string encoding;
             string filenameExtension;
-
             var viewer = new ReportViewer();
-            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptDailySales.rdlc");
-
-            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptUserEntry.rdlc");
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", dt));
             viewer.LocalReport.Refresh();
-
             var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
-
             return File(bytes, mimeType);
         }
         public ActionResult CNFullManifest(DateTime CNDate, int CNDestination)
         {
-            db = new dbcontext();
-            List<CNInfo> cnData = db.CNInfoset.ToList();
+            List<SqlParameter> pram = new List<SqlParameter>();
+            SqlParameter p1 = new SqlParameter("@CNDate", CNDate);
+            SqlParameter p2 = new SqlParameter("@DestinationId", CNDestination);
+            pram.Add(p1);
+            pram.Add(p2);
+            DataTable dt = SqlHelper.ExecuteDataset(connection, CommandType.StoredProcedure, "CargoManifest", pram.ToArray()).Tables[0];
 
             Warning[] warnings;
             string mimeType;
             string[] streamids;
             string encoding;
             string filenameExtension;
-
+            List<ReportParameter> param = new List<ReportParameter>();
             var viewer = new ReportViewer();
-            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptDailySales.rdlc");
-
-            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptFullManifest.rdlc");
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", dt));
             viewer.LocalReport.Refresh();
 
             var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
@@ -58,19 +71,22 @@ namespace WebApi.Controllers
         }
         public ActionResult CNPartManifest(DateTime CNDate, int CNDestination)
         {
-            db = new dbcontext();
-            List<CNInfo> cnData = db.CNInfoset.ToList();
+            List<SqlParameter> pram = new List<SqlParameter>();
+            SqlParameter p1 = new SqlParameter("@CNDate", CNDate);
+            SqlParameter p2 = new SqlParameter("@DestinationId", CNDestination);
+            pram.Add(p1);
+            pram.Add(p2);
+            DataTable dt = SqlHelper.ExecuteDataset(connection, CommandType.StoredProcedure, "CargoManifest", pram.ToArray()).Tables[0];
 
             Warning[] warnings;
             string mimeType;
             string[] streamids;
             string encoding;
             string filenameExtension;
-
+            List<ReportParameter> param = new List<ReportParameter>();
             var viewer = new ReportViewer();
-            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptDailySales.rdlc");
-
-            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptFullManifest.rdlc");
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", dt));
             viewer.LocalReport.Refresh();
 
             var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
@@ -268,18 +284,20 @@ namespace WebApi.Controllers
         }
         public ActionResult QuickPrint(int CN)
         {
-            db = new dbcontext();
-          List<CNInfo> cnData = db.CNInfoset.Where(c=>c.CNInfoId==CN).ToList();
+            List<SqlParameter> pram = new List<SqlParameter>();
+            SqlParameter p1 = new SqlParameter("@CNId", CN);
+            pram.Add(p1);
+            DataTable dt = SqlHelper.ExecuteDataset(connection, CommandType.StoredProcedure, "CNQuickPrint", pram.ToArray()).Tables[0];
+
             Warning[] warnings;
             string mimeType;
             string[] streamids;
             string encoding;
             string filenameExtension;
-
+            List<ReportParameter> param = new List<ReportParameter>();
             var viewer = new ReportViewer();
             viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptSingleCN.rdlc");
-
-            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", dt));
             viewer.LocalReport.Refresh();
 
             var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);

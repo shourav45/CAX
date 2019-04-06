@@ -25,7 +25,7 @@
                             Date :
                         </div>
                         <div class="col-md-6">
-                            <input autocomplete="off" ng-model="CNInfo.Date" type="text" id="datepicker1"  class="form-control" />
+                            <input autocomplete="off" disabled ng-model="CNInfo.Date" type="text" id="datepicker1"  class="form-control" />
                         </div>
                     </div>
                      <div class="form-group"  style="margin-bottom: 5%;">
@@ -62,7 +62,7 @@
                                Date :
                            </div>
                            <div class="col-md-6">
-                               <input autocomplete="off" type="text" ng-model="Sale.Date" id="datepicker2" class="form-control" />
+                               <input autocomplete="off" disabled type="text" ng-model="Sale.Date" id="datepicker2" class="form-control" />
                            </div>
                        </div>
                        <div class="form-group" style="margin-bottom: 5%;">
@@ -70,7 +70,9 @@
                                SPO Name :
                            </div>
                            <div class="col-md-6">
-                               <input ng-model="Sale.SPOName" class="form-control" />
+                               <select class="form-control" ng-options="spo.SPOInfoId as spo.Name for spo in listSPO" ng-model="Sale.SPOName" id="SPOId" name="SPOId">
+                                   <option value="" selected>Select SPO</option>
+                               </select>
                            </div>
                           
                        </div>
@@ -252,8 +254,54 @@ $(document).ready(function(){
                 $scope.vm = {};
                 $scope.vm.dtOptions = DTOptionsBuilder.newOptions()
                   .withOption('order', [0, 'asc']);
+                $scope.CNInfo = {};
+                $scope.Sale = {};
             }
 
+            //cn info
+            $scope.CNUserEntryReport = function () {
+                if ($scope.CNInfo.Date == undefined || $scope.CNInfo.Date == null || $scope.CNInfo.Date == '')
+                {
+                    toastr.warning('Please select date.');
+                    return;
+                }
+                window.open('/Report/CNUserEntryReport?CNDate=' + $scope.CNInfo.Date + '&CNDestination=' + $scope.CNInfo.DestinationId, '_blank');
+            }
+
+            $scope.CNFullManifest = function () {
+                if ($scope.CNInfo.Date == undefined || $scope.CNInfo.Date == null || $scope.CNInfo.Date == '') {
+                    toastr.warning('Please select date.');
+                    return;
+                }
+                if ($scope.CNInfo.DestinationId == null || $scope.CNInfo.DestinationId == '') {
+                    toastr.warning('Please select destination.');
+                    return;
+                }
+                window.open('/Report/CNFullManifest?CNDate=' + $scope.CNInfo.Date + '&CNDestination=' + $scope.CNInfo.DestinationId, '_blank');
+            }
+
+            $scope.CNPartManifest = function () {
+                if ($scope.CNInfo.Date == undefined || $scope.CNInfo.Date == null || $scope.CNInfo.Date == '') {
+                    toastr.warning('Please select date.');
+                    return;
+                }
+                if ($scope.CNInfo.DestinationId == null || $scope.CNInfo.DestinationId == '') {
+                    toastr.warning('Please select destination.');
+                    return;
+                }
+                window.open('/Report/CNPartManifest?CNDate=' + $scope.CNInfo.Date + '&CNDestination=' + $scope.CNInfo.DestinationId, '_blank');
+            }
+
+            //sales info
+            $scope.SaleDailyTotal = function () {
+                window.open('/Report/SaleDailyTotal?SaleDate=' + $scope.Sale.Date + '&SaleSOPName=' + $scope.Sale.SPOName, '_blank');
+            }
+            $scope.SaleSPOReport = function () {
+                window.open('/Report/SaleSPOReport?SaleDate=' + $scope.Sale.Date + '&SaleSOPName=' + $scope.Sale.SPOName, '_blank');
+            }
+            $scope.SaleSPOTotalReport = function () {
+                window.open('/Report/SaleSPOTotalReport?SaleDate=' + $scope.Sale.Date + '&SaleSOPName=' + $scope.Sale.SPOName, '_blank');
+            }
 
             //party report
             $scope.PartyFolioReport = function () {
@@ -275,31 +323,7 @@ $(document).ready(function(){
             $scope.BillMonthlyDetails = function () {
                 window.open('/Report/BillMonthlyDetails?BillDate=' + $scope.Bill.Date + '&PartyId=' + $scope.Bill.PartyId + '&CNType=' + $scope.Bill.CNType + '&Discount=' + $scope.Bill.Discount, '_blank');
             }
-           //sales info
-            $scope.SaleDailyTotal = function () {
-                window.open('/Report/SaleDailyTotal?SaleDate=' + $scope.Sale.Date + '&SaleSOPName=' + $scope.Sale.SPOName, '_blank');
-            }
-            $scope.SaleSPOReport = function () {
-                window.open('/Report/SaleSPOReport?SaleDate=' + $scope.Sale.Date + '&SaleSOPName=' + $scope.Sale.SPOName, '_blank');
-            }
-            $scope.SaleSPOTotalReport = function () {
-                window.open('/Report/SaleSPOTotalReport?SaleDate=' + $scope.Sale.Date + '&SaleSOPName=' + $scope.Sale.SPOName, '_blank');
-            }
-            //cn info
-            $scope.CNUserEntryReport =function()
-            {
-                window.open('/Report/CNUserEntryReport?CNDate=' + $scope.CNInfo.Date + '&CNDestination=' + $scope.CNInfo.DestinationId, '_blank');
-            }
-
-            $scope.CNFullManifest = function()
-            {
-                window.open('/Report/CNFullManifest?CNDate=' + $scope.CNInfo.Date + '&CNDestination=' + $scope.CNInfo.DestinationId, '_blank');
-            }
-
-            $scope.CNPartManifest = function()
-            {
-                window.open('/Report/CNPartManifest?CNDate=' + $scope.CNInfo.Date + '&CNDestination=' + $scope.CNInfo.DestinationId, '_blank');
-            }
+          
 
             $scope.DateConvert = function DateConvert(str) {
                 var re = /\/Date\(([0-9]*)\)\//;
@@ -326,6 +350,16 @@ $(document).ready(function(){
                            toastr.options.positionClass = 'toast-bottom-right';
                        }, function errorCallback(response) {
                        });
+            }
+            function getAllSPO() {
+                $http.get("/api/SPOInfoes")
+                    .then(function successCallback(response) {
+                        $scope.listSPO = response.data;
+                        console.log('spo block');
+                        console.log($scope.listSPO);
+                    }, function errorCallback(response) {
+                        //error msg
+                    });
             }
         });
 </script>
