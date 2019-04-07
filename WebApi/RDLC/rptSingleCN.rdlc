@@ -549,7 +549,7 @@
           </Line>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Height>3.78in</Height>
+        <Height>3.78001in</Height>
         <Width>9.00589in</Width>
         <Style>
           <Border>
@@ -558,13 +558,13 @@
         </Style>
       </Rectangle>
     </ReportItems>
-    <Height>3.78in</Height>
+    <Height>3.78001in</Height>
     <Style />
   </Body>
   <Width>9.00589in</Width>
   <Page>
-    <PageHeight>8.5in</PageHeight>
-    <PageWidth>3.6in</PageWidth>
+    <PageHeight>3.8in</PageHeight>
+    <PageWidth>8.99in</PageWidth>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
