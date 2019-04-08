@@ -7,28 +7,29 @@
 <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 
 <div class="row" style="background-color:dimgrey;height:918px;" ng-controller="FrmlClt">
-    <form ng-submit="submitForm()" name="caxform" method="post" novalidate style="height: 84%;width: 94%;background-color: white;margin-top: 10%;margin-left: 3%;">
-        <div class="col-md-12" style="background-color: red;height: 7%;border: groove;width: 99%;margin-left: 6px;margin-top: 5px;">
-            <p style="color:white;text-align: center;font-size: xx-large;font-weight: bold;">Booking CN Parcel</p>
+    <form ng-submit="submitForm()" name="caxform" method="post" novalidate style="height: 62%;width: 74%;background-color: white;margin-top: 10%;margin-left: 11%;">
+        <div class="col-md-12" style="background-color: blue;height: 40px;border: groove;width: 99%;margin-left: 6px;margin-top: 5px;">
+            <p style="color:white;text-align: center;font-size: x-large;font-weight: bold;">Booking CN Parcel</p>
         </div>
-        <div class="row" style="margin-left: 1%;">
+      
+        <div class="row" style="margin-left: 1%;margin-right: 2%;">
             <div class="col-md-6">
-                <table class="table table-borderless" style="border-right: groove;">
-                    <tr>
-                        <td style="width: 29%;vertical-align: middle;">
+                <table style="border-right: groove;width:100%">
+                    <tr style="margin-bottom: 10px;">
+                        <td style="width: 27%;vertical-align: middle;padding-bottom: 2%;padding-top: 2%;">
                             <label> Date :</label>
                         </td>
-                        <td ng-class="{ 'has-error' : submitted && caxform.CNDate.$invalid}">
-                            <input autocomplete="off" class="form-control" type="text" name="CNDate" ng-model="Book.CNDate" id="datepicker" required>
+                        <td ng-class="{ 'has-error' : submitted && caxform.CNDate.$invalid}" style="padding-bottom: 2%;padding-top: 2%;">
+                            <input style="width: 90%;" autocomplete="off" readonly type="text" name="CNDate" ng-model="Book.CNDate" id="datepicker" required>
                             <span ng-show="submitted &&  caxform.CNDate.$error.required" class="text-danger">Date is Required</span>
                         </td>
                     </tr>
                     <tr>
-                        <td style="vertical-align: middle;">
+                        <td style="vertical-align: middle;padding-bottom: 2%;">
                             <label>Destination :</label>
                         </td>
-                        <td ng-class="{ 'has-error' : submitted && caxform.UserName.$invalid}">
-                            <select class="form-control" name="UserName" ng-model="Book.Destination" data-show-subtext="true" data-live-search="true" required>
+                        <td ng-class="{ 'has-error' : submitted && caxform.UserName.$invalid}" style="padding-bottom: 2%;">
+                            <select style="width: 90%;" name="UserName" ng-model="Book.Destination" data-show-subtext="true" data-live-search="true" required>
                                 <option value="" data-subtext="">Select Destination</option>
                                 <option ng-repeat="dest in DestinationList" value="{{dest.DestinationId}}" data-subtext="{{dest.Area}}">{{dest.District}}->{{dest.Area}}</option>
                             </select>
@@ -37,11 +38,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="vertical-align: middle;">
+                        <td style="vertical-align: middle;padding-bottom: 2%;">
                             <label>Party :</label>
                         </td>
-                        <td ng-class="{ 'has-error' : submitted && caxform.PartyName.$invalid}">
-                            <select id="PartyName" class="form-control" ng-change="LoadPartyRate(Book.PartyId,'Parcel')" name="PartyName" ng-model="Book.PartyId" data-show-subtext="false" data-live-search="true" required>
+                        <td ng-class="{ 'has-error' : submitted && caxform.PartyName.$invalid}" style="padding-bottom: 2%;">
+                            <select style="width: 90%;" id="PartyName" ng-change="LoadPartyRate(Book.PartyId,'Parcel');" name="PartyName" ng-model="Book.PartyId" data-show-subtext="false" data-live-search="true" required>
                                 <option value="" data-subtext="">Select Party</option>
                                 <option ng-repeat="party in PartyList" value="{{party.PartyInfoId}}" data-subtext="">{{party.Name}}</option>
                             </select>
@@ -49,30 +50,28 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="vertical-align: middle;">
+                        <td style="vertical-align: middle;padding-bottom: 2%;">
                             <label>Party Code :</label>
                         </td>
-                        <td ng-class="{ 'has-error' : submitted && caxform.PartyInfoId.$invalid}">
-                            <input class="form-control" name="PartyInfoId" type="text" disabled ng-model="Book.PartyId" required />
+                        <td ng-class="{ 'has-error' : submitted && caxform.PartyInfoId.$invalid}" style="padding-bottom: 2%;">
+                            <input style="width: 90%;" name="PartyInfoId" type="text" disabled ng-model="Book.PartyId" required />
                             <span ng-show="submitted &&  caxform.PartyInfoId.$error.required" class="text-danger">Party code is Required</span>
                         </td>
-
                     </tr>
                     <tr>
-                        <td style="vertical-align: middle;">
+                        <td style="vertical-align: middle;padding-bottom: 2%;">
                             <label>CN Type :</label>
                         </td>
-                        <td>
-                            <input class="form-control" name="CNType" type="text" disabled value="Parcel" required />
+                        <td style="padding-bottom: 2%;">
+                            <input style="width: 90%;" name="CNType" type="text" disabled value="Parcel" required />
                         </td>
-
                     </tr>
                     <tr>
-                        <td style="vertical-align: middle;">
+                        <td style="vertical-align: middle;padding-bottom: 2%;">
                             <label>Service Type :</label>
                         </td>
-                        <td ng-class="{ 'has-error' : submitted && caxform.ServiceType.$invalid}">
-                            <select class="form-control" name="ServiceType" ng-model="Book.ServiceType" data-show-subtext="false" data-live-search="false" required>
+                        <td ng-class="{ 'has-error' : submitted && caxform.ServiceType.$invalid}" style="padding-bottom: 2%;">
+                            <select style="width: 90%;" name="ServiceType" ng-model="Book.ServiceType" data-show-subtext="false" data-live-search="false" required>
                                 <option value="" data-subtext="">Select Service Type</option>
                                 <option value="In Dhaka" data-subtext="">In Dhaka</option>
                                 <option value="Out Dhaka" data-subtext="">Out Dhaka</option>
@@ -82,53 +81,53 @@
 
                     </tr>
                     <tr>
-                        <td style="vertical-align: middle;">
+                        <td style="vertical-align: middle;padding-bottom: 2%;">
                             <label> Fo/L No : </label>
                         </td>
-                        <td ng-class="{ 'has-error' : submitted && caxform.Follio.$invalid}">
-                            <input class="form-control" name="Follio" type="text" ng-model="Book.Follio" required />
+                        <td ng-class="{ 'has-error' : submitted && caxform.Follio.$invalid}" style="padding-bottom: 2%;">
+                            <input style="width: 90%;" autocomplete="off" name="Follio" type="text" ng-model="Book.Follio" required />
                             <span ng-show="submitted &&  caxform.Follio.$error.required" class="text-danger">Fo/L is Required</span>
                         </td>
                     </tr>
+                   
                     <tr>
-                        <td style="vertical-align: middle;">
+                        <td style="vertical-align: middle;padding-bottom: 2%;">
                             <label>Consignee Name : </label>
                         </td>
-                        <td ng-class="{ 'has-error' : submitted && caxform.ConsingeeName.$invalid}">
-                            <input class="form-control" name="ConsingeeName" type="text" ng-model="Book.ConsingeeName" required />
+                        <td style="padding-bottom: 2%;" ng-class="{ 'has-error' : submitted && caxform.ConsingeeName.$invalid}">
+                            <input  style="width: 90%;" name="ConsingeeName" type="text" ng-model="Book.ConsingeeName" required />
                             <span ng-show="submitted &&  caxform.ConsingeeName.$error.required" class="text-danger">Consignee name is Required</span>
                         </td>
                     </tr>
                     <tr>
-                        <td style="vertical-align: middle;">
+                        <td style="vertical-align: middle;padding-bottom: 6%;">
                             <label>Consignee Address :</label>
                         </td>
-                        <td ng-class="{ 'has-error' : submitted && caxform.ConsigneeAddress.$invalid}">
-                            <textarea class="form-control" name="ConsigneeAddress" ng-model="Book.ConsigneeAddress" required></textarea>
+                        <td style="padding-bottom: 6%;" ng-class="{ 'has-error' : submitted && caxform.ConsigneeAddress.$invalid}">
+                            <textarea  style="width: 90%;" name="ConsigneeAddress" ng-model="Book.ConsigneeAddress" required></textarea>
                             <span ng-show="submitted &&  caxform.ConsigneeAddress.$error.required" class="text-danger">Consignee Address is Required</span>
                         </td>
                     </tr>
-
                 </table>
             </div>
-            <div class="col-md-6">
-                <table class="table table-borderless">
+            <div class="col-md-5">
+                <table>
                     <tr>
-                        <td style="width: 20%;vertical-align: middle;">
+                        <td style="vertical-align: middle;padding-bottom: 2%;padding-top:2%;">
                             <label> Item Info :</label>
                         </td>
-                        <td ng-class="{ 'has-error' : submitted && caxform.ItemInfo.$invalid}">
-                            <textarea class="form-control" name="ItemInfo" ng-model="Book.ItemInfo" required></textarea>
+                        <td style="padding-bottom: 2%;padding-top:2%;" ng-class="{ 'has-error' : submitted && caxform.ItemInfo.$invalid}">
+                            <textarea style="width:140%" name="ItemInfo" ng-model="Book.ItemInfo" required></textarea>
                             <span ng-show="submitted &&  caxform.ItemInfo.$error.required" class="text-danger">Item Info is Required</span>
-
                         </td>
                     </tr>
+                   
                     <tr>
-                        <td style="vertical-align: middle;">
+                        <td style="vertical-align: middle;padding-bottom: 2%;">
                             <label>Parcel Type:</label>
                         </td>
-                        <td ng-class="{ 'has-error' : submitted && caxform.Ex1.$invalid}">
-                            <select class="form-control" ng-change="FillRateEntry()" name="Ex1" ng-model="Book.Size" required>
+                        <td style="padding-bottom: 2%;" ng-class="{ 'has-error' : submitted && caxform.Ex1.$invalid}">
+                            <select  style="width:140%" ng-change="FillRateEntry()" name="Ex1" ng-model="Book.Size" required>
                                 <option value="" data-subtext="">Select Parcel Type</option>
                                 <option value="Big" data-subtext="">Big Parcel</option>
                                 <option value="General" data-subtext="">General Parcel</option>
@@ -137,11 +136,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="vertical-align: middle;">
+                        <td style="vertical-align: middle;padding-bottom: 2%;">
                             <label>Rate Type :</label>
                         </td>
-                        <td ng-class="{ 'has-error' : submitted && caxform.optionsRadiosInline.$invalid}">
-                            <div class="col-md-8">
+                        <td style="padding-bottom: 2%;" ng-class="{ 'has-error' : submitted && caxform.optionsRadiosInline.$invalid}">
+                            <div class="col-md-8" style="width: 100%;">
                                 <label class="radio-inline">
                                     <input type="radio" name="optionsRadiosInline" ng-model="Book.RateType" ng-click="FillRateEntry()" id="optionsRadiosInline1" value="Auto" required />Auto
                                 </label>
@@ -152,34 +151,29 @@
                             </div>
                         </td>
                     </tr>
-
                     <tr>
-                        <td style="vertical-align: middle;">
+                        <td style="padding-bottom: 2%;vertical-align: middle;">
                             <label>Total Weight(KG):</label>
                         </td>
                         <td ng-class="{ 'has-error' : submitted && caxform.KPNumber.$invalid}">
-                            <input class="text-center form-control" name="KPNumber" ng-model="Book.KPNumber" type="text" required />
+                            <input style="width:140%" name="KPNumber" ng-model="Book.KPNumber" type="text" required />
                             <span ng-show="submitted &&  caxform.KPNumber.$error.required" class="text-danger">Total Weight is Required</span>
-
                         </td>
                     </tr>
                 </table>
-                <table class="table-borderless" style="margin-left: 7%;">
+                <table  style="margin-left: 21%;width: 97%;margin-top: 2%;">
                     <tr>
                         <td style="padding-bottom: 3%;" ng-class="{ 'has-error' : submitted && caxform.FirstPieceNumber.$invalid}">
                             <label class="control-label">
                                 First   :
                             </label>
                             <input style="width:26%" class="text-center" name="FirstPieceNumber" disabled id="FirstPieceNumber" ng-model="FirstPieceNumber" type="text" required />
-
                             <label class="control-label">
                                 KG Rate :
                             </label>
                             <input style="width:26%" class="text-center" disabled id="FirstPieceRate" name="FirstPieceRate" ng-model="FirstPieceRate" type="text" required />
                             <span ng-show="submitted &&  caxform.FirstPieceNumber.$error.required" class="text-danger">Required</span>
-
                         </td>
-
                     </tr>
                     <tr>
                         <td style="padding-bottom: 3%;" ng-class="{ 'has-error' : submitted && caxform.AfterFirstPieceRate.$invalid}">
@@ -192,7 +186,6 @@
                             </label>
                             <input style="width:26%" class="text-center" disabled id="AfterFirstPieceRate" name="AfterFirstPieceRate" ng-model="AfterFirstPieceRate" type="text" required />
                             <span ng-show="submitted &&  caxform.AfterFirstPieceRate.$error.required" class="text-danger">Required</span>
-
                         </td>
                     </tr>
                     <tr>
@@ -200,24 +193,21 @@
                             <a class="btn btn-info" ng-click="DoCalculate()" href="">Calculate</a>
                         </td>
                     </tr>
-                    <tr>
-                        <td style="padding-right: 22%;" ng-class="{ 'has-error' : submitted && caxform.TotalAmount.$invalid}">
-                            <label class="col-md-4 control-label">
-                                Total Amount:
-                                <span style="color:red">*</span>
-                            </label>
-                            <div class="col-md-8">
-                                <input class="text-center form-control" name="TotalAmount" disabled ng-model="Book.TotalAmount" type="text" required />
-                                <div class="form-control-focus"> </div>
-                                <span ng-show="submitted &&  caxform.TotalAmount.$error.required" class="text-danger">Required</span>
-                            </div>
-                        </td>
-
-                    </tr>
+                   
                 </table>
+                <tr>
+                    <td style="padding-bottom: 2%;vertical-align: middle;">
+                        Total Amount:
+                        <span style="color:red">*</span>
+                    </td>
+                    <td style="padding-bottom:2%;" ng-class="{ 'has-error' : submitted && caxform.TotalAmount.$invalid}">
+                        <input style="width:70%" name="TotalAmount" disabled ng-model="Book.TotalAmount" type="text" required />
+                        <span ng-show="submitted &&  caxform.TotalAmount.$error.required" class="text-danger">Total Weight is Required</span>
+                    </td>
+                </tr>
             </div>
         </div>
-        <div class="col-md-12" style="background-color: red;height: 8%;PADDING-TOP: 1%;border: groove;width: 99%;margin-left: 6px;margin-top: -19px;">
+        <div class="col-md-12" style="background-color: red;height: 8%;PADDING-TOP: 4px;border: groove;width: 99%;margin-left: 6px;margin-top: -19px;">
             <input type="submit" class="btn btn-primary" style="width:16%;margin-left: 9px;" ng-click="submitted=true" value="Add" />
             <input type="reset" id="frmresetbtn" class="btn btn-warning" style="float:left;width: 16%;margin-left: 34%" ng-click="submitted=false" value="Reset" />
         </div>
