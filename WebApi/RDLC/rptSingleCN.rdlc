@@ -270,32 +270,6 @@
               </Border>
             </Style>
           </Textbox>
-          <Textbox Name="Textbox12">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>=First(Fields!PartyName.Value, "DataSet1")</Value>
-                    <Style />
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>2.40563in</Top>
-            <Left>4.27673in</Left>
-            <Height>0.19792in</Height>
-            <Width>1.8125in</Width>
-            <ZIndex>10</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-            </Style>
-          </Textbox>
           <Textbox Name="Textbox13">
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
@@ -315,7 +289,7 @@
             <Left>7.40172in</Left>
             <Height>0.19792in</Height>
             <Width>1.30208in</Width>
-            <ZIndex>11</ZIndex>
+            <ZIndex>10</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -341,7 +315,7 @@
             <Left>8.23505in</Left>
             <Height>0.19792in</Height>
             <Width>0.38541in</Width>
-            <ZIndex>12</ZIndex>
+            <ZIndex>11</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -367,7 +341,7 @@
             <Left>8.23505in</Left>
             <Height>0.19792in</Height>
             <Width>0.33333in</Width>
-            <ZIndex>13</ZIndex>
+            <ZIndex>12</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -393,7 +367,7 @@
             <Left>8.23505in</Left>
             <Height>0.19792in</Height>
             <Width>0.33333in</Width>
-            <ZIndex>14</ZIndex>
+            <ZIndex>13</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -419,7 +393,7 @@
             <Left>8.23505in</Left>
             <Height>0.19792in</Height>
             <Width>0.61458in</Width>
-            <ZIndex>15</ZIndex>
+            <ZIndex>14</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -447,7 +421,7 @@
             <Left>8.03714in</Left>
             <Height>0.19792in</Height>
             <Width>0.8125in</Width>
-            <ZIndex>16</ZIndex>
+            <ZIndex>15</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -476,7 +450,7 @@
             <Left>5.90173in</Left>
             <Height>0.21875in</Height>
             <Width>0.96875in</Width>
-            <ZIndex>17</ZIndex>
+            <ZIndex>16</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -502,7 +476,7 @@
             <Left>7.31838in</Left>
             <Height>0.19792in</Height>
             <Width>0.66667in</Width>
-            <ZIndex>18</ZIndex>
+            <ZIndex>17</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -528,7 +502,7 @@
             <Left>8.23505in</Left>
             <Height>0.19792in</Height>
             <Width>0.6875in</Width>
-            <ZIndex>19</ZIndex>
+            <ZIndex>18</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -540,7 +514,7 @@
             <Left>3.905in</Left>
             <Height>3.76737in</Height>
             <Width>0in</Width>
-            <ZIndex>20</ZIndex>
+            <ZIndex>19</ZIndex>
             <Style>
               <Border>
                 <Style>Solid</Style>

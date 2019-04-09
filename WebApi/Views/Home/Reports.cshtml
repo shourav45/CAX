@@ -8,28 +8,28 @@
 <div class="row" style="background-color:dimgrey;height:650px;" ng-controller="FrmlClt">
    <div style="margin-top: 12%;">
 
-       <div style="background-color:#a72525eb;width: 64%;margin-left: 18%;color:white;height: 460px;">
+       <div style="background-color:darkolivegreen;width: 46%;margin-left: 18%;color:white;height: 460px;">
            <h2 style="font-size: xx-large;text-align: center;padding-top: 2%;font-weight: 800;text-decoration: underline;">View Reports</h2>
            <ul class="nav nav-tabs row" style="width: 98%;margin-left: 1%;">
-               <li class="active"><a href="#home" style="font-size: x-large;font-weight: 800;">CN Info</a></li>
-               <li><a href="#menu1" style="font-size: x-large;font-weight: 800;">Sales Info</a></li>
-               <li><a href="#menu2" style="font-size: x-large;font-weight: 800;">Bill Info</a></li>
-               <li><a href="#menu3" style="font-size: x-large;font-weight: 800;">Party Report</a></li>
+               <li class="active"><a href="#home" style="font-size: large;">CN Info</a></li>
+               <li><a href="#menu1" style="font-size: large;">Sales Info</a></li>
+               <li><a href="#menu2" style="font-size: large;">Bill Info</a></li>
+               <li><a href="#menu3" style="font-size: large;">Party Report</a></li>
            </ul>
 
            <div class="tab-content">
                <div id="home" class="tab-pane fade in active">
                   <div class="row" style="margin-top: 4%;">
                     <div class="form-group" style="margin-bottom: 8%;">
-                        <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                        <div class="col-md-4 label" style="text-align: right;font-size: large;">
                             Date :
                         </div>
                         <div class="col-md-6">
-                            <input autocomplete="off" disabled ng-model="CNInfo.Date" type="text" id="datepicker1"  class="form-control" />
+                            <input autocomplete="off" readonly ng-model="CNInfo.Date" type="text" id="datepicker1"  class="form-control" />
                         </div>
                     </div>
                      <div class="form-group"  style="margin-bottom: 5%;">
-                         <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                         <div class="col-md-4 label" style="text-align: right;font-size: large;">
                              Destination :
                          </div>
                          <div class="col-md-6">
@@ -58,15 +58,15 @@
                <div id="menu1" class="tab-pane fade">
                    <div class="row" style="margin-top: 4%;">
                        <div class="form-group" style="margin-bottom: 8%;">
-                           <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                           <div class="col-md-4 label" style="text-align: right;font-size:large;">
                                Date :
                            </div>
                            <div class="col-md-6">
-                               <input autocomplete="off" disabled type="text" ng-model="Sale.Date" id="datepicker2" class="form-control" />
+                               <input autocomplete="off" readonly type="text" ng-model="Sale.Date" id="datepicker2" class="form-control" />
                            </div>
                        </div>
                        <div class="form-group" style="margin-bottom: 5%;">
-                           <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                           <div class="col-md-4 label" style="text-align: right;font-size:large;">
                                SPO Name :
                            </div>
                            <div class="col-md-6">
@@ -94,16 +94,16 @@
                <div id="menu2" class="tab-pane fade">
                    <div class="row" style="margin-top: 4%;">
                        <div class="form-group" style="margin-bottom: 8%;">
-                           <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                           <div class="col-md-4 label" style="text-align: right;font-size:large;">
                                Date :
                            </div>
                            <div class="col-md-6">
-                               <input autocomplete="off" ng-model="Bill.Date" type="text" id="datepicker3" class="form-control" />
+                               <input autocomplete="off" readonly ng-model="Bill.Date" type="text" id="datepicker3" class="form-control" />
                            </div>
                        </div>
 
                        <div class="form-group" style="margin-bottom: 5%;">
-                           <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                           <div class="col-md-4 label" style="text-align: right;font-size: large;">
                                Party Name :
                            </div>
                            <div class="col-md-6">
@@ -116,7 +116,7 @@
                    </div>
                    <div class="row" style="margin-top: 3%;">
                        <div class="form-group" style="margin-bottom: 8%;">
-                           <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                           <div class="col-md-4 label" style="text-align: right;font-size:large;">
                                CN / Item Type :
                            </div>
                            <div class="col-md-6">
@@ -125,7 +125,7 @@
                        </div>
 
                        <div class="form-group" style="margin-bottom: 14%;">
-                           <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                           <div class="col-md-4 label" style="text-align: right;font-size:large;">
                               Discount :
                            </div>
                            <div class="col-md-6">
@@ -149,16 +149,16 @@
                <div id="menu3" class="tab-pane fade">
                    <div class="row" style="margin-top: 4%;">
                        <div class="form-group" style="margin-bottom: 8%;">
-                           <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                           <div class="col-md-4 label" style="text-align: right;font-size:large;">
                                Date :
                            </div>
                            <div class="col-md-6">
-                               <input autocomplete="off" ng-model="Party.Date" type="text" id="datepicker4" class="form-control" />
+                               <input autocomplete="off" readonly ng-model="Party.Date" type="text" id="datepicker4" class="form-control" />
                            </div>
                        </div>
 
                        <div class="form-group" style="margin-bottom: 5%;">
-                           <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                           <div class="col-md-4 label" style="text-align: right;font-size:large;">
                                Party Name :
                            </div>
                            <div class="col-md-6">
@@ -171,7 +171,7 @@
                    </div>
                    <div class="row" style="margin-top: 3%;">
                        <div class="form-group" style="margin-bottom: 6%;">
-                           <div class="col-md-4 label" style="text-align: right;font-size: x-large;font-weight: 800;">
+                           <div class="col-md-4 label" style="text-align: right;font-size: large;">
                               Update Status :
                            </div>
                            <div class="col-md-6">
@@ -182,18 +182,18 @@
                        <table class="table table-borderless" style="width: 92%;margin-left: 5%;">
                            <tr>
                                <td style="text-align: right;">
-                                   <a class="btn btn-default green" ng-click="PartyFolioReport()" href="#" style="width: 60%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Follio Report By Party</a>
+                                   <a class="btn btn-default green" ng-click="PartyFolioReport()" href="#" style="width: 70%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Follio Report By Party</a>
                                </td>
                                <td>
-                                   <a class="btn btn-default green" ng-click="PartyShipperCopy()" href="#" style="width: 60%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Shipper Copy Report</a>
+                                   <a class="btn btn-default green" ng-click="PartyShipperCopy()" href="#" style="width: 70%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Shipper Copy Report</a>
                                </td>
                            </tr>
                            <tr>
                                <td style="text-align: right;">
-                                   <a class="btn btn-default green" ng-click="PartyNonUpdateReport()" href="#" style="width: 60%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Non Update Report</a>
+                                   <a class="btn btn-default green" ng-click="PartyNonUpdateReport()" href="#" style="width: 70%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Non Update Report</a>
                                </td>
                                <td>
-                                   <a class="btn btn-default green" ng-click="PartyUpdateReport()" href="#" style="width: 60%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Update Report</a>
+                                   <a class="btn btn-default green" ng-click="PartyUpdateReport()" href="#" style="width: 70%;font-weight: 800;color: white;background-color: rgb(32, 212, 126);">Update Report</a>
                                </td>
                            </tr>
                        </table>
