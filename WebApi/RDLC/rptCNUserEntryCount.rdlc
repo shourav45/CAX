@@ -304,10 +304,10 @@
     <Height>1.46181in</Height>
     <Style />
   </Body>
-  <Width>6.65761in</Width>
+  <Width>8.12636in</Width>
   <Page>
     <PageHeader>
-      <Height>0.83902in</Height>
+      <Height>0.61333in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -322,7 +322,7 @@
                   <Style>
                     <FontStyle>Normal</FontStyle>
                     <FontFamily>Helvetica Neue</FontFamily>
-                    <FontSize>0.1875in</FontSize>
+                    <FontSize>16pt</FontSize>
                     <FontWeight>Medium</FontWeight>
                     <TextDecoration>None</TextDecoration>
                   </Style>
@@ -334,9 +334,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox1</rd:DefaultName>
-          <Left>1.66542in</Left>
-          <Height>0.25in</Height>
-          <Width>3.40625in</Width>
+          <Height>0.28125in</Height>
+          <Width>8.12636in</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -354,7 +353,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=Parameters!CNDate.Value</Value>
+                  <Value>=First(Fields!CNDate.Value, "DataSet1")</Value>
                   <Style>
                     <FontSize>9pt</FontSize>
                     <FontWeight>Bold</FontWeight>
@@ -368,10 +367,9 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox3</rd:DefaultName>
-          <Top>0.39458in</Top>
-          <Left>2.23485in</Left>
+          <Top>0.29514in</Top>
           <Height>0.21875in</Height>
-          <Width>1.98699in</Width>
+          <Width>8.12636in</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -385,7 +383,7 @@
         </Textbox>
         <Line Name="Line2">
           <Top>0.28125in</Top>
-          <Left>1.47792in</Left>
+          <Left>2.0925in</Left>
           <Height>0in</Height>
           <Width>3.78125in</Width>
           <ZIndex>2</ZIndex>
@@ -403,7 +401,7 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>0.23958in</Height>
+      <Height>0.25in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <Style>
@@ -414,8 +412,6 @@
     </PageFooter>
     <PageHeight>11.69in</PageHeight>
     <PageWidth>8.27in</PageWidth>
-    <TopMargin>1in</TopMargin>
-    <BottomMargin>1in</BottomMargin>
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
@@ -443,6 +439,10 @@
           <DataField>UserFullName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="CNDate">
+          <DataField>CNDate</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="CNNumber">
           <DataField>CNNumber</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
@@ -458,13 +458,6 @@
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
-  <ReportParameters>
-    <ReportParameter Name="CNDate">
-      <DataType>String</DataType>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-  </ReportParameters>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>b05defa1-9481-4729-a050-7666d7dae943</rd:ReportID>
 </Report>

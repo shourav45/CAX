@@ -32,16 +32,29 @@ namespace WebApi.Controllers
             pram.Add(p1);
             pram.Add(p2);
             DataTable dt= SqlHelper.ExecuteDataset(connection, CommandType.StoredProcedure, "UserCNEntryCount",pram.ToArray()).Tables[0];
+            var viewer = new ReportViewer();
+            List<ReportParameter> param = new List<ReportParameter>();
+
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptUserEntry.rdlc");
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", dt));
+
+            param.Add(new ReportParameter("CNDate", CNDate.ToShortDateString()));
+            if(CNDestination=="0")
+            {
+                param.Add(new ReportParameter("Dest","All"));
+            }
+            else
+            {
+                param.Add(new ReportParameter("Dest", dt.Rows[0][4].ToString()));
+            }
+            viewer.LocalReport.SetParameters(param);
+            viewer.LocalReport.Refresh();
 
             Warning[] warnings;
             string mimeType;
             string[] streamids;
             string encoding;
             string filenameExtension;
-            var viewer = new ReportViewer();
-            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptUserEntry.rdlc");
-            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", dt));
-            viewer.LocalReport.Refresh();
             var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
             return File(bytes, mimeType);
         }
@@ -62,7 +75,9 @@ namespace WebApi.Controllers
             string encoding;
             string filenameExtension;
             List<ReportParameter> param = new List<ReportParameter>();
-           // var viewer = new ReportViewer();
+            param.Add(new ReportParameter("CNDate", CNDate.ToShortDateString()));
+            param.Add(new ReportParameter("Dest", dt.Rows[0][6].ToString()));
+            // var viewer = new ReportViewer();
             viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptFullManifest.rdlc");
             viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", dt));
             viewer.LocalReport.Refresh();
