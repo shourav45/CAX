@@ -85,9 +85,9 @@
                         <td style="vertical-align: middle;padding-bottom: 2%;">
                             <label> Fo/L No : </label>
                         </td>
-                        <td ng-class="{ 'has-error' : submitted && caxform.Follio.$invalid}" style="padding-bottom: 2%;">
-                            <input style="width: 90%;" autocomplete="off" name="Follio" type="text" ng-model="Book.Follio" required />
-                            <span ng-show="submitted &&  caxform.Follio.$error.required" class="text-danger">Fo/L is Required</span>
+                        <td style="padding-bottom: 2%;">
+                            <input style="width: 90%;" autocomplete="off" name="Follio" type="text" ng-model="Book.Follio"  />
+                           
                         </td>
                     </tr>
                     <tr>
@@ -194,11 +194,16 @@
 </div>
 @section Scripts{
     <!-- Page-Level Plugin Scripts-->
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#datepicker').datepicker({ format: "dd/mm/yyyy" });
-        });
-    </script>
+   <script type="text/javascript">
+$(document).ready(function() {
+    $("#datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'd MM, y',
+        maxDate: 'today'
+    });
+});
+</script>
     <script>
         CNApp.controller('FrmlClt', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
             init();
@@ -332,46 +337,37 @@
             $scope.submitForm = function () {
                 if ($scope.caxform.$invalid)
                     return;
+                UiBlock();
                 $http.post("/CNInfoes/PostCNInfo?CNType=Poly" +
                         "&PolySize=NULL&CNDate=" + $scope.Book.CNDate +
                         "&ServiceType=" + $scope.Book.ServiceType + "&PartyId=" + $scope.Book.PartyId +
                     "&Destination=" + $scope.Book.Destination + "&Follio=" + $scope.Book.Follio +
                     "&ConsingeeName=" + $scope.Book.ConsingeeName + "&ConsigneeAddress=" + $scope.Book.ConsigneeAddress +
                     "&Kgpiece=" + $scope.Book.KPNumber +
-                    "&RateType=" + $scope.Book.RateType + "&Weight=" + "0" + "&ServiceCharge=" + $scope.Book.ServiceCharge +
+                    "&RateType=" + $scope.Book.RateType + "&Weight=" + "0" + "&ServiceCharge=" + $scope.ServiceCharge +
                     "&VatStatus=0&VatPercent=0&VatAmount=0&AitStatus=0&AitPercent=0&AitAmount=0&TotalAmount=" + $scope.Book.TotalAmount +
                     "&Size=" + $scope.Book.Size + "&KPNumber=" + $scope.Book.KPNumber + "&Ex1=" + $scope.AfterFirstPieceRate)
                             .then(function successCallback(response) {
                                 console.log(response.data);
-
-                                if (response.data != '0')
-                                {
+                                UiUnBlock();
+                                console.log(response.data);
+                                LoadLastCN();
+                                if (response.data != '0') {
                                     $scope.Book = [];
                                     $("#frmresetbtn").trigger("click");
-                                    swal({
-                                        title: "Success!",
-                                        text: "CN added successfully! Print now?",
-                                        type: "success",
-                                        showCancelButton: true,
-                                        confirmButtonColor: '#DD6B55',
-                                        confirmButtonText: 'Yes, Print now',
-                                        cancelButtonText: "No, Print later",
-                                        closeOnConfirm: false,
-                                        closeOnCancel: false
-                                    },
-                               function (isConfirm) {
-                                   if (isConfirm) {
-                                       swal.close();
-                                       var win = window.open('../Report/QuickPrint?CN=' + response.data, '_blank');
-                                       win.focus();
-                                   } else {
-                                       swal.close();
-                                   }
-                               });
+                                    //toastr.options.onclick = function () { console.log("clicked "); };
+                                    toastr.success('Click to quick print.', 'CN added successfully!',
+                                        {
+                                            onclick: function () {
+                                                var win = window.open('../Report/QuickPrint?CN=' + response.data, '_blank');
+                                                win.focus();
+                                            }
+                                        }
+                                    );
+                                    // toastr.success('CN added successfully! Click to print');
                                     return;
                                 }
                                 sweetAlert("Sorry!!", response.data, "error");
-
                             }, function errorCallback(response) {
                                 //error msg
                             });

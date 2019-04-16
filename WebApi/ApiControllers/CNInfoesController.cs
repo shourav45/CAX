@@ -22,7 +22,9 @@ namespace WebApi.ApiControllers
         [System.Web.Http.HttpGet]
         public ActionResult GetCNInfoset()
         {
-            List<CNInfo> CNList = db.CNInfoset.OrderByDescending(cn=>cn.CNInfoId).Take(100).ToList();
+            HttpCookie myCookie = Request.Cookies["UserCookie"];
+            string myname = myCookie.Values["UserInfoId"].ToString();
+            List<CNInfo> CNList = db.CNInfoset.OrderByDescending(cn=>cn.CNInfoId).Where(cn=>cn.AddBy== myname).Take(100).ToList();
             foreach (var cn in CNList)
             {
                 PartyInfo Party = db.PartyInfoset.Where(p => p.PartyInfoId.ToString() == cn.PartyId).FirstOrDefault();
@@ -32,6 +34,15 @@ namespace WebApi.ApiControllers
                 }
             }
             return Json(CNList,JsonRequestBehavior.AllowGet);
+        }
+        [System.Web.Http.HttpGet]
+        public ActionResult LastCNNumber()
+        {
+            HttpCookie myCookie = Request.Cookies["UserCookie"];
+            string myname = myCookie.Values["UserInfoId"].ToString();
+            var CNList = db.CNInfoset.Where(c=>c.AddBy==myname).ToList().LastOrDefault();
+
+            return Json(CNList, JsonRequestBehavior.AllowGet);
         }
         public IQueryable<CNInfo> LoadAllCNInfoset()
         {
@@ -111,7 +122,7 @@ namespace WebApi.ApiControllers
             cn.Status = "A";
             cn.Ex1 = "";
             cn.DeliveryStatus = "0";
-            cn.ServiceCharge = "0";//need to add on the form
+            //cn.ServiceCharge = "0";//need to add on the form
             db.CNInfoset.Add(cn);
            var result= db.SaveChanges();
             return Json(cn.CNInfoId, JsonRequestBehavior.AllowGet);

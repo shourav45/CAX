@@ -85,9 +85,8 @@
                         <td style="vertical-align: middle;padding-bottom: 4%;">
                             <label> Fo/L No : </label>
                         </td>
-                        <td ng-class="{ 'has-error' : submitted && caxform.Follio.$invalid}" style="padding-bottom: 4%;">
-                            <input  style="width: 90%;" autocomplete="off" name="Follio" type="text" ng-model="Book.Follio" required />
-                            <span ng-show="submitted &&  caxform.Follio.$error.required" class="text-danger">Fo/L is Required</span>
+                        <td style="padding-bottom: 4%;">
+                            <input  style="width: 90%;" autocomplete="off" name="Follio" type="text" ng-model="Book.Follio"  />
                         </td>
                     </tr>
                    
@@ -176,7 +175,7 @@
                         <td style="padding-bottom: 4%;vertical-align: middle;">
                             <label>Total:</label>
                         </td>
-                        <td style="padding-bottom: 4%;" ng-class="{ 'has-error' : submitted && caxform.TotalAmount.$invalid}">
+                        <td style="margin-bottom: 10%;" ng-class="{ 'has-error' : submitted && caxform.TotalAmount.$invalid}">
                             <input style="width:140%" class="text-center" name="TotalAmount" disabled ng-model="Book.TotalAmount" type="text" required />
                             <div class="form-control-focus"> </div>
                             <span ng-show="submitted &&  caxform.TotalAmount.$error.required" class="text-danger">Required</span>    
@@ -186,7 +185,7 @@
                
             </div>
         </div>
-        <div class="col-md-12" style="background-color: blue;height: 8%;PADDING-TOP: 3px;border: groove;width: 99%;margin-left: 6px;margin-top: -19px;">
+        <div class="col-md-12" style="background-color: blue;height: 8%;PADDING-TOP: 3px;border: groove;width: 99%;margin-left: 6px;margin-top: 6px;">
             <input type="submit" class="btn btn-primary" style="width:16%;margin-left: 9px;" ng-click="submitted=true" value="Add" />
             <input type="reset" id="frmresetbtn" class="btn btn-warning" style="float:left;width: 16%;margin-left: 34%" ng-click="submitted=false" value="Reset" />
         </div>
@@ -202,6 +201,7 @@ $(document).ready(function() {
         dateFormat: 'd MM, y',
         maxDate: 'today'
     });
+    LoadLastCN();
 });
     </script>
     <script>
@@ -320,41 +320,33 @@ $(document).ready(function() {
             $scope.submitForm = function () {
                 if ($scope.caxform.$invalid)
                     return;
+                UiBlock();
                 $http.post("/CNInfoes/PostCNInfo?CNType=Document"+
                         "&PolySize=NULL&CNDate="+ $scope.Book.CNDate +
                         "&ServiceType=" + $scope.Book.ServiceType + "&PartyId=" + $scope.Book.PartyId +
                     "&Destination=" + $scope.Book.Destination + "&Follio=" + $scope.Book.Follio +
                     "&ConsingeeName=" + $scope.Book.ConsingeeName + "&ConsigneeAddress=" + $scope.Book.ConsigneeAddress +
                     "&Kgpiece=" + $scope.Book.KPNumber +
-                    "&RateType=" + $scope.Book.RateType + "&Weight=" + "0" + "&ServiceCharge="+ $scope.Book.ServiceCharge +
+                    "&RateType=" + $scope.Book.RateType + "&Weight=" + "0" + "&ServiceCharge=" + $scope.ServiceCharge +
                     "&VatStatus=0&VatPercent=0&VatAmount=0&AitStatus=0&AitPercent=0&AitAmount=0&TotalAmount=" + $scope.Book.TotalAmount +
                     "&Size=" + $scope.Book.Size + "&KPNumber=" + $scope.Book.KPNumber + "&Ex1=" + $scope.FirstPieceRate)
                             .then(function successCallback(response) {
+                                UiUnBlock();
                                 console.log(response.data);
-
+                                LoadLastCN();
                                 if (response.data != '0') {
                                     $scope.Book = [];
                                     $("#frmresetbtn").trigger("click");
-                                    swal({
-                                        title: "Success!",
-                                        text: "CN added successfully! Print now?",
-                                        type: "success",
-                                        showCancelButton: true,
-                                        confirmButtonColor: '#DD6B55',
-                                        confirmButtonText: 'Yes, Print now',
-                                        cancelButtonText: "No, Print later",
-                                        closeOnConfirm: false,
-                                        closeOnCancel: false
-                                    },
-                               function (isConfirm) {
-                                   if (isConfirm) {
-                                       swal.close();
-                                       var win = window.open('../Report/QuickPrint?CN=' + response.data, '_blank');
-                                       win.focus();
-                                   } else {
-                                       swal.close();
-                                   }
-                               });
+                                    //toastr.options.onclick = function () { console.log("clicked "); };
+                                    toastr.success('Click to quick print.', 'CN added successfully!',
+                                        {
+                                            onclick: function () {
+                                                var win = window.open('../Report/QuickPrint?CN=' + response.data, '_blank');
+                                                win.focus();
+                                            }
+                                        }
+                                    );
+                                   // toastr.success('CN added successfully! Click to print');
                                     return;
                                 }
                                 sweetAlert("Sorry!!", response.data, "error");

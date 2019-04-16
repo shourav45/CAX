@@ -205,3 +205,8 @@ packages/
 /WebApi/obj/Debug/WebApi.pdb
 /WebApi/RDLC.zip
 /WebApi/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+/WebApi/bin/WebApi.dll
+/WebApi/bin/WebApi.pdb
+/WebApi/obj/Debug/WebApi.dll
+/WebApi/obj/Debug/WebApi.pdb
+/WebApi/obj/Debug/WebApp.csproj.FileListAbsolute.txt

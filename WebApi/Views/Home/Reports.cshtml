@@ -8,13 +8,14 @@
 <div class="row" style="background-color:dimgrey;height:650px;" ng-controller="FrmlClt">
    <div style="margin-top: 12%;">
 
-       <div style="background-color:silver;width: 46%;margin-left: 18%;color:white;height: 460px;">
+       <div style="background-color:silver;width: 64%;margin-left: 18%;color:white;height: 460px;">
            <h2 style="font-size: xx-large;text-align: center;padding-top: 2%;font-weight: 800;text-decoration: underline;">View Reports</h2>
            <ul class="nav nav-tabs row" style="width: 98%;margin-left: 1%;">
                <li class="active"><a href="#home" style="font-size: large;">CN Info</a></li>
                <li><a href="#menu1" style="font-size: large;">Sales Info</a></li>
                <li><a href="#menu2" style="font-size: large;">Bill Info</a></li>
                <li><a href="#menu3" style="font-size: large;">Party Report</a></li>
+               <li><a href="#menu4" style="font-size: large;">CN Print</a></li>
            </ul>
 
            <div class="tab-content">
@@ -200,6 +201,34 @@
 
                    </div>
                </div>
+               <div id="menu4" class="tab-pane fade">
+                   <div class="row" style="margin-top: 4%;">
+                       <div class="form-group" style="margin-bottom: 8%;">
+                           <div class="col-md-4 label" style="text-align: right;font-size:large;">
+                              From Date :
+                           </div>
+                           <div class="col-md-6">
+                               <input autocomplete="off" readonly type="text" ng-model="CN.FromDate" id="datepicker5" class="form-control" />
+                           </div>
+                       </div>
+                       <div class="form-group" style="margin-bottom: 5%;">
+                           <div class="col-md-4 label" style="text-align: right;font-size:large;">
+                               To Date :
+                           </div>
+                           <div class="col-md-6">
+                               <input autocomplete="off" readonly type="text" ng-model="CN.ToDate" id="datepicker6" class="form-control" />
+
+                           </div>
+
+                       </div>
+                       <div class="form-group" style="margin-bottom: 5%;">
+                           <div class="col-md-12" style="margin-top: 5%;margin-bottom: 2%;text-align: center;font-size: x-large;font-weight: 800;">
+                               <a class="btn btn-default" ng-click="CNPrint()" href="#" style="font-weight: 800;color: white;width: 50%;background-color: rgb(32, 212, 126);">CN Report</a>
+                           </div>
+                       </div>
+                      
+                   </div>
+               </div>
            </div>
        </div>
 
@@ -232,6 +261,18 @@ $(document).ready(function() {
         dateFormat: 'd MM, y',
         maxDate: 'today'
     });
+    $("#datepicker5").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'mm/dd/yy',
+        maxDate: 'today'
+    });
+    $("#datepicker6").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'mm/dd/yy',
+        maxDate: 'today'
+    });
 });
 </script>
 <script>
@@ -256,8 +297,23 @@ $(document).ready(function(){
                   .withOption('order', [0, 'asc']);
                 $scope.CNInfo = {};
                 $scope.Sale = {};
+                $scope.CN={};
             }
 
+            $scope.CNPrint=function()
+            {
+                if($scope.CN.FromDate==undefined ||$scope.CN.FromDate==null ||$scope.CN.FromDate=='')
+                {
+                    toastr.warning('Please select from date.');
+                    return;
+                }
+                if($scope.CN.ToDate==undefined ||$scope.CN.ToDate==null ||$scope.CN.ToDate=='')
+                {
+                    toastr.warning('Please select To date.');
+                    return;
+                }
+                window.open('/Report/CNReport?FromDate=' + $scope.CN.FromDate + '&ToDate=' + $scope.CN.ToDate, '_blank');
+            }
             //cn info
             $scope.CNUserEntryReport = function () {
                 if ($scope.CNInfo.Date == undefined || $scope.CNInfo.Date == null || $scope.CNInfo.Date == '')

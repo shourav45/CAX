@@ -15,8 +15,34 @@ namespace WebApi.Controllers
 {
     public class ReportController : Controller
     {
-        private dbcontext db;
+        public dbcontext db=new dbcontext();
         private string connection = ConfigurationManager.ConnectionStrings["ConnString1"].ConnectionString;
+
+        public ActionResult CNReport(DateTime FromDate, DateTime ToDate)
+        {
+            List<SqlParameter> pram = new List<SqlParameter>();
+            SqlParameter p1 = new SqlParameter("@FromDate", FromDate);
+            SqlParameter p2 = new SqlParameter("@ToDate", ToDate);
+            pram.Add(p1);
+            pram.Add(p2);
+
+            DataTable dt = SqlHelper.ExecuteDataset(connection, CommandType.StoredProcedure, "CNListPrint", pram.ToArray()).Tables[0];
+
+            Warning[] warnings;
+            string mimeType;
+            string[] streamids;
+            string encoding;
+            string filenameExtension;
+            List<ReportParameter> param = new List<ReportParameter>();
+            var viewer = new ReportViewer();
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptPrintCNList.rdlc");
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", dt));
+            viewer.LocalReport.Refresh();
+
+            var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
+
+            return File(bytes, mimeType);
+        }
         public ActionResult CNUserEntryReport(DateTime CNDate,string CNDestination)
         {
             db = new dbcontext();

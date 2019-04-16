@@ -305,6 +305,7 @@
     <Content Include="assets\scripts\bootstrap-select.min.js" />
     <Content Include="assets\scripts\dashboard-demo.js" />
     <Content Include="assets\scripts\flot-demo.js" />
+    <Content Include="assets\scripts\jquery.blockUI.js" />
     <Content Include="assets\scripts\morris-demo.js" />
     <Content Include="assets\scripts\siminta.js" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -480,6 +481,9 @@
     <EmbeddedResource Include="RDLC\rptCNCargoManifest.rdlc" />
     <EmbeddedResource Include="RDLC\rptCNUserEntryCount.rdlc" />
     <EmbeddedResource Include="RDLC\rptFullManifest.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RDLC\rptPrintCNList.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="RDLC\rptSPOSalesDaily 1.rdlc" />
