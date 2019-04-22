@@ -483,10 +483,19 @@
     <EmbeddedResource Include="RDLC\rptFullManifest.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="RDLC\rptShipperCopy.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RDLC\rptMonthlyBillPartyDetails.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="RDLC\rptPrintCNList.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="RDLC\rptSPOSalesDaily 1.rdlc" />
+    <EmbeddedResource Include="RDLC\rptMonthlyBillParty.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="RDLC\rptUserEntry.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>

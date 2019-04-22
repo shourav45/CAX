@@ -2,5 +2,5 @@
 
 var CNApp;
 (function () {
-    CNApp = angular.module("MainApp", [ 'datatables']);
+    CNApp = angular.module("MainApp", [ 'datatables','$filter']);
 })();

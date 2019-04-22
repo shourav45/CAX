@@ -36,7 +36,7 @@
                          <div class="col-md-6">
                              <select class="form-control" name="UserName" ng-model="CNInfo.DestinationId" data-show-subtext="true" data-live-search="true" required>
                                  <option value="" data-subtext="">Select Destination</option>
-                                 <option ng-repeat="dest in DestinationList" value="{{dest.DestinationId}}" data-subtext="{{dest.Area}}">{{dest.District}}->{{dest.Area}}</option>
+                                 <option ng-repeat="dest in DestinationList" value="{{dest.DestinationId}}" data-subtext="{{dest.Area}}">{{dest.Area}} ({{dest.District}})</option>
                              </select>
                          </div>
                      </div>
@@ -93,10 +93,10 @@
                    </div>
                </div>
                <div id="menu2" class="tab-pane fade">
-                   <div class="row" style="margin-top: 4%;">
-                       <div class="form-group" style="margin-bottom: 8%;">
+                   <div class="row" style="margin-top: 2%;">
+                       <div class="form-group" style="margin-bottom: 5%;">
                            <div class="col-md-4 label" style="text-align: right;font-size:large;">
-                               Date :
+                               Month :
                            </div>
                            <div class="col-md-6">
                                <input autocomplete="off" readonly ng-model="Bill.Date" type="text" id="datepicker3" class="form-control" />
@@ -115,22 +115,34 @@
                            </div>
                        </div>
                    </div>
-                   <div class="row" style="margin-top: 3%;">
-                       <div class="form-group" style="margin-bottom: 8%;">
+                   <div class="row" style="margin-top: 1%;">
+                       <div class="form-group" style="margin-bottom: 5%;">
                            <div class="col-md-4 label" style="text-align: right;font-size:large;">
                                CN / Item Type :
                            </div>
                            <div class="col-md-6">
-                               <input class="form-control" ng-model="Bill.CNType"/>
+                               <select id="CNType" class="form-control" name="CNType" ng-model="Bill.CNType" data-show-subtext="false" data-live-search="true" required>
+                                   <option value="All" selected>All</option>
+                                   <option value="In Dhaka">In Dhaka</option>
+                                   <option value="Out Dhaka">Out Dhaka</option>
+                               </select>
                            </div>
                        </div>
 
-                       <div class="form-group" style="margin-bottom: 14%;">
+                       <div class="form-group" style="margin-bottom: 6%;">
                            <div class="col-md-4 label" style="text-align: right;font-size:large;">
                               Discount :
                            </div>
                            <div class="col-md-6">
-                               <input class="form-control" ng-model="Bill.Discount"/>
+                               <input class="form-control" type="number" placeholder="Discount in %"  ng-model="Bill.Discount"/>
+                           </div>
+                       </div>
+                       <div class="form-group" style="margin-bottom: 6%;">
+                           <div class="col-md-4 label" style="text-align: right;font-size:large;">
+                               Vat :
+                           </div>
+                           <div class="col-md-6">
+                               <input class="form-control" type="number" placeholder="Vat in %" ng-model="Bill.Vat" />
                            </div>
                        </div>
 
@@ -205,21 +217,22 @@
                    <div class="row" style="margin-top: 4%;">
                        <div class="form-group" style="margin-bottom: 8%;">
                            <div class="col-md-4 label" style="text-align: right;font-size:large;">
-                              From Date :
+                              CN Date :
                            </div>
                            <div class="col-md-6">
                                <input autocomplete="off" readonly type="text" ng-model="CN.FromDate" id="datepicker5" class="form-control" />
                            </div>
                        </div>
-                       <div class="form-group" style="margin-bottom: 5%;">
+                       <div class="form-group" style="margin-bottom: 8%;">
                            <div class="col-md-4 label" style="text-align: right;font-size:large;">
-                               To Date :
+                               User :
                            </div>
                            <div class="col-md-6">
-                               <input autocomplete="off" readonly type="text" ng-model="CN.ToDate" id="datepicker6" class="form-control" />
-
+                               <select class="form-control" name="UserName" ng-model="CN.UserId">
+                                   <option value="" data-subtext="">Select User</option>
+                                   <option ng-repeat="user in userList" value="{{user.UserInfoId}}">{{user.Name}}</option>
+                               </select>
                            </div>
-
                        </div>
                        <div class="form-group" style="margin-bottom: 5%;">
                            <div class="col-md-12" style="margin-top: 5%;margin-bottom: 2%;text-align: center;font-size: x-large;font-weight: 800;">
@@ -252,7 +265,7 @@ $(document).ready(function() {
     $("#datepicker3").datepicker({
         changeMonth: true,
         changeYear: true,
-        dateFormat: 'd MM, y',
+        dateFormat: 'MM, yy',
         maxDate: 'today'
     });
     $("#datepicker4").datepicker({
@@ -262,12 +275,6 @@ $(document).ready(function() {
         maxDate: 'today'
     });
     $("#datepicker5").datepicker({
-        changeMonth: true,
-        changeYear: true,
-        dateFormat: 'mm/dd/yy',
-        maxDate: 'today'
-    });
-    $("#datepicker6").datepicker({
         changeMonth: true,
         changeYear: true,
         dateFormat: 'mm/dd/yy',
@@ -283,12 +290,14 @@ $(document).ready(function(){
 });
 </script>
 <script>
-        CNApp.controller('FrmlClt', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
+    CNApp.controller('FrmlClt', function ($scope, $http, $filter, DTOptionsBuilder, DTColumnBuilder) {
             init();
             function init() {
                 initialize();
                 LoadPartyList();
                 LoadDestinationList();
+                LoaduserList();
+                LoadLastCN();
             }
 
             function initialize() {
@@ -297,22 +306,67 @@ $(document).ready(function(){
                   .withOption('order', [0, 'asc']);
                 $scope.CNInfo = {};
                 $scope.Sale = {};
-                $scope.CN={};
+                $scope.CN = {};
+                $scope.Bill = {};
+                $scope.Bill.CNType = 'All';
+                $scope.Bill.Discount = parseInt(0);
+                $scope.Bill.Vat = parseInt(0);
+                $scope.Testdate = new Date();
+                $scope.CN.FromDate = $filter('date')($scope.Testdate, "d MMM, y");
+                $scope.CNInfo.Date = $filter('date')($scope.Testdate, "d MMM, y");
+                $scope.Sale.Date = $filter('date')($scope.Testdate, "d MMM, y");
+                
             }
-
+        //party report
+            $scope.PartyShipperCopy = function () {
+                if ($scope.Party.Date == undefined || $scope.Party.Date == null || $scope.Party.Date == '') {
+                    toastr.warning('Please select date.');
+                    return;
+                }
+                if ($scope.Party.PartyId == undefined || $scope.Party.PartyId == null || $scope.Party.PartyId == '') {
+                    toastr.warning('Please select Party.');
+                    return;
+                }
+                window.open('/Report/PartyShipperCopy?PartyDate=' + $scope.Party.Date + '&PartyId=' + $scope.Party.PartyId + '&UpdateStatus=' + $scope.Party.UpdateStatus, '_blank');
+            }
+            $scope.PartyFolioReport = function () {
+               
+                window.open('/Report/PartyFolioReport?PartyDate=' + $scope.Party.Date + '&PartyId=' + $scope.Party.PartyId + '&UpdateStatus=' + $scope.Party.UpdateStatus, '_blank');
+            }
+           
+            $scope.PartyNonUpdateReport = function () {
+                window.open('/Report/PartyNonUpdateReport?PartyDate=' + $scope.Party.Date + '&PartyId=' + $scope.Party.PartyId + '&UpdateStatus=' + $scope.Party.UpdateStatus, '_blank');
+            }
+            $scope.PartyUpdateReport = function () {
+                $window.open('/Report/PartyUpdateReport?PartyDate=' + $scope.Party.Date + '&PartyId=' + $scope.Party.PartyId + '&UpdateStatus=' + $scope.Party.UpdateStatus, '_blank');
+            }
+        //Bill info
+            $scope.BillMonthly = function () {
+                if ($scope.Bill.Date == undefined || $scope.Bill.Date == null || $scope.Bill.Date == '') {
+                    toastr.warning('Please select month.');
+                    return;
+                }
+                if ($scope.Bill.PartyId == undefined || $scope.Bill.PartyId == null || $scope.Bill.PartyId == '') {
+                    toastr.warning('Please select Party.');
+                    return;
+                }
+                window.open('/Report/BillMonthly?BillDate=' + $scope.Bill.Date + '&PartyId=' + $scope.Bill.PartyId + '&CNType=' + $scope.Bill.CNType + '&Discount=' + $scope.Bill.Discount + '&Vat=' + $scope.Bill.Vat, '_blank');
+            }
+            $scope.BillMonthlyDetails = function () {
+                window.open('/Report/BillMonthlyDetails?BillDate=' + $scope.Bill.Date + '&PartyId=' + $scope.Bill.PartyId + '&CNType=' + $scope.Bill.CNType + '&Discount=' + $scope.Bill.Discount, '_blank');
+            }
             $scope.CNPrint=function()
             {
                 if($scope.CN.FromDate==undefined ||$scope.CN.FromDate==null ||$scope.CN.FromDate=='')
                 {
-                    toastr.warning('Please select from date.');
+                    toastr.warning('Please select date.');
                     return;
                 }
-                if($scope.CN.ToDate==undefined ||$scope.CN.ToDate==null ||$scope.CN.ToDate=='')
-                {
-                    toastr.warning('Please select To date.');
+                if ($scope.CN.UserId == undefined || $scope.CN.UserId == null || $scope.CN.UserId == '') {
+                    toastr.warning('Please select user.');
                     return;
                 }
-                window.open('/Report/CNReport?FromDate=' + $scope.CN.FromDate + '&ToDate=' + $scope.CN.ToDate, '_blank');
+                window.open('/Report/CNReport?FromDate=' + $scope.CN.FromDate + '&UserId=' + $scope.CN.UserId, '_blank');
             }
             //cn info
             $scope.CNUserEntryReport = function () {
@@ -359,26 +413,6 @@ $(document).ready(function(){
                 window.open('/Report/SaleSPOTotalReport?SaleDate=' + $scope.Sale.Date + '&SaleSOPName=' + $scope.Sale.SPOName, '_blank');
             }
 
-            //party report
-            $scope.PartyFolioReport = function () {
-                window.open('/Report/PartyFolioReport?PartyDate=' + $scope.Party.Date + '&PartyId=' + $scope.Party.PartyId + '&UpdateStatus=' + $scope.Party.UpdateStatus, '_blank');
-            }
-            $scope.PartyShipperCopy = function () {
-                window.open('/Report/PartyShipperCopy?PartyDate=' + $scope.Party.Date + '&PartyId=' + $scope.Party.PartyId + '&UpdateStatus=' + $scope.Party.UpdateStatus, '_blank');
-            }
-            $scope.PartyNonUpdateReport = function () {
-                window.open('/Report/PartyNonUpdateReport?PartyDate=' + $scope.Party.Date + '&PartyId=' + $scope.Party.PartyId + '&UpdateStatus=' + $scope.Party.UpdateStatus, '_blank');
-            }
-            $scope.PartyUpdateReport = function () {
-                $window.open('/Report/PartyUpdateReport?PartyDate=' + $scope.Party.Date + '&PartyId=' + $scope.Party.PartyId + '&UpdateStatus=' + $scope.Party.UpdateStatus, '_blank');
-            }
-            //Bill info
-            $scope.BillMonthly = function () {
-                window.open('/Report/BillMonthly?BillDate=' + $scope.Bill.Date + '&PartyId=' + $scope.Bill.PartyId + '&CNType=' + $scope.Bill.CNType + '&Discount=' + $scope.Bill.Discount, '_blank');
-            }
-            $scope.BillMonthlyDetails = function () {
-                window.open('/Report/BillMonthlyDetails?BillDate=' + $scope.Bill.Date + '&PartyId=' + $scope.Bill.PartyId + '&CNType=' + $scope.Bill.CNType + '&Discount=' + $scope.Bill.Discount, '_blank');
-            }
           
 
             $scope.DateConvert = function DateConvert(str) {
@@ -407,6 +441,14 @@ $(document).ready(function(){
                        }, function errorCallback(response) {
                        });
             }
+            function LoaduserList() {
+                $http.get("/api/UserInfoes")
+                       .then(function successCallback(response) {
+                           $scope.userList = response.data;
+                           //console.log($scope.userList);
+                       }, function errorCallback(response) {
+                       });
+            };
             function getAllSPO() {
                 $http.get("/api/SPOInfoes")
                     .then(function successCallback(response) {

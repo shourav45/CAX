@@ -7,7 +7,7 @@
 <link href="~/assets/css/bootstrap-select.min.css" rel="stylesheet" />
 <link href="~/assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 <div class="row" style="background-color:dimgrey;height:800px;margin-top: 8%;">
-    <div name="caxform" style="height: 100%;width: 94%;background-color: white;margin-top: 12%;margin-left: 3%;">
+    <div name="caxform" style="height: 100%;width: 74%;background-color: white;margin-top:2%;margin-left: 12%;">
         <div class="row" ng-controller="PartyCtrl">
             <div class="col-lg-12">
                 <div class="panel panel-default">
@@ -21,7 +21,7 @@
                                 <div class="col-lg-6">
                                     <div class="" ng-class="{ 'has-error' : submitted && userform.Name.$invalid}">
                                         <label class="col-md-4 control-label">
-                                            Name :
+                                            Party Name :
                                             <span style="color:red">*</span>
                                         </label>
                                         <div class="col-md-8">
@@ -54,6 +54,16 @@
                                     &emsp;
                                 </div>
                                 <div class="col-lg-6">
+                                    <div class="" ng-class="{ 'has-error' : submitted && userform.Address.$invalid}">
+                                        <label class="col-md-4 control-label">
+                                            Address:
+                                        </label>
+                                        <div class="col-md-8">
+                                            <textarea ng-model="Party.Address" class="form-control" placeholder="Address" id="Address" name="Address"></textarea>
+                                           
+                                        </div>
+                                    </div>
+                                    &emsp;
                                     <div class="" ng-class="{ 'has-error' : submitted && userform.Email.$invalid}">
                                         <label class="col-md-4 control-label">
                                             Email:
@@ -146,6 +156,7 @@
                 initialize();
                 LoadPartyList();
                 getAllSPO();
+                LoadLastCN();
             }
             function initialize() {
                 $scope.vm = {};
@@ -185,9 +196,11 @@
                 },
                     function (isConfirm) {
                         if (isConfirm) {
+                            UiBlock();
                             $http.delete("/api/PartyInfoes/" + prt.PartyInfoId)
                                 .then(function successCallback(response) {
                                     $("#frmresetbtn").trigger("click");
+                                    UiUnBlock();
                                     LoadPartyList();
                                     sweetAlert("Success!!", "Party deleted", "success");
                                 }, function errorCallback(response) {
@@ -215,6 +228,7 @@
 
                 if ($scope.IsEdit == 1) //for update user
                 {
+                    UiBlock();
                     if ($scope.Party != 0) {
                         $http.put("/api/PartyInfoes/" + $scope.Party.PartyInfoId, $scope.Party)
                             .then(function successCallback(response) {
@@ -223,6 +237,7 @@
                                 LoadPartyList();
                                 getAllSPO();
                                 $scope.IsEdit = 0;
+                                UiUnBlock();
                                 sweetAlert("Done!!", "User updated successfully", "success");
                             }, function errorCallback(response) {
                                 //error msg
@@ -231,16 +246,20 @@
                 }
                 else //for new user
                 {
+                    UiBlock();
                     if ($scope.Party != 0) {
                         console.log($scope.Party);
                         $http.post("/api/PartyInfoes", $scope.Party)
                             .then(function successCallback(response) {
                                 $scope.Party = [];
                                 $("#frmresetbtn").trigger("click");
+                                UiUnBlock();
                                 LoadPartyList();
                                 sweetAlert("Congratulations!!", "A Party has been added successfully", "success");
                             }, function errorCallback(response) {
                                 //error msg
+                                toastr.warning('Something wrong!');
+                                UiUnBlock();
                             });
                     }
                 }

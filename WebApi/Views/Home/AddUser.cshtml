@@ -7,7 +7,7 @@
 <link href="~/assets/css/bootstrap-select.min.css" rel="stylesheet" />
 <link href="~/assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 <div class="row" style="background-color:dimgrey;height:800px;margin-top: 8%;">
-    <div name="caxform" style="height: 100%;width: 94%;background-color: white;margin-top: 12%;margin-left: 3%;">
+    <div name="caxform" style="height: 100%;width: 74%;background-color: white;margin-top: 2%;margin-left: 12%;">
         <div class="row" ng-controller="UserClt">
             <div class="col-lg-12">
                 <div class="panel panel-default">
@@ -214,6 +214,7 @@
             function init() {
                 initialize();
                 LoaduserList();
+                LoadLastCN();
             }
             function initialize() {
                 $scope.vm = {};
@@ -262,11 +263,13 @@
                     closeOnCancel: true
                 },
                     function (isConfirm) {
+                        UiBlock();
                         if (isConfirm) {
                             $http.delete("/api/UserInfoes/" + user.UserInfoId)
                         .then(function successCallback(response) {
                             $("#frmresetbtn").trigger("click");
                             document.getElementById('permissionerr').style.display = 'none';
+                            UiUnBlock();
                             LoaduserList();
                             sweetAlert("Success!!", "User deleted", "success");
                         }, function errorCallback(response) {
@@ -293,6 +296,7 @@
 
                 if ($scope.IsEdit == 1) //for update user
                 {
+                    
                     var pcount = 0;
                     var pstring = '';
                     if (document.getElementById('Zonal').checked == true) {
@@ -364,12 +368,14 @@
                     }
 
                     if (pcount != 0) {
+                        UiBlock();
                         $scope.User.UserRole = pstring;
                         $http.put("/api/UserInfoes/" + $scope.User.UserInfoId, $scope.User)
                             .then(function successCallback(response) {
                                 $scope.User = [];
                                 $("#frmresetbtn").trigger("click");
                                 document.getElementById('permissionerr').style.display = 'none';
+                                UiUnBlock();
                                 LoaduserList();
                                 $scope.IsEdit = 0;
                                 sweetAlert("Done!!", "User updated successfully", "success");
@@ -454,6 +460,7 @@
                     }
 
                     if (pcount != 0) {
+                        UiBlock();
                         $scope.User.UserRole = pstring;
                         console.log($scope.User);
                         $http.post("/api/UserInfoes", $scope.User)
@@ -461,6 +468,7 @@
                                 $scope.User = [];
                                 $("#frmresetbtn").trigger("click");
                                 document.getElementById('permissionerr').style.display = 'none';
+                                UiUnBlock();
                                 LoaduserList();
                                 sweetAlert("Congratulations!!", "A user has been added successfully", "success");
                             }, function errorCallback(response) {

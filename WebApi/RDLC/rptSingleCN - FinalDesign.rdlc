@@ -474,7 +474,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=Parameters!PrintUser.Value</Value>
+                    <Value>my name</Value>
                     <Style />
                   </TextRun>
                 </TextRuns>
@@ -564,7 +564,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=First(Fields!ConsigneeAddress.Value, "DataSet1")</Value>
+                    <Value>Address</Value>
                     <Style />
                   </TextRun>
                 </TextRuns>
@@ -628,14 +628,6 @@
           <DataField>CNType</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ConsigneeAddress">
-          <DataField>ConsigneeAddress</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="PartyAddress">
-          <DataField>PartyAddress</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="CNDate">
           <DataField>CNDate</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
@@ -652,7 +644,10 @@
           <DataField>ConsingeeName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-       
+        <Field Name="ConsigneeAddress">
+          <DataField>ConsigneeAddress</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Kgpiece">
           <DataField>Kgpiece</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -688,14 +683,6 @@
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
-  <ReportParameters>
-    <ReportParameter Name="PrintUser">
-      <DataType>String</DataType>
-      <Nullable>true</Nullable>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>ReportParameter1</Prompt>
-    </ReportParameter>
-  </ReportParameters>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>b05defa1-9481-4729-a050-7666d7dae943</rd:ReportID>
 </Report>

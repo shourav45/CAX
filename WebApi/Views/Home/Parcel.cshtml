@@ -156,7 +156,7 @@
                             <label>Total Weight(KG):</label>
                         </td>
                         <td ng-class="{ 'has-error' : submitted && caxform.KPNumber.$invalid}">
-                            <input style="width:140%" name="KPNumber" ng-model="Book.KPNumber" type="text" required />
+                            <input style="width:140%" name="KPNumber" ng-model="Book.KPNumber" type="number" required />
                             <span ng-show="submitted &&  caxform.KPNumber.$error.required" class="text-danger">Total Weight is Required</span>
                         </td>
                     </tr>
@@ -167,11 +167,11 @@
                             <label class="control-label">
                                 First   :
                             </label>
-                            <input style="width:26%" class="text-center" name="FirstPieceNumber" disabled id="FirstPieceNumber" ng-model="FirstPieceNumber" type="text" required />
+                            <input style="width:26%" class="text-center" name="FirstPieceNumber" disabled id="FirstPieceNumber" ng-model="FirstPieceNumber" type="number" required />
                             <label class="control-label">
                                 KG Rate :
                             </label>
-                            <input style="width:26%" class="text-center" disabled id="FirstPieceRate" name="FirstPieceRate" ng-model="FirstPieceRate" type="text" required />
+                            <input style="width:26%" class="text-center" disabled id="FirstPieceRate" name="FirstPieceRate" ng-model="FirstPieceRate" type="number" required />
                             <span ng-show="submitted &&  caxform.FirstPieceNumber.$error.required" class="text-danger">Required</span>
                         </td>
                     </tr>
@@ -217,16 +217,22 @@
     <!-- Page-Level Plugin Scripts-->
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#datepicker').datepicker({ format: "dd/mm/yyyy" });
+            $("#datepicker").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'd MM, y',
+                maxDate: 'today'
+            });
         });
     </script>
     <script>
-        CNApp.controller('FrmlClt', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
+        CNApp.controller('FrmlClt', function ($scope, $http, $filter, DTOptionsBuilder, DTColumnBuilder) {
             init();
             function init() {
                 initialize();
                 LoadPartyList();
                 LoadDestinationList();
+                LoadLastCN();
             }
 
             function initialize() {
@@ -236,6 +242,14 @@
                 $scope.IsEdit = 0;
                 $scope.Book = [];
                 $scope.Book.RateType = 'Auto';
+                $scope.ServiceCharge = parseInt(0);
+                $scope.Book.KPNumber = parseInt(0);
+                $scope.FirstPieceNumber = parseInt(0);
+                $scope.FirstPieceRate = parseInt(0);
+                $scope.AfterFirstPieceRate = parseInt(0);
+                $scope.Testdate = new Date();
+                $scope.Book.CNDate = $filter('date')($scope.Testdate, "d MMM, y");
+                $scope.Book.TotalAmount = parseInt(0);
             }
 
             $scope.DateConvert = function DateConvert(str) {
@@ -291,11 +305,14 @@
 
                     }
                     if (availablePartyRate != null && availablePartyRate != undefined) {
-                        $scope.Book.KPNumber = "";
+                        $scope.Book.KPNumber = parseInt(0);
                         $scope.FirstPieceNumber = availablePartyRate[0].FirstKP;
                         $scope.FirstPieceRate = availablePartyRate[0].FirstKPRate;
                         $scope.AfterFirstPieceRate = availablePartyRate[0].AfterFirstKPRate;
-                        $scope.Book.TotalAmount = "";
+                        $scope.Book.TotalAmount = parseInt(0);
+                        $scope.FirstPieceNumber = parseInt(0);
+                        $scope.FirstPieceRate = parseInt(0);
+                        $scope.AfterFirstPieceRate = parseInt(0);
                     }
                 }
             }
@@ -339,6 +356,10 @@
             $scope.submitForm = function () {
                 if ($scope.caxform.$invalid)
                     return;
+                if ($scope.Book.KPNumber == 0 || $scope.Book.KPNumber == '0' || $scope.Book.KPNumber < 0) {
+                    toastr.warning('Please input kg number.');
+                    return;
+                }
                 UiBlock();
                 $http.post("/CNInfoes/PostCNInfo?CNType=Parcel" +
                         "&PolySize=NULL&CNDate=" + $scope.Book.CNDate +
@@ -347,16 +368,25 @@
                     "&ConsingeeName=" + $scope.Book.ConsingeeName + "&ConsigneeAddress=" + $scope.Book.ConsigneeAddress +
                     "&ItemInfo=" + $scope.Book.ItemInfo + "&Kgpiece=" + $scope.Book.KPNumber +
                     "&RateType=" + $scope.Book.RateType + "&Weight=" + "0" + "&ServiceCharge=" + $scope.ServiceCharge +
-                    "&VatStatus=0&VatPercent=0&VatAmount=0&AitStatus=0&AitPercent=0&AitAmount=0&TotalAmount=" + $scope.Book.TotalAmount +
+                    "&VatStatus=0&VatPercent=0&VatAmount=" + $scope.FirstPieceRate + "&AitStatus=0&AitPercent=0&AitAmount=0&TotalAmount=" + $scope.Book.TotalAmount +
                     "&Size=" + $scope.Book.Size + "&KPNumber=" + $scope.Book.KPNumber + "&Ex1=" + $scope.AfterFirstPieceRate)
                             .then(function successCallback(response) {
-                                console.log(response.data);
+                                //console.log(response.data);
                                 UiUnBlock();
-                                console.log(response.data);
+                                //console.log(response.data);
                                 LoadLastCN();
                                 if (response.data != '0') {
-                                    $scope.Book = [];
-                                    $("#frmresetbtn").trigger("click");
+                                    $scope.Book.Follio = '';
+                                    $scope.Book.ConsingeeName = '';
+                                    $scope.Book.ConsigneeAddress = '';
+                                    $scope.Book.ItemInfo = '';
+                                    $scope.Book.Size = null;
+                                    $scope.FirstPieceNumber = parseInt(0);
+                                    $scope.FirstPieceRate = parseInt(0);
+                                    $scope.AfterFirstPieceRate = parseInt(0);
+                                    $scope.Book.KPNumber = parseInt(0);
+                                    $scope.Book.TotalAmount = parseInt(0);
+                                    //$("#frmresetbtn").trigger("click");
                                     //toastr.options.onclick = function () { console.log("clicked "); };
                                     toastr.success('Click to quick print.', 'CN added successfully!',
                                         {

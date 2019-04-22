@@ -31,7 +31,7 @@
                         <td ng-class="{ 'has-error' : submitted && caxform.UserName.$invalid}" style="padding-bottom: 4%;">
                             <select style="width: 90%;" name="UserName" ng-model="Book.Destination" data-show-subtext="true" data-live-search="true" required>
                                 <option value="" data-subtext="">Select Destination</option>
-                                <option ng-repeat="dest in DestinationList" value="{{dest.DestinationId}}" data-subtext="{{dest.Area}}">{{dest.District}}->{{dest.Area}}</option>
+                                <option ng-repeat="dest in DestinationList" value="{{dest.DestinationId}}" data-subtext="{{dest.Area}}">{{dest.Area}} ({{dest.District}})</option>
                             </select>
                             <span ng-show="submitted &&  caxform.UserName.$error.required" class="text-danger">Destination is Required</span>
 
@@ -205,12 +205,13 @@ $(document).ready(function() {
 });
     </script>
     <script>
-        CNApp.controller('FrmlClt', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
+        CNApp.controller('FrmlClt', function ($scope, $http,$filter, DTOptionsBuilder, DTColumnBuilder) {
             init();
             function init() {
                 initialize();
                 LoadPartyList();
                 LoadDestinationList();
+                LoadLastCN();
             }
 
             function initialize() {
@@ -222,6 +223,10 @@ $(document).ready(function() {
                 $scope.Book.Size = 'General';
                 $scope.Book.RateType = 'Auto';
                 $scope.ServiceCharge = parseInt(0);
+                $scope.Book.KPNumber = parseInt(0);
+                $scope.Testdate = new Date();
+                $scope.Book.CNDate = $filter('date')($scope.Testdate, "d MMM, y");
+                $scope.Book.TotalAmount = parseInt(0);
             }
 
             $scope.DateConvert = function DateConvert(str) {
@@ -278,7 +283,7 @@ $(document).ready(function() {
                     }
                     if(availablePartyRate != null && availablePartyRate != undefined){
                         $scope.FirstPieceRate = parseInt(availablePartyRate[0].FirstKPRate);
-                        $scope.Book.TotalAmount = "";
+                        $scope.Book.TotalAmount = parseInt(0);
                     }
                 }
             }
@@ -289,7 +294,7 @@ $(document).ready(function() {
                 $http.get("/RateInfoes/GetRateByPartyId?PartyId=" + PartyId + '&RateType=' + RateType)
                        .then(function successCallback(response) {
                            $scope.PartyRate = response.data;
-                           console.log($scope.PartyRate);
+                           //console.log($scope.PartyRate);
                            $scope.FillRateEntry();
                            toastr.options.positionClass = 'toast-bottom-right';
                            if ($scope.PartyRate =='0') {
@@ -320,6 +325,12 @@ $(document).ready(function() {
             $scope.submitForm = function () {
                 if ($scope.caxform.$invalid)
                     return;
+                //alert($scope.Book.KPNumber);
+                if ($scope.Book.KPNumber == 0 || $scope.Book.KPNumber == '0' || $scope.Book.KPNumber<0)
+                {
+                    toastr.warning('Please input piece number.');
+                    return;
+                }
                 UiBlock();
                 $http.post("/CNInfoes/PostCNInfo?CNType=Document"+
                         "&PolySize=NULL&CNDate="+ $scope.Book.CNDate +
@@ -328,15 +339,18 @@ $(document).ready(function() {
                     "&ConsingeeName=" + $scope.Book.ConsingeeName + "&ConsigneeAddress=" + $scope.Book.ConsigneeAddress +
                     "&Kgpiece=" + $scope.Book.KPNumber +
                     "&RateType=" + $scope.Book.RateType + "&Weight=" + "0" + "&ServiceCharge=" + $scope.ServiceCharge +
-                    "&VatStatus=0&VatPercent=0&VatAmount=0&AitStatus=0&AitPercent=0&AitAmount=0&TotalAmount=" + $scope.Book.TotalAmount +
+                    "&VatStatus=0&VatPercent=0&VatAmount=" + $scope.FirstPieceRate + "&AitStatus=0&AitPercent=0&AitAmount=0&TotalAmount=" + $scope.Book.TotalAmount +
                     "&Size=" + $scope.Book.Size + "&KPNumber=" + $scope.Book.KPNumber + "&Ex1=" + $scope.FirstPieceRate)
                             .then(function successCallback(response) {
                                 UiUnBlock();
-                                console.log(response.data);
+                                //console.log(response.data);
                                 LoadLastCN();
                                 if (response.data != '0') {
-                                    $scope.Book = [];
-                                    $("#frmresetbtn").trigger("click");
+                                    $scope.Book.Follio = '';
+                                    $scope.Book.ConsingeeName = '';
+                                    $scope.Book.ConsigneeAddress = '';
+                                    $scope.Book.KPNumber = parseInt(0);
+                                    $scope.Book.TotalAmount = parseInt(0);
                                     //toastr.options.onclick = function () { console.log("clicked "); };
                                     toastr.success('Click to quick print.', 'CN added successfully!',
                                         {

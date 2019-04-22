@@ -40,7 +40,7 @@
                                         <div class="col-md-8">
                                             <input type="text" ng-model="Destination.Area" class="form-control" placeholder="Area" id="Area" name="Area" required>
                                             <div class="form-control-focus"> </div>
-                                            <span ng-show="submitted &&  caxform.Area.$error.required" class="text-danger">Email is Required</span>
+                                            <span ng-show="submitted &&  caxform.Area.$error.required" class="text-danger">Area is Required</span>
                                         </div>
                                     </div>
                                     &emsp;
@@ -110,6 +110,7 @@
             function init() {
                 initialize();
                 LoadDestinationList();
+                LoadLastCN();
             }
             function initialize() {
                 $scope.vm = {};
@@ -135,8 +136,8 @@
             $scope.Delete = function (dest) {
                 console.log(dest);
                 swal({
-                    title: "Are you sure?",
-                    text: "You will not be able to recover this user!",
+                    title: "Confirm Delete?",
+                    text: "You will not be able to recover this data!",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: '#DD6B55',
@@ -147,9 +148,11 @@
                 },
                     function (isConfirm) {
                         if (isConfirm) {
+                            UiBlock();
                             $http.delete("/api/Destinations/" + dest.DestinationId)
                         .then(function successCallback(response) {
                             $("#frmresetbtn").trigger("click");
+                            UiUnBlock();
                             LoadDestinationList();
                             sweetAlert("Success!!", "Destination deleted", "success");
                         }, function errorCallback(response) {
@@ -164,7 +167,7 @@
                        .then(function successCallback(response) {
                            $scope.DestinationList = response.data;
                            toastr.options.positionClass = 'toast-bottom-right';
-                           toastr.success($scope.DestinationList.length + ' users found.');
+                           toastr.success($scope.DestinationList.length + ' Destination found.');
                        }, function errorCallback(response) {
                            //error msg
                        });
@@ -176,11 +179,13 @@
 
                 if ($scope.IsEdit == 1) //for update user
                 {
+                    UiBlock();
                     console.log($scope.Destination);
                     $http.put("/api/Destinations/" + $scope.Destination.DestinationId, $scope.Destination)
                             .then(function successCallback(response) {
                                 $scope.Destination = [];
                                 $("#frmresetbtn").trigger("click");
+                                UiUnBlock();
                                 LoadDestinationList();
                                 $scope.IsEdit = 0;
                                 sweetAlert("Done!!", "Updated successfully", "success");
@@ -191,11 +196,12 @@
                 }
                 else //for new user
                 {
-                        console.log($scope.Destination);
+                    UiBlock();
                     $http.post("/api/Destinations?DistrictName=" + $scope.Destination.District + "&Area=" + $scope.Destination.Area)
                             .then(function successCallback(response) {
                                 $scope.Destination = [];
                                 $("#frmresetbtn").trigger("click");
+                                UiUnBlock();
                                 LoadDestinationList();
                                 sweetAlert("Congratulations!!", "Destination added successfully", "success");
                             }, function errorCallback(response) {

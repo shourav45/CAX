@@ -55,7 +55,6 @@
                                                         <td>
                                                             <div class="btn-group">
                                                                 <button type="button" class="btn btn-default btn" data-toggle="tooltip" data-placement="top" title="Edit" ng-click="Edit(cn);"><i class="glyphicon glyphicon-pencil"></i></button>
-                                                                <button type="button" class="btn btn-default btn"data-toggle="tooltip" data-placement="top" title="Delete" ng-click="Delete(cn);"><i class="glyphicon glyphicon-trash"></i></button>
                                                                 <a class="btn btn-default btn" href="/Report/QuickPrint?CN={{cn.CNInfoId}}" target="_blank" data-toggle="tooltip" data-placement="top" title="Print CN"><i class="glyphicon glyphicon-print"></i></a>
 
                                                             </div>
@@ -87,6 +86,7 @@ $(document).ready(function(){
             function init() {
                 initialize();
                 LoadCnInfo();
+                LoadLastCN();
             }
 
             function initialize() {

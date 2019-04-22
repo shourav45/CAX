@@ -6,7 +6,7 @@
 <link href="~/assets/css/bootstrap-select.min.css" rel="stylesheet" />
 <link href="~/assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 <div class="row" style="background-color:dimgrey;height:800px;margin-top: 8%;">
-    <div name="caxform" style="height: 100%;width: 94%;background-color: white;margin-top: 12%;margin-left: 3%;">
+    <div name="caxform" style="height: 89%;width: 74%;background-color: white;margin-top: 2%;margin-left: 10%;">
         <div class="row" ng-controller="SPOCtrl">
             <div class="col-lg-12">
                 <div class="panel panel-default">
@@ -140,6 +140,7 @@
             function init() {
                 initialize();
                 LoaduserList();
+                LoadLastCN();
             }
             function initialize() {
                 $scope.vm = {};
@@ -162,7 +163,7 @@
             }
 
             $scope.DeleteSPO = function (spo) {
-                console.log(spo);
+                
                 swal({
                     title: "Are you sure?",
                     text: "You will not be able to recover this SPO!",
@@ -176,9 +177,11 @@
                 },
                     function (isConfirm) {
                         if (isConfirm) {
+                            UiBlock();
                             $http.delete("/api/SPOInfoes/" + spo.SPOInfoId)
                         .then(function successCallback(response) {
                             $("#frmresetbtn").trigger("click");
+                            UiUnBlock();
                             LoaduserList();
                             sweetAlert("Success!!", "SPO deleted", "success");
                         }, function errorCallback(response) {
@@ -206,11 +209,13 @@
 
                 if ($scope.IsEdit == 1) //for update user
                 {
+                    UiBlock();
                     if ($scope.SPO != 0) {
                         $http.put("/api/SPOInfoes/" + $scope.SPO.SPOInfoId, $scope.SPO)
                             .then(function successCallback(response) {
                                 //$scope.SPO = [];
                                 $("#frmresetbtn").trigger("click");
+                                UiUnBlock();
                                 LoaduserList();
                                 $scope.IsEdit = 0;
                                 sweetAlert("Done!!", "User updated successfully", "success");
@@ -221,12 +226,14 @@
                 }
                 else //for new user
                 {
+                    UiBlock();
                     if ($scope.SPO != 0) {
                         console.log($scope.SPO);
                         $http.post("/api/SPOInfoes", $scope.SPO)
                             .then(function successCallback(response) {
                                 //$scope.SPO = [];
                                 $("#frmresetbtn").trigger("click");
+                                UiUnBlock();
                                 LoaduserList();
                                 sweetAlert("Congratulations!!", "A SPO has been added successfully", "success");
                             }, function errorCallback(response) {

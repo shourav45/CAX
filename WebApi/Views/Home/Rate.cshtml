@@ -4,8 +4,8 @@
 }
 <link href="~/assets/css/bootstrap-select.min.css" rel="stylesheet" />
 <link href="~/assets/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
-<div class="row" style="background-color:dimgrey;height:800px;margin-top: 8%;">
-    <div name="caxform" style="height: 100%;width: 94%;background-color: white;margin-top: 2%;margin-left: 3%;">
+<div class="row" style="background-color:dimgrey;height:1110px;margin-top: 8%;">
+    <div name="caxform" style="height: 85%;width: 74%;background-color: white;margin-top: 2%;margin-left: 12%;">
         <div class="row" ng-controller="RateClt">
             <div class="col-lg-12">
                 <div class="panel panel-default">
@@ -80,7 +80,7 @@
                                             <span style="color:red">*</span>
                                         </label>
                                         <div class="col-md-6">
-                                            <input type="text" ng-model="NewRate.FirstKP" class="col-md-2 form-control" placeholder="Kg / Piece" id="FirstKP" name="FirstKP" required>
+                                            <input type="number" ng-model="NewRate.FirstKP" class="col-md-2 form-control" placeholder="Kg / Piece" id="FirstKP" name="FirstKP" required>
                                             <div class="form-control-focus"> </div>
                                             <span ng-show="submitted &&  caxform.FirstKP.$error.required" class="text-danger">Please enter number</span>
 
@@ -93,7 +93,7 @@
                                             <span style="color:red">*</span>
                                         </label>
                                         <div class="col-md-6">
-                                            <input type="text" ng-model="NewRate.FirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="FirstKPRate" name="FirstKPRate" required>
+                                            <input type="number" ng-model="NewRate.FirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="FirstKPRate" name="FirstKPRate" required>
                                             <div class="form-control-focus"> </div>
                                             <span ng-show="submitted &&  caxform.FirstKPRate.$error.required" class="text-danger">Please enter rate</span>
 
@@ -106,7 +106,7 @@
                                             <span style="color:red">*</span>
                                         </label>
                                         <div class="col-md-6">
-                                            <input type="text" ng-model="NewRate.AfterFirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="AfterFirstKPRate" name="AfterFirstKPRate" required>
+                                            <input type="number" ng-model="NewRate.AfterFirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="AfterFirstKPRate" name="AfterFirstKPRate" required>
                                             <div class="form-control-focus"> </div>
                                             <span ng-show="submitted &&  caxform.AfterFirstKPRate.$error.required" class="text-danger">Please enter rate</span>
                                         </div>
@@ -137,7 +137,7 @@
                                             <span style="color:red">*</span>
                                         </label>
                                         <div class="col-md-6">
-                                            <input type="text" ng-model="NewRate.FirstKP" class="col-md-2 form-control" placeholder="Kg / Piece" id="FirstKP" name="FirstKP" required>
+                                            <input type="number" ng-model="NewRate.FirstKP" class="col-md-2 form-control" placeholder="Kg / Piece" id="FirstKP" name="FirstKP" required>
                                             <div class="form-control-focus"> </div>
                                             <span ng-show="submitted &&  caxform.FirstKP.$error.required" class="text-danger">Please enter number</span>
 
@@ -150,7 +150,7 @@
                                             <span style="color:red">*</span>
                                         </label>
                                         <div class="col-md-6">
-                                            <input type="text" ng-model="NewRate.FirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="FirstKPRate" name="FirstKPRate" required>
+                                            <input type="number" ng-model="NewRate.FirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="FirstKPRate" name="FirstKPRate" required>
                                             <div class="form-control-focus"> </div>
                                             <span ng-show="submitted &&  caxform.FirstKPRate.$error.required" class="text-danger">Please enter rate</span>
 
@@ -163,7 +163,7 @@
                                             <span style="color:red">*</span>
                                         </label>
                                         <div class="col-md-6">
-                                            <input type="text" ng-model="NewRate.AfterFirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="AfterFirstKPRate" name="AfterFirstKPRate" required>
+                                            <input type="number" ng-model="NewRate.AfterFirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="AfterFirstKPRate" name="AfterFirstKPRate" required>
                                             <div class="form-control-focus"> </div>
                                             <span ng-show="submitted &&  caxform.AfterFirstKPRate.$error.required" class="text-danger">Please enter rate</span>
                                         </div>
@@ -196,7 +196,7 @@
                                             <span style="color:red">*</span>
                                         </label>
                                         <div class="col-md-6">
-                                            <input type="text" ng-model="NewRate.FirstKP" class="col-md-2 form-control" placeholder="Kg / Piece" id="FirstKP" name="FirstKP" required>
+                                            <input type="number" ng-model="NewRate.FirstKP" class="col-md-2 form-control" placeholder="Kg / Piece" id="FirstKP" name="FirstKP" required>
                                             <div class="form-control-focus"> </div>
                                             <span ng-show="submitted &&  caxform.FirstKP.$error.required" class="text-danger">Please enter number</span>
 
@@ -209,7 +209,7 @@
                                             <span style="color:red">*</span>
                                         </label>
                                         <div class="col-md-6">
-                                            <input type="text" ng-model="NewRate.FirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="FirstKPRate" name="FirstKPRate" required>
+                                            <input type="number" ng-model="NewRate.FirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="FirstKPRate" name="FirstKPRate" required>
                                             <div class="form-control-focus"> </div>
                                             <span ng-show="submitted &&  caxform.FirstKPRate.$error.required" class="text-danger">Please enter rate</span>
 
@@ -222,7 +222,7 @@
                                             <span style="color:red">*</span>
                                         </label>
                                         <div class="col-md-6">
-                                            <input type="text" ng-model="NewRate.AfterFirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="AfterFirstKPRate" name="AfterFirstKPRate" required>
+                                            <input type="number" ng-model="NewRate.AfterFirstKPRate" class="col-md-2 form-control" placeholder="BDT" id="AfterFirstKPRate" name="AfterFirstKPRate" required>
                                             <div class="form-control-focus"> </div>
                                             <span ng-show="submitted &&  caxform.AfterFirstKPRate.$error.required" class="text-danger">Please enter rate</span>
                                         </div>
@@ -247,7 +247,6 @@
                                                     <tr>
                                                         <th>SL/No</th>
                                                         <th>Party</th>
-                                                        <th>Party Code</th>
                                                         <th>Rate Type</th>
                                                         <th>Size</th>
                                                         <th>First KG/Piece Number</th>
@@ -260,7 +259,6 @@
                                                     <tr ng-repeat="rate in RateList">
                                                         <td>{{$index + 1}}</td>
                                                         <td>{{rate.Ex2}}</td>
-                                                        <td>{{rate.PartyInfoId}}</td>
                                                         <td>{{rate.RateType}}</td>
                                                         <td>{{rate.Ex1}} {{rate.RateType}}</td>
                                                         <td>{{rate.FirstKP}}</td>
@@ -302,6 +300,7 @@
                 initialize();
                 LoadPartyList();
                 LoadRate();
+                LoadLastCN();
             }
             function initialize() {
                 $scope.NewRate = [];
@@ -313,6 +312,10 @@
                 console.log(rate);
                 $scope.IsEdit = 1;
                 $scope.NewRate = rate;
+                $scope.NewRate.FirstKP = parseInt(rate.FirstKP);
+                $scope.NewRate.FirstKPRate = parseInt(rate.FirstKPRate);
+                $scope.NewRate.FirstKPRate = parseInt(rate.FirstKPRate);
+                $scope.NewRate.AfterFirstKPRate = parseInt(rate.AfterFirstKPRate);
                 //$("#RateType").val(rate.RateType).change();
                 //$('RateType').selectmenu('refresh', true);
                 //document.getElementById('RateType').value = rate.RateType;
@@ -326,11 +329,11 @@
                 //$(window).scrollTop(0);
             }
 
-            $scope.Delete = function (dest) {
-                console.log(dest);
+            $scope.Delete = function (item) {
+                console.log(item);
                 swal({
                     title: "Are you sure?",
-                    text: "You will not be able to recover this user!",
+                    text: "You will not be able to recover this rate!",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: '#DD6B55',
@@ -341,11 +344,13 @@
                 },
                     function (isConfirm) {
                         if (isConfirm) {
-                            $http.delete("/api/Destinations/" + dest.DestinationId)
+                            UiBlock();
+                            $http.post("/RateInfoes/DeleteRateInfo?id=" + item.RateInfoId)
                         .then(function successCallback(response) {
                             $("#frmresetbtn").trigger("click");
-                            LoadDestinationList();
-                            sweetAlert("Success!!", "Destination deleted", "success");
+                            UiUnBlock();
+                            LoadPartyList();
+                            sweetAlert("Success!!", "Rate deleted", "success");
                         }, function errorCallback(response) {
                             //error msg
                         });
@@ -371,7 +376,6 @@
                        .then(function successCallback(response) {
                            $scope.PartyList = response.data;
                            toastr.options.positionClass = 'toast-bottom-right';
-                           toastr.success($scope.PartyList.length + ' Party found.');
                        }, function errorCallback(response) {
                            //error msg
                        });
@@ -383,12 +387,14 @@
 
                 if ($scope.IsEdit == 1) //for update user
                 {
-                    console.log($scope.Destination);
-                    $http.put("/RateInfoes/PutRateInfo/" + $scope.Destination.DestinationId, $scope.Destination)
+                    UiBlock();
+                    console.log($scope.NewRate);
+                    $http.put("/RateInfoes/PutRateInfo/" + $scope.NewRate.RateInfoId, $scope.NewRate)
                             .then(function successCallback(response) {
                                 $scope.dest = [];
                                 $("#frmresetbtn").trigger("click");
-                                LoadDestinationList();
+                                UiUnBlock();
+                                LoadRate();
                                 $scope.IsEdit = 0;
                                 sweetAlert("Done!!", "Updated successfully", "success");
                             }, function errorCallback(response) {
@@ -398,9 +404,11 @@
                 }
                 else //for new user
                 {
+                    UiBlock();
                     //console.log($scope.NewRate);
                     $http.post("/RateInfoes/PostRateInfo?PartyInfoId=" + $scope.NewRate.PartyInfoId + "&RateType=" + $scope.NewRate.RateType + "&FirstKP=" + $scope.NewRate.FirstKP + "&FirstKPRate=" + $scope.NewRate.FirstKPRate + "&AfterFirstKPRate=" + $scope.NewRate.AfterFirstKPRate + "&Ex1=" + $scope.NewRate.Ex1)
                             .then(function successCallback(response) {
+                                UiUnBlock();
                                 $scope.NewRate = [];
                                 $("#frmresetbtn").trigger("click");
                                 LoadRate();

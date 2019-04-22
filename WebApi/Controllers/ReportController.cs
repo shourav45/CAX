@@ -18,14 +18,16 @@ namespace WebApi.Controllers
         public dbcontext db=new dbcontext();
         private string connection = ConfigurationManager.ConnectionStrings["ConnString1"].ConnectionString;
 
-        public ActionResult CNReport(DateTime FromDate, DateTime ToDate)
+        public ActionResult CNReport(DateTime FromDate,int UserId)
         {
+            HttpCookie myCookie = Request.Cookies["UserCookie"];
+            int myname =Convert.ToInt32(myCookie.Values["UserInfoId"]);
+            string PrintUser = myCookie.Values["Name"].ToString();
             List<SqlParameter> pram = new List<SqlParameter>();
             SqlParameter p1 = new SqlParameter("@FromDate", FromDate);
-            SqlParameter p2 = new SqlParameter("@ToDate", ToDate);
+            SqlParameter p2 = new SqlParameter("@User", UserId);
             pram.Add(p1);
             pram.Add(p2);
-
             DataTable dt = SqlHelper.ExecuteDataset(connection, CommandType.StoredProcedure, "CNListPrint", pram.ToArray()).Tables[0];
 
             Warning[] warnings;
@@ -33,10 +35,13 @@ namespace WebApi.Controllers
             string[] streamids;
             string encoding;
             string filenameExtension;
-            List<ReportParameter> param = new List<ReportParameter>();
+            ReportParameter rptparam = new ReportParameter();
+            rptparam = new ReportParameter("PrintUser", PrintUser);
+
             var viewer = new ReportViewer();
             viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptPrintCNList.rdlc");
             viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", dt));
+            viewer.LocalReport.SetParameters(rptparam);
             viewer.LocalReport.Refresh();
 
             var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
@@ -102,10 +107,12 @@ namespace WebApi.Controllers
             string filenameExtension;
             List<ReportParameter> param = new List<ReportParameter>();
             param.Add(new ReportParameter("CNDate", CNDate.ToShortDateString()));
-            param.Add(new ReportParameter("Dest", dt.Rows[0][6].ToString()));
+            var des = db.Destinationset.Where(d => d.DestinationId == CNDestination).FirstOrDefault();
+            param.Add(new ReportParameter("Dest", des.Area+" ("+des.District+")"));
             // var viewer = new ReportViewer();
             viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptFullManifest.rdlc");
             viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", dt));
+            viewer.LocalReport.SetParameters(param);
             viewer.LocalReport.Refresh();
 
             var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
@@ -199,10 +206,49 @@ namespace WebApi.Controllers
 
             return File(bytes, mimeType);
         }
-        public ActionResult BillMonthly(DateTime BillDate, int PartyId,string CNType,int Discount)
+        public ActionResult BillMonthly(DateTime BillDate, int PartyId,string CNType,string Discount,string Vat)
         {
+            double d = Convert.ToDouble(Discount);
+            double v= Convert.ToDouble(Vat);
             db = new dbcontext();
-            List<CNInfo> cnData = db.CNInfoset.ToList();
+            List<SqlParameter> pram = new List<SqlParameter>();
+            SqlParameter p1 = new SqlParameter("@CNDate", BillDate);
+            SqlParameter p2 = new SqlParameter("@PartyId", PartyId);
+            SqlParameter p3 = new SqlParameter("@CNType", CNType);
+            pram.Add(p1);
+            pram.Add(p2);
+            pram.Add(p3);
+            DataTable dt = SqlHelper.ExecuteDataset(connection, CommandType.StoredProcedure, "MonthlyBillPartyWise", pram.ToArray()).Tables[0];
+            double TotalBill = 0,DiscountAmount=0,VatAmount=0;
+            foreach(DataRow item in dt.Rows)
+            {
+                TotalBill = TotalBill+Convert.ToInt32(item["TotalAmount"]);
+            }
+            if(d!=0)
+            {
+               double a1=TotalBill / 100;
+                DiscountAmount =(d* a1);
+            }
+            if(v!=0)
+            {
+                double a2 = TotalBill / 100;
+                VatAmount = (v * a2);
+            }
+            double AfterVat = TotalBill + VatAmount;
+            double AfterDiscount = AfterVat - DiscountAmount;
+
+            var party = db.PartyInfoset.Where(p => p.PartyInfoId == PartyId).FirstOrDefault();
+            List<ReportParameter> param = new List<ReportParameter>();
+            param.Add(new ReportParameter("CNMonth", BillDate.ToShortDateString()));
+            param.Add(new ReportParameter("PartyName", party.Name));
+            param.Add(new ReportParameter("PartyAddress", party.Address));
+            param.Add(new ReportParameter("DiscountAmount", DiscountAmount.ToString()));
+            param.Add(new ReportParameter("DiscountPercent",Discount.ToString()));
+            param.Add(new ReportParameter("VatPercent", Vat.ToString()));
+            param.Add(new ReportParameter("VatAmount", VatAmount.ToString()));
+            param.Add(new ReportParameter("TotalAmount", TotalBill.ToString()));
+            param.Add(new ReportParameter("AfterVat", AfterVat.ToString()));
+            param.Add(new ReportParameter("AfterDiscount", AfterDiscount.ToString()));
 
             Warning[] warnings;
             string mimeType;
@@ -211,9 +257,9 @@ namespace WebApi.Controllers
             string filenameExtension;
 
             var viewer = new ReportViewer();
-            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptDailySales.rdlc");
-
-            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptMonthlyBillParty.rdlc");
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", dt));
+            viewer.LocalReport.SetParameters(param);
             viewer.LocalReport.Refresh();
 
             var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
@@ -264,19 +310,28 @@ namespace WebApi.Controllers
         }
         public ActionResult PartyShipperCopy(DateTime PartyDate, int PartyId, string UpdateStatus)
         {
-            db = new dbcontext();
-            List<CNInfo> cnData = db.CNInfoset.ToList();
+            
+            List<SqlParameter> pram = new List<SqlParameter>();
+            SqlParameter p1 = new SqlParameter("@CNDate", PartyDate);
+            SqlParameter p2 = new SqlParameter("@PartyId", PartyId);
+            pram.Add(p1);
+            pram.Add(p2);
+            DataTable dt = SqlHelper.ExecuteDataset(connection, CommandType.StoredProcedure, "ShipperCopy", pram.ToArray()).Tables[0];
 
             Warning[] warnings;
             string mimeType;
             string[] streamids;
             string encoding;
             string filenameExtension;
+            var party = db.PartyInfoset.Where(p => p.PartyInfoId == PartyId).FirstOrDefault();
+            List<ReportParameter> rptparam = new List<ReportParameter>();
+            rptparam.Add(new ReportParameter("CNMonth", PartyDate.ToShortDateString()));
+            rptparam.Add(new ReportParameter("PartyName", party.Name));
 
             var viewer = new ReportViewer();
-            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptDailySales.rdlc");
-
-            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", cnData));
+            viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptShipperCopy.rdlc");
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", dt));
+            viewer.LocalReport.SetParameters(rptparam);
             viewer.LocalReport.Refresh();
 
             var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);
@@ -327,6 +382,11 @@ namespace WebApi.Controllers
         }
         public ActionResult QuickPrint(int CN)
         {
+            HttpCookie myCookie = Request.Cookies["UserCookie"];
+            string myname = myCookie.Values["Name"].ToString();
+            List<ReportParameter> param = new List<ReportParameter>();
+            param.Add(new ReportParameter("PrintUser", myname));
+         
             List<SqlParameter> pram = new List<SqlParameter>();
             SqlParameter p1 = new SqlParameter("@CNId", CN);
             pram.Add(p1);
@@ -337,10 +397,12 @@ namespace WebApi.Controllers
             string[] streamids;
             string encoding;
             string filenameExtension;
-            List<ReportParameter> param = new List<ReportParameter>();
+            ReportParameter rptparam = new ReportParameter();
             var viewer = new ReportViewer();
             viewer.LocalReport.ReportPath = Server.MapPath("~/RDLC/rptSingleCN.rdlc");
             viewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", dt));
+            rptparam = new ReportParameter("PrintUser", myname);
+            viewer.LocalReport.SetParameters(rptparam);
             viewer.LocalReport.Refresh();
 
             var bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out filenameExtension, out streamids, out warnings);

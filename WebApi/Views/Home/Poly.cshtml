@@ -205,12 +205,13 @@ $(document).ready(function() {
 });
 </script>
     <script>
-        CNApp.controller('FrmlClt', function ($scope, $http, DTOptionsBuilder, DTColumnBuilder) {
+        CNApp.controller('FrmlClt', function ($scope, $http, $filter, DTOptionsBuilder, DTColumnBuilder) {
             init();
             function init() {
                 initialize();
                 LoadPartyList();
                 LoadDestinationList();
+                LoadLastCN();
             }
 
             function initialize() {
@@ -221,6 +222,10 @@ $(document).ready(function() {
                 $scope.Book = [];
                 $scope.Book.RateType = 'Auto';
                 $scope.ServiceCharge = parseInt(0);
+                $scope.Book.KPNumber = parseInt(0);
+                $scope.Testdate = new Date();
+                $scope.Book.CNDate = $filter('date')($scope.Testdate, "d MMM, y");
+                $scope.Book.TotalAmount = parseInt(0);
             }
 
             $scope.DateConvert = function DateConvert(str) {
@@ -337,6 +342,10 @@ $(document).ready(function() {
             $scope.submitForm = function () {
                 if ($scope.caxform.$invalid)
                     return;
+                if ($scope.Book.KPNumber == 0 || $scope.Book.KPNumber == '0' || $scope.Book.KPNumber < 0) {
+                    toastr.warning('Please input piece number.');
+                    return;
+                }
                 UiBlock();
                 $http.post("/CNInfoes/PostCNInfo?CNType=Poly" +
                         "&PolySize=NULL&CNDate=" + $scope.Book.CNDate +
@@ -345,7 +354,7 @@ $(document).ready(function() {
                     "&ConsingeeName=" + $scope.Book.ConsingeeName + "&ConsigneeAddress=" + $scope.Book.ConsigneeAddress +
                     "&Kgpiece=" + $scope.Book.KPNumber +
                     "&RateType=" + $scope.Book.RateType + "&Weight=" + "0" + "&ServiceCharge=" + $scope.ServiceCharge +
-                    "&VatStatus=0&VatPercent=0&VatAmount=0&AitStatus=0&AitPercent=0&AitAmount=0&TotalAmount=" + $scope.Book.TotalAmount +
+                    "&VatStatus=0&VatPercent=0&VatAmount=" + $scope.FirstPieceRate + "&AitStatus=0&AitPercent=0&AitAmount=0&TotalAmount=" + $scope.Book.TotalAmount +
                     "&Size=" + $scope.Book.Size + "&KPNumber=" + $scope.Book.KPNumber + "&Ex1=" + $scope.AfterFirstPieceRate)
                             .then(function successCallback(response) {
                                 console.log(response.data);
